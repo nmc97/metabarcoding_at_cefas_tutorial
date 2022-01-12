@@ -1,9 +1,8 @@
-Template for the Read the Docs tutorial
+Tutorial for Cefas Metabarcoding Users
 =======================================
 
-This GitHub template includes fictional Python library
-with some basic Sphinx docs.
+This is a guide for Metabarcoding analysis at Cefas for researchers at any level.
 
-Read the tutorial here:
+It is in development so any contributions or advice would be appreciated.
+Please email: nicola.coyle@cefas.co.uk
 
-https://docs.readthedocs.io/en/stable/tutorial/
