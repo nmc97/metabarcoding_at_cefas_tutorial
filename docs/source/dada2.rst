@@ -12,8 +12,7 @@ Dada2 is a widely used software for identifying ASV's in metabarcoding studies.
 Installation
 ------------
 
-
-One option for installing Dada2 is to build a [Mamba](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html) environment. Some R packages can be install directly using [Mamba](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html). Others will need to be intstalled within R.
+Dada2 is an R package. One option for installing Dada2 in linux is to build a [Mamba](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html) environment. Some R packages can be install directly using [Mamba](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html). Others will need to be intstalled within R.
 
 Create a Mamba env:
 ^^^^^^^^^^^^^^^^^^^
@@ -23,8 +22,10 @@ Create a Mamba env:
 	mamba  install bioconductor-dada2 # install dada2
 
 
-Install phyloseq and Biostrings in R
+Install `phyloseq` and `Biostrings` in R
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code::
 
 	# install phyloseq within R - biocLite not working anymore, instead using BiocManager
 
@@ -40,7 +41,10 @@ Install phyloseq and Biostrings in R
 
 	BiocManager::install("Biostrings")
 
-	#### Alterantively - installing Dada2 within R
+Alterantively - installing `Dada2` within R:
+
+.. code::
+
 	# similarly you can install dada2 within R
 
 	if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -52,11 +56,12 @@ Install phyloseq and Biostrings in R
 Dada2 Tutorial
 --------------
 
-
 Dada2 tutorial can be found `here <https://benjjneb.github.io/dada2/tutorial.html>`_ : https://benjjneb.github.io/dada2/tutorial.html
 
 tutorial Data:
 https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
+
+.. code::
 
 	# download the tutorial data
 	cd /path/to/tutorial_data/directory # set a directory to store the tutorial data
@@ -67,6 +72,8 @@ Download Silva datasets. Curated for Dada2:
 
 Training taxonomy dataset for the tutorial. File location: https://zenodo.org/record/4587955/files/silva_nr99_v138.1_train_set.fa.gz?download=1
 
+.. code::
+
 	# download silva dataset for the tutorial
 	cd /path/to/data/directory # set a directory to store the data
 	wget https://zenodo.org/record/4587955/files/silva_nr99_v138.1_train_set.fa.gz?download=1 # grabs the file from the internet and downloads into the current directory
@@ -75,6 +82,8 @@ Training taxonomy dataset for the tutorial. File location: https://zenodo.org/re
 
 Species Dataset. File location: https://zenodo.org/record/4587955/files/silva_species_assignment_v138.1.fa.gz?download=1
 
+
+.. code::
 
 	# download silva species dataset for the tutorial
 	cd /path/to/data/directory # set a directory to store the data
