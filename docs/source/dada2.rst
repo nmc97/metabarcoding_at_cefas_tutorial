@@ -14,7 +14,7 @@ Installation
 
 Dada2 is an R package. One option for installing Dada2 in linux is to build a [Mamba](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html) environment. Some R packages can be install directly using [Mamba](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html). Others will need to be intstalled within R.
 
-Create a Mamba env:
+Create a Mamba environment:
 ^^^^^^^^^^^^^^^^^^^
 
 	mamba create -n dada2 r-essentials # setup a new environment and install r-essentials
