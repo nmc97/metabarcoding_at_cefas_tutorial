@@ -9,7 +9,7 @@ how to :ref:`What is metabarcoding?` the program.
 
 .. note::
 
-   This project is under active development.
+   This project is under active development
 
 Contents
 --------
