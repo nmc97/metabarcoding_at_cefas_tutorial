@@ -2,23 +2,41 @@
 Metabarcoding
 =============
 
+What is metabarcoding?
+======================
 
-Useful databases
-^^^^^^^^^^^^^^^^
+# insert description and/or links
 
-Choosing a
+Process:
+========
 
-- SILVA
-- PR2 - `18S database <https://pr2-database.org/>`_
+1. Set up experiment - keep the rest of the analysis in mind when setting up the experiment
 
-Cox-1 gene databases:
+  - choose a target sequence
 
-- `Automated high throughput animal CO1 metabarcoding classification <https://www.nature.com/articles/s41598-018-22505-4>`_
+2. sequencing
+
+  - note: Nanopore metabarcoding while produces longer sequences, the databases for assigning taxonomy to these sequences may be poor in comparison to other metabarcoding approaches
+
+3. Data archiving
+
+
+Quality Control: Read quality
+=============================
+
+Forward and reverse reads in MiSeq - can struggle on metabarcoding runs - low sequence diversity
+does better on forward than reverse reads - lower quality
+Decide if you should use reverse reads at all
+
+Overlapping reads - do they overlap enough? If not how do I include them
+
 
 OTU's ASV's
 ===========
 
-what are they
+Before deciding what clustering method to use it is important tto understand the different types of clusters that you may want to produce.
+
+[insert]
 
 Clustering
 ==========
@@ -42,7 +60,7 @@ Option: Visualise with `Pavian <https://github.com/fbreitwieser/pavian>`_
 
 **Considerations:**
 
-* Can miss uncharacterised species,
+* Can miss uncharacterised species
 * minimap alignments require filtering (parameters are questionable)
 
 2\. De novo Clustering strategy - defined threshold
@@ -74,14 +92,19 @@ Identify Chimeras
 5.  More abundant OTU's more likely to be real
 6.  OTU's for every library and them split
 
-Read quality
-============
+R
 
-Forward and reverse reads in MiSeq - can struggle on metabarcoding runs - low sequence diversity
-does better on forward than reverse reads - lower quality
-Decide if you should use reverse reads at all
+Useful databases
+=================
 
-Overlapping reads - do they overlap enough? If not how do I include them
+Choosing a database:
+
+- SILVA
+- PR2 - `18S database <https://pr2-database.org/>`_
+
+Cox-1 gene databases:
+
+- `Automated high throughput animal CO1 metabarcoding classification <https://www.nature.com/articles/s41598-018-22505-4>`_
 
 Statistics
 ==========
@@ -91,7 +114,7 @@ Phyloseq is good but is limited due to the developer
 Output files/ abundance file - try to have them in `.biom` format - relatively universal
 
 Alpha diversity
----------------
+^^^^^^^^^^^
 
 Measure of abundance of species
 
