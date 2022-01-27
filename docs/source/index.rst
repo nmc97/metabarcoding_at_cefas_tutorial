@@ -16,7 +16,9 @@ Contents
 
 .. toctree::
 
-   usage
+   metabarcoding-getting_started
    dada2
+   frogs
+   usage
    api
    test
