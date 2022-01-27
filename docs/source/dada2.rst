@@ -1,13 +1,20 @@
 Dada2
 =====
-`Divisive Amplicon Denoising Algorithm <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/>`_
+`Divisive Amplicon Denoising Algorithm <https://github.com/benjjneb/dada2>`_
 
 .. contents::
    :local:
    
-Background
-^^^^^^^^^^
+Background & Installation
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Dada2 is a widely used software for identifying ASV's in metabarcoding studies.
+
+Papers: 
+`DADA2: High resolution sample inference from Illumina amplicon data, Challahan et al. 2016, Nature Methods <DADA2: High resolution sample inference from Illumina amplicon data>`_
+`Bioconductor Workflow for Microbiome Data Analysis: from raw reads to community analyses, Challahan et al. 2016, F1000Research <https://f1000research.com/articles/5-1492`>_ (includes code)
+`Exact sequence variants should replace operational taxonomic units in marker-gene data analysis, Challahan et al. 2017, Nature <https://www.nature.com/articles/ismej2017119>`_ 
+`High-throughput amplicon sequencing of the full-length 16S rRNA gene with single-nucleotide resolution, Challahan et al. 2019, Nucleic acids rsearch 2019 <https://academic.oup.com/nar/article/47/18/e103/5527971>`_
 
 Installation
 ------------
@@ -20,38 +27,6 @@ Create a Mamba environment:
 	mamba create -n dada2 r-essentials # setup a new environment and install r-essentials
 	conda activate dada2 # activate the new environment
 	mamba  install bioconductor-dada2 # install dada2
-
-
-Install `phyloseq` and `Biostrings` in R
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code::
-
-	# install phyloseq within R - biocLite not working anymore, instead using BiocManager
-
-	if (!require("BiocManager", quietly = TRUE))
-		install.packages("BiocManager")
-
-	BiocManager::install("phyloseq")
-
-	# installing Biostrings
-
-	if (!requireNamespace("BiocManager", quietly = TRUE))
-		install.packages("BiocManager")
-
-	BiocManager::install("Biostrings")
-
-Alterantively - installing `Dada2` within R:
-
-.. code::
-
-	# similarly you can install dada2 within R
-
-	if (!requireNamespace("BiocManager", quietly = TRUE))
-		install.packages("BiocManager")
-
-	BiocManager::install("dada2")
-	# not tested by NC
 
 Dada2 Tutorial
 --------------
@@ -92,6 +67,41 @@ Species Dataset. File location: https://zenodo.org/record/4587955/files/silva_sp
 
 
 .. note:: Check that these downloadable datasets are up to date.
+
+Follow up Statistics:
+=====================
+
+Install `phyloseq` and `Biostrings` in R
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code::
+
+	# install phyloseq within R - biocLite not working anymore, instead using BiocManager
+
+	if (!require("BiocManager", quietly = TRUE))
+		install.packages("BiocManager")
+
+	BiocManager::install("phyloseq")
+
+	# installing Biostrings
+
+	if (!requireNamespace("BiocManager", quietly = TRUE))
+		install.packages("BiocManager")
+
+	BiocManager::install("Biostrings")
+
+Alterantively - installing `Dada2` within R:
+
+.. code::
+
+	# similarly you can install dada2 within R
+
+	if (!requireNamespace("BiocManager", quietly = TRUE))
+		install.packages("BiocManager")
+
+	BiocManager::install("dada2")
+	# not tested by NC
+
 
 ---
 Author: Nicola Coyle
