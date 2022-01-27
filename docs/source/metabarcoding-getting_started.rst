@@ -114,7 +114,7 @@ Phyloseq is good but is limited due to the developer
 Output files/ abundance file - try to have them in `.biom` format - relatively universal
 
 Alpha diversity
-^^^^^^^^^^^
+---------------
 
 Measure of abundance of species
 
@@ -125,7 +125,7 @@ Lots of metrics!
 - level of evenness - how evenly they split
 
 Normalising
-^^^^^^^^^^^
+-----------
 
 - accounting for sequencing depth before doing your analysis
 - subsample seq dataset
@@ -134,7 +134,7 @@ Normalising
     - accounts for sequencing depth twice
 
 Beta diversity
-^^^^^^^^^^^^^^
+--------------
 
 - unsupervised analysis (doesn't know which samples are in which group)
 - based on the abundance of these ...
@@ -145,7 +145,7 @@ Beta diversity
 
 
 Packages for statistics
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 Process - Dada2
 trimming, deduplicating, clustering
