@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'metabarcoding@cefas'
+copyright = '2022, Nicola Coyle'
+author = 'Nicola Coyle'
 
 release = '0.1'
 version = '0.1.0'
