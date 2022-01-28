@@ -14,6 +14,7 @@ Contents
 --------
 
 .. toctree::
+   :maxdepth: 2
 
    metabarcoding-getting_started
    dada2
