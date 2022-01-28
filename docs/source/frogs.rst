@@ -20,7 +20,7 @@ This requires first downloading a file which specifies dependencies : `frogs-con
 
 The file contains something like this [check if it has been updated before using]:
 
-.. code:: [yaml]
+.. code::
 
   channels:
     - conda-forge
@@ -77,7 +77,6 @@ Test installation:
 
 find the location of the frogs installaion and run test.sh
 
-..code::
 
 
 
