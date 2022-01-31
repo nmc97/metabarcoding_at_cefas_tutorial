@@ -1,7 +1,7 @@
 Frogs
 =====
 
-`FROGS <https://github.com/geraldinepascal/FROGS#installation>`_
+`FROGS (Find Rapidly Otus Galaxy Solution) <https://github.com/geraldinepascal/FROGS#installation>`_
 
 .. contents::
    :local:
@@ -67,22 +67,47 @@ The file contains something like this [check if it has been updated before using
 
 Once you have saved the frogs-conda-requirements.yaml, run these commands:
 
+note: the publisher recommends making an environment called `frogs@3.2.3`. This will make file locations more difficult to access due to the `@` symbol. Best to use frogs_3.2.3 instead.
+
 .. code::
 
-  mamba env create -n frogs@3.2.3 --file frogs-conda-requirements.yaml
+  mamba env create -n frogs_3.2.3 --file frogs-conda-requirements.yaml
   # activate your environment
-  conda activate frogs@3.2.3
+  conda activate frogs_3.2.3
 
 Test installation:
 
-find the location of the frogs installaion and run test.sh
+find the location of the frogs installaion ( likely will look like:/home/$Username/mambaforge/envs/frogs_3.2.3/share/FROGS-3.2.3/) and run test.sh (within test folder)
+
+.. code ::
+
+  cd $path_to_frogs/test/test.sh
+  sh test.sh ../ 1 2 res
+
+This resulted in an error because cutadapt has not been installed properly
+Similarly , swarm and emboss needed to be installed individually.
+
+.. code ::
+
+    mamba install cutadapt=2.10
+    mamba install swarm=3.10
+    mamba install emboss=6.6.0
+
+    # Or all three together :
+    mamba install cutadapt=2.10 swarm=3.10 emboss=6.6.0
+
+After installing `cutadapt`, `needleall` and `swarm` and rerunning `test.sh` the following output was shown:
+
+.. code::
 
 
 
+If you encounter a diffferent error, try to run the command that the program failed on. take a look at the output and see if you can decipher what went wrong. You can check the installation of each program by typing it into the command line separately, if you know it's name.
 
+Tutorial
+--------
 
-
-
+`tutorial <https://tutorials.migale.inra.fr/posts/frogs-16s/#:~:text=FROGS%20%5B%201%5D%20is%20a%20tool%20dedicated%20to,performed%20on%20the%20Migale%20cluster%20migale.jouy.inrae.fr%20and%20rstudio.migale.inrae.fr.>`_
 
 ---
 Author: Nicola Coyle

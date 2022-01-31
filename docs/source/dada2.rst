@@ -1,49 +1,64 @@
 Dada2
 =====
-`Divisive Amplicon Denoising Algorithm <https://github.com/benjjneb/dada2>`_
+`Dada2 - Divisive Amplicon Denoising Algorithm <https://github.com/benjjneb/dada2>`_
 
 .. contents::
    :local:
-   
+
 Background & Installation
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Dada2 is a widely used software for identifying ASV's in metabarcoding studies.
 
-Papers: 
+Papers:
+
 `DADA2: High resolution sample inference from Illumina amplicon data, Challahan et al. 2016, Nature Methods <DADA2: High resolution sample inference from Illumina amplicon data>`_
+
 `Bioconductor Workflow for Microbiome Data Analysis: from raw reads to community analyses, Challahan et al. 2016, F1000Research <https://f1000research.com/articles/5-1492`>_ (includes code)
-`Exact sequence variants should replace operational taxonomic units in marker-gene data analysis, Challahan et al. 2017, Nature <https://www.nature.com/articles/ismej2017119>`_ 
+
+`Exact sequence variants should replace operational taxonomic units in marker-gene data analysis, Challahan et al. 2017, Nature <https://www.nature.com/articles/ismej2017119>`_
+
 `High-throughput amplicon sequencing of the full-length 16S rRNA gene with single-nucleotide resolution, Challahan et al. 2019, Nucleic acids rsearch 2019 <https://academic.oup.com/nar/article/47/18/e103/5527971>`_
 
-Installation
-------------
+Installation with mamba
+-----------------------
 
-Dada2 is an R package. One option for installing Dada2 in linux is to build a [Mamba](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html) environment. Some R packages can be install directly using [Mamba](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html). Others will need to be intstalled within R.
+Dada2 is an R package. One option for installing Dada2 in linux is to build a `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_ environment. Some R packages can be install directly using `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_. Others will need to be intstalled within R.
 
 Create a Mamba environment:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code::
 
 	mamba create -n dada2 r-essentials # setup a new environment and install r-essentials
 	conda activate dada2 # activate the new environment
 	mamba  install bioconductor-dada2 # install dada2
 
+Alterantively - installing `Dada2` within R:
+
+.. code::
+
+	if (!requireNamespace("BiocManager", quietly = TRUE))
+		install.packages("BiocManager")
+
+	BiocManager::install("dada2")
+	# note: not tested by NC
+
 Dada2 Tutorial
---------------
+^^^^^^^^^^^^^^
 
 Dada2 tutorial can be found `here <https://benjjneb.github.io/dada2/tutorial.html>`_ : https://benjjneb.github.io/dada2/tutorial.html
 
-tutorial Data:
+Tutorial Data:
 https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
 
 .. code::
 
 	# download the tutorial data
 	cd /path/to/tutorial_data/directory # set a directory to store the tutorial data
-	wget https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip	
+	wget https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
 
 Download Silva datasets. Curated for Dada2:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------
 
 Training taxonomy dataset for the tutorial. File location: https://zenodo.org/record/4587955/files/silva_nr99_v138.1_train_set.fa.gz?download=1
 
@@ -90,17 +105,26 @@ Install `phyloseq` and `Biostrings` in R
 
 	BiocManager::install("Biostrings")
 
-Alterantively - installing `Dada2` within R:
+Dadaist2
+=========
 
-.. code::
+New : Wrapper - `Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>``_
 
-	# similarly you can install dada2 within R
+Installation
 
-	if (!requireNamespace("BiocManager", quietly = TRUE))
-		install.packages("BiocManager")
+.. code ::
 
-	BiocManager::install("dada2")
-	# not tested by NC
+  mamba create -n dadaist2
+  conda activate dadaist2
+  mamba install -y -c conda-forge -c bioconda dadaist2
+
+
+Usage
+
+.. code ::
+
+
+
 
 
 ---
