@@ -9,4 +9,4 @@ build:
 #    - pdf
 
 sphinx:
-  fail_on_warning: true
+  fail_on_warning: False
