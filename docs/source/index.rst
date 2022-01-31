@@ -14,10 +14,12 @@ Contents
 --------
 
 .. toctree::
+   :maxdepth: 2
 
    metabarcoding-getting_started
    dada2
    frogs
+   list_programs_resources
    usage
    api
    test
