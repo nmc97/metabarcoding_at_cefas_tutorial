@@ -187,8 +187,7 @@ Beta diversity
 Differential abundance
 ----------------------
 
-`Microbiome differential abundance methods produce different results across 38 datasets <https://www.nature.com/articles/s41467-022-28034-z>'_
-
+`Microbiome differential abundance methods produce different results across 38 datasets <https://www.nature.com/articles/s41467-022-28034-z>`_
 
 Packages for statistics
 -----------------------

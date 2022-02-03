@@ -108,7 +108,7 @@ Install `phyloseq` and `Biostrings` in R
 Dadaist2
 ^^^^^^^^
 
-New : Wrapper - `Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>``_
+New : Wrapper - `Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>`_
 
 Installation
 ------------

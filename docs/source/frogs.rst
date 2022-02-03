@@ -96,12 +96,6 @@ Similarly , swarm and emboss needed to be installed individually.
     # Or all three together :
     mamba install cutadapt=2.10 swarm=3.10 emboss=6.6.0
 
-After installing `cutadapt`, `needleall` and `swarm` and rerunning `test.sh` the following output was shown:
-
-.. code::
-
-
-
 If you encounter a diffferent error, try to run the command that the program failed on. take a look at the output and see if you can decipher what went wrong. You can check the installation of each program by typing it into the command line separately, if you know it's name.
 
 Tutorial
