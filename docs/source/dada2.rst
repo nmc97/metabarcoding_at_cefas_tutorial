@@ -84,10 +84,10 @@ Species Dataset. File location: https://zenodo.org/record/4587955/files/silva_sp
 .. note:: Check that these downloadable datasets are up to date.
 
 Follow up Statistics:
-=====================
+^^^^^^^^^^^^^^^^^^^^^
 
 Install `phyloseq` and `Biostrings` in R
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------------------
 
 .. code::
 
@@ -106,11 +106,12 @@ Install `phyloseq` and `Biostrings` in R
 	BiocManager::install("Biostrings")
 
 Dadaist2
-=========
+^^^^^^^^
 
 New : Wrapper - `Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>``_
 
 Installation
+------------
 
 .. code ::
 
@@ -118,13 +119,32 @@ Installation
   conda activate dadaist2
   mamba install -y -c conda-forge -c bioconda dadaist2
 
+  # additionally install from github
+  git clone https://github.com/quadram-institute-bioscience/dadaist2
 
 Usage
+-----
+
+note - file names must not starat with a number
+note 2 - can be run in POD using singularity and nextflow
+
+Tutorial: https://quadram-institute-bioscience.github.io/dadaist2/tutorial
 
 .. code ::
 
+dadaist2 -i data/16S/ -o example-output -d refs/SILVA_SSU_r138_2019.RData -t 8 -m metadata.tsv
 
+From tutorial:
 
+.. raw ::
+
+  Briefly:
+
+  -i points to the input directory containing paired end reads (by default recognised by _R1 and _R2 tags, but this can be customised)
+  -o is the output directory
+  -d is the reference database in DADA2 or DECIPHER format (we downloaded a DECIPHER database)
+  -m link to the metadata file (if not supplied a blank one will be generated and used)
+  -t is the number of processing threads
 
 
 ---
