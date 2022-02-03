@@ -14,9 +14,12 @@ Uses: `Metacoder: An R package for visualization and manipulation of community t
 
 Where to find in MicrobiomeAnalyst: `Data Upload > Data Inspection > Data Filter > Normalization > Analysis Overview > Heat Tree`
 
-.. topic :: pros and cons
+.. note ::
 
-  Con : cannot automate - but you can download the R scripts to endure you can trace back what you have done
+  pros and cons
+
+  Con : Cannot automate - but you can download the R scripts to ensure you can trace back what you have done
+
   Pros: Excellent when you don't use R and do not need to automate the output. Can be used directly after using Dadaist2 - outputs are supplied.
 
 Statistical anaylsis
@@ -33,3 +36,10 @@ Exploring functional implications of community structures:
 ----------------------------------------------------------
 
 `PICRUSt: Phylogenetic Investigation of Communities by Reconstruction of Unobserved States <http://picrust.github.io/picrust/>`_
+
+Taxonomy
+--------
+
+`indicspecies: multivariate-analysis-indicator-value <https://www.rdocumentation.org/packages/indicspecies/versions/1.7.9/topics/indicspecies-package>`_
+
+"This package provides a set of functions to assess the strength and statistical significance of the relationship between species occurrence/abundance and groups of sites. It is also possible to check the statistical significance of such associations."
