@@ -9,23 +9,16 @@ What is metabarcoding?
 General Process:
 ^^^^^^^^^^^^^^^^
 
-#Process - Dada2
-#trimming, deduplicating, clustering
-#chimeras
-#Taxon Id
-#Table of Abundances
-
 #. Set up experiment - keep the rest of the analysis in mind when setting up the experiment
-
-  - choose a target sequence
+Choose a target sequence
 
 #. Sequencing
 
-  - note: Nanopore metabarcoding while produces longer sequences, the databases for assigning taxonomy to these sequences may be poor in comparison to other metabarcoding approaches
+note: Nanopore metabarcoding while produces longer sequences, the databases for assigning taxonomy to these sequences may be poor in comparison to other metabarcoding approaches
 
 #. Data archiving
 
-  - Read files (fastq.gz, metadata)
+Read files (fastq.gz, metadata)
 
 #. Quality control
 
@@ -46,7 +39,9 @@ General Process:
 
  - Choose a database based on the organisms and target sequences you are working with
 
-x. https://www.nature.com/articles/s41467-022-28034-z
+#.  Abundance statistics - alpha and beta Metrics
+
+#. Differential abundance
 
 Quality Control: Read quality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -188,6 +183,12 @@ Beta diversity
 - It is normal to do a lot of normalising before this step
 
     - lots of different ways to do this
+
+Differential abundance
+----------------------
+
+`Microbiome differential abundance methods produce different results across 38 datasets <https://www.nature.com/articles/s41467-022-28034-z>'_
+
 
 Packages for statistics
 -----------------------

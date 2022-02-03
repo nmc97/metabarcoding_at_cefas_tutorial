@@ -20,6 +20,4 @@ Contents
    dada2
    frogs
    list_programs_resources
-   usage
    api
-   test

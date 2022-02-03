@@ -132,7 +132,7 @@ Tutorial: https://quadram-institute-bioscience.github.io/dadaist2/tutorial
 
 .. code ::
 
-dadaist2 -i data/16S/ -o example-output -d refs/SILVA_SSU_r138_2019.RData -t 8 -m metadata.tsv
+  dadaist2 -i data/16S/ -o example-output -d refs/SILVA_SSU_r138_2019.RData -t 8 -m metadata.tsv
 
 From tutorial:
 
