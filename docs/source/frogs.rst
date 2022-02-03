@@ -109,6 +109,21 @@ Tutorial
 
 `tutorial <https://tutorials.migale.inra.fr/posts/frogs-16s/#:~:text=FROGS%20%5B%201%5D%20is%20a%20tool%20dedicated%20to,performed%20on%20the%20Migale%20cluster%20migale.jouy.inrae.fr%20and%20rstudio.migale.inrae.fr.>`_
 
+
+
+Parameter Considerations
+------------------------
+
+SWARM - d
+^^^^^^^^^
+
+SWARM uses a parameter d to determine which sequences to add to a cluser. If a new sequence is d distance from an seqeunces in an existing cluster, the new sequence is added to this cluser. `d` is 1 by default.
+
+In `Ershova et al. 2021 <https://academic.oup.com/icesjms/article/78/9/3342/6360557#323435484>`_ they use `d = 13`:
+
+"Step-by-step clustering was performed in SWARM 2.1.13 (Mahé et al., 2015) using a distance value of d = 13 to cluster individual sequences into molecular operational taxonomic units (MOTUs). This distance value has previously been used to cluster similar datasets using the same COI fragment (e.g. Bakker et al., 2019; Antich et al., 2020; Atienza et al., 2020)."
+
+
 ---
 Author: Nicola Coyle
 25/01/2022
