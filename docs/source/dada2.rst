@@ -125,7 +125,8 @@ Installation
 Usage
 -----
 
-note - file names must not starat with a number
+note 1 - file names must not start with a number
+
 note 2 - can be run in POD using singularity and nextflow
 
 Tutorial: https://quadram-institute-bioscience.github.io/dadaist2/tutorial
@@ -145,7 +146,6 @@ From tutorial:
   -d is the reference database in DADA2 or DECIPHER format (we downloaded a DECIPHER database)
   -m link to the metadata file (if not supplied a blank one will be generated and used)
   -t is the number of processing threads
-
 
 ---
 Author: Nicola Coyle
