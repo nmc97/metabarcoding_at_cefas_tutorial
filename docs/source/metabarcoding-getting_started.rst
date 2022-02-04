@@ -9,39 +9,40 @@ What is metabarcoding?
 General Process:
 ^^^^^^^^^^^^^^^^
 
-#. Set up experiment - keep the rest of the analysis in mind when setting up the experiment
+1. Set up experiment
+Keep the rest of the analysis in mind when setting up the experiment
 Choose a target sequence
 
-#. Sequencing
+2. Sequencing
 
 note: Nanopore metabarcoding while produces longer sequences, the databases for assigning taxonomy to these sequences may be poor in comparison to other metabarcoding approaches
 
-#. Data archiving
+3. Data archiving
 
 Read files (fastq.gz, metadata)
 
-#. Quality control
+4. Quality control
 
- - trimming - remove low quality reads, adapters and trim low quality read ends.
- - deduplicating - removing reads which appear more than once in the dataset (reads can be overalappinga and highly similar but reads that are identical are redundant)
+- trimming - remove low quality reads, adapters and trim low quality read ends.
+- deduplicating - removing reads which appear more than once in the dataset (reads can be overalappinga and highly similar but reads that are identical are redundant)
 
-#. Clustering
+5. Clustering
 
-  - lots of different ways to do this.
-  - What types of clusters are you looking for? OUT's? ASV's?
-  - What type of data do you have? e.g: 16S, 18S, COI, long/short reads.
+- lots of different ways to do this.
+- What types of clusters are you looking for? OUT's? ASV's?
+- What type of data do you have? e.g.: 16S, 18S, COI, long/short reads.
 
-#. Check for chimeras
+6. Check for chimeras
 
-  - these are sequences which are atrifical
+- these are sequences which are artificial
 
-#. Classify Taxa
+7. Classify Taxa
 
- - Choose a database based on the organisms and target sequences you are working with
+- Choose a database based on the organisms and target sequences you are working with
 
-#.  Abundance statistics - alpha and beta Metrics
+8. Abundance statistics - alpha and beta Metrics
 
-#. Differential abundance
+9. Differential abundance Analysis
 
 Quality Control: Read quality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -54,17 +55,42 @@ Overlapping reads - do they overlap enough? If not how do I include them
 
 [insert]
 
+Programs to use: Fastqc, Trimmomatic, ??? what is standard in metabarcoding?
+
+.. note::
+
+  *Questions to consider:*
+
+  What type of reads do I have?
+  Will the forward and reverse reads (if paired) overlap?
+  What clustering method will I be using (some account for error in reads somewhat so trimming may be less necessary)
+  How many reads do I have?
+  What do the read quality checks tell me about the data quality?
+  After trimming/ filtering how many reads are there per sample.
+  Are there samples that need to be excluded from the rest of the analyses?
+
+
 Clustering
 ^^^^^^^^^^
 
-**OTU's ASV's**
+**OTU's vs ASV's**
 
-Before deciding what clustering method to use it is important tto understand the different types of clusters that you may want to produce.
+Before deciding what clustering method to use it is important to understand the different types of clusters that you may want to produce.
 
+*Definitions:*
 
-There are three types of algorithm for clustering metabarcoding reads into OTU's or ASV's:
+OTU = Operating Taxonomic Units
+ASV = Amplicon Sequence Variant
 
+See: `MICROBIOME INFORMATICS: OTU VS. ASV <https://www.zymoresearch.com/blogs/blog/microbiome-informatics-otu-vs-asv>`_
+
+**algorithms**
+
+There are three general types of algorithm for clustering metabarcoding reads into OTU's or ASV's:
+
+`Alignment based strategies <1\. Alignment-based strategy>`_
 `De novo clustering - threshold <2\. De novo Clustering strategy - defined threshold_>`_
+`De novo clustering - no threshold <3\. Clustering with guided clustering instead of thresholds>`_
 
 1\. Alignment-based strategy
 ----------------------------
@@ -85,14 +111,18 @@ Option: Visualise with `Pavian <https://github.com/fbreitwieser/pavian>`_
 
 2\. De novo Clustering strategy - defined threshold
 ---------------------------------------------------
+
 Picks a threshold at which to define a cluster - not really taxa arbitrary grouping
 
 Considerations:
-Been in use for a long time so well understood - used for a long time
-More parameters than alignment strategy so more complicated
+
+Been in use for a long time so this process is well understood
+
+There are more parameters than alignment strategy so the process is more complicated
 
 3\. Clustering with guided clustering instead of thresholds
 -----------------------------------------------------------
+
 Not as arbitrary as threshold-based analysis
 Accounts for sequencing errors
 
@@ -100,23 +130,27 @@ Accounts for sequencing errors
 * `SWARM <https://github.com/torognes/swarm>`_
 * `DADA2 <https://benjjneb.github.io/dada2/>`_
 
-Identify Chimeras
-^^^^^^^^^^^^^^^^^
+Identifying Chimeras
+^^^^^^^^^^^^^^^^^^^^
+[fill in]
 
-1.  What proportion foo the reads align to the reference?
+[notes
+1.  What proportion of the reads align to the reference?
 2.  Chimera could be 2 species you haven't seen before
 3.  Check OTU's individually
 4.  Check against reference
 5.  More abundant OTU's more likely to be real
-6.  OTU's for every library and them split
+6.  OTU's for every library and them split]
 
-Taxanomic assignment:
+
+Taxonomic assignment:
 ^^^^^^^^^^^^^^^^^^^^^
+[fill in]
 
 Useful databases
 ----------------
 
-Choosing a database ...
+Choosing a database ... [fill in]
 
 - SILVA
 - PR2 - `18S database <https://pr2-database.org/>`_
@@ -189,7 +223,19 @@ Differential abundance
 
 `Microbiome differential abundance methods produce different results across 38 datasets <https://www.nature.com/articles/s41467-022-28034-z>`_
 
-Packages for statistics
------------------------
+Recommended packages and pipelines:
+-----------------------------------
 
-Many ststistical packages in r for metabarcoding statistics use the package `vegan <http://vegan.r-forge.r-project.org/FAQ-vegan.html#What-is-vegan_003f>_`
+Depending on your skill level and needs for a given project the following packages and pipelines are Recommended:
+
+# Table showing which processes each does and the environment needed e.g. galaxy. command line or R.
+
+#
+DADA2
+Dadaist2
+FROGS
+PhyloSeq
+Microbiome R package
+MicrobiomeAnalyst
+Rhea
+Indecspecies

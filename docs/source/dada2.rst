@@ -14,7 +14,7 @@ Papers:
 
 `DADA2: High resolution sample inference from Illumina amplicon data, Challahan et al. 2016, Nature Methods <DADA2: High resolution sample inference from Illumina amplicon data>`_
 
-`Bioconductor Workflow for Microbiome Data Analysis: from raw reads to community analyses, Challahan et al. 2016, F1000Research <https://f1000research.com/articles/5-1492`>_ (includes code)
+`Bioconductor Workflow for Microbiome Data Analysis: from raw reads to community analyses, Challahan et al. 2016, F1000Research <https://f1000research.com/articles/5-1492>`_ (includes code)
 
 `Exact sequence variants should replace operational taxonomic units in marker-gene data analysis, Challahan et al. 2017, Nature <https://www.nature.com/articles/ismej2017119>`_
 
@@ -105,10 +105,16 @@ Install `phyloseq` and `Biostrings` in R
 
 	BiocManager::install("Biostrings")
 
-Dadaist2
-^^^^^^^^
+Dadaist2 - a command line wrapper for Dada2
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 New : Wrapper - `Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>`_
+
+.. note::
+
+  When to use:
+
+  If you like working within the command line instead of R, this could be ideal. Familiarity with Dada2 methods is necessary to ensure the parameters involved are correct for your data. It has many automatically generted outputs that may be very useful e.g. MicrobiomeAnalyst, phyloseq and Rhea input files, and very nice html log files. Rhea is incorporated into Dadaist2 so some statistical analysis can be conducted using this package. The only con is that there are a lot of scripts to become familiar with before the full potential of the pipeline is available to a user.
 
 Installation
 ------------
@@ -131,21 +137,28 @@ note 2 - can be run in POD using singularity and nextflow
 
 Tutorial: https://quadram-institute-bioscience.github.io/dadaist2/tutorial
 
+Minimal use case:
+
 .. code ::
 
   dadaist2 -i data/16S/ -o example-output -d refs/SILVA_SSU_r138_2019.RData -t 8 -m metadata.tsv
 
-From tutorial:
+  # Briefly:
 
-.. raw ::
+  # -i points to the input directory containing paired end reads (by default recognised by _R1 and _R2 tags, but this can be customised)
+  # -o is the output directory
+  # -d is the reference database in DADA2 or DECIPHER format (we downloaded a DECIPHER database)
+  # -m link to the metadata file (if not supplied a blank one will be generated and used)
+  # -t is the number of processing threads
 
-  Briefly:
+Plotting Taxonomy Dadaist2 vs PhyloSeq
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  -i points to the input directory containing paired end reads (by default recognised by _R1 and _R2 tags, but this can be customised)
-  -o is the output directory
-  -d is the reference database in DADA2 or DECIPHER format (we downloaded a DECIPHER database)
-  -m link to the metadata file (if not supplied a blank one will be generated and used)
-  -t is the number of processing threads
+Use script `dadaist2-taxplot` in Dadaist2
+
+`Notes on comparison <https://quadram-institute-bioscience.github.io/dadaist2/notes/6_Rscripts.html>`_
+`Phyloseq script <https://quadram-institute-bioscience.github.io/dadaist2/notes/plot.html>`_
+
 
 ---
 Author: Nicola Coyle
