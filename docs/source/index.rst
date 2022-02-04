@@ -17,7 +17,7 @@ Contents
    :maxdepth: 2
 
    metabarcoding-getting_started
-   Statistics
+   statistics
    dada2
    frogs
    list_programs_resources

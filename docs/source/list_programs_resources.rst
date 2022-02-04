@@ -68,7 +68,7 @@ Installation:
 
   BiocManager::install("microbiome")
 
-Tutorial: `tutorial pages <<https://microbiome.github.io/tutorials/>`_
+Tutorial: `tutorial pages <https://microbiome.github.io/tutorials/>`_
 
 .. note ::
 
@@ -105,9 +105,9 @@ Alpha Diversity
 ^^^^^^^^^^^^^^^
 `Comment in the Usearch Documentation <https://drive5.com/usearch/manual/alpha_diversity.html>`_
 
-`Comment in the PhyloSeq FAQ <https://www.bioconductor.org/packages/release/bioc/vignettes/phyloseq/inst/doc/phyloseq-FAQ.html#should-i-normalize-my-data-before-alpha-diversity-analysis)
+`Comment in the PhyloSeq FAQ <https://www.bioconductor.org/packages/release/bioc/vignettes/phyloseq/inst/doc/phyloseq-FAQ.html#should-i-normalize-my-data-before-alpha-diversity-analysis>`_
 
-`Paper discussing rarefaction of data <https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531)
+`Paper discussing rarefaction of data <https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531)>`_
 
 `Paper discussion rarefaction of data <https://onlinelibrary.wiley.com/doi/epdf/10.1046/j.1461-0248.2001.00230.x>`_
 
@@ -130,11 +130,11 @@ Different algorithms
 
 `Swarm Software <https://github.com/torognes/swarm>`_
 
-`USearch Software <https://drive5.com/usearch/manual/uparse_pipeline.html`_
+`USearch Software <https://drive5.com/usearch/manual/uparse_pipeline.html>`_
 
 Databases (lots of others)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 `PR2 database <https://github.com/pr2database/pr2database/releases>`_
 
-`Silvia database <https://www.arb-silva.de/)`_
+`Silvia database <https://www.arb-silva.de/>`_
