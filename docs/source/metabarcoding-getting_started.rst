@@ -91,8 +91,8 @@ Considerations:
 Been in use for a long time so well understood - used for a long time
 More parameters than alignment strategy so more complicated
 
-*3\. Clustering with guided clustering instead of thresholds*
--------------------------------------------------------------
+3\. Clustering with guided clustering instead of thresholds
+-----------------------------------------------------------
 Not as arbitrary as threshold-based analysis
 Accounts for sequencing errors
 
