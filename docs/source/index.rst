@@ -23,4 +23,5 @@ Contents
    dada2
    frogs
    list_programs_resources
+   glossary
    api
