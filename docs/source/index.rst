@@ -19,9 +19,10 @@ Contents
    :maxdepth: 2
 
    metabarcoding-getting_started
-   statistics
+   azure_vm
+   list_programs_resources
    dada2
    frogs
-   list_programs_resources
+   statistics
    glossary
    api
