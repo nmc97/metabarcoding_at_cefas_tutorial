@@ -26,6 +26,24 @@ Read files (fastq.gz, metadata)
 - trimming - remove low quality reads, adapters and trim low quality read ends.
 - deduplicating - removing reads which appear more than once in the dataset (reads can be overalappinga and highly similar but reads that are identical are redundant)
 
+e.g. in Dada2 tutorial
+
+.. code::
+
+  plotQualityProfile(fnFs[1:2]) # plot forward reads
+  plotQualityProfile(fnRs[1:2]) # plot reverse reads
+
+  # Place filtered files in filtered/ subdirectory
+  filtFs <- file.path(path, "filtered", paste0(sample.names, "_F_filt.fastq.gz"))
+  filtRs <- file.path(path, "filtered", paste0(sample.names, "_R_filt.fastq.gz"))
+  names(filtFs) <- sample.names
+  names(filtRs) <- sample.names
+
+  # decide to truncate forward reads at 240 and reverse reads at 160: truncLen=c(240,160)
+  out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(240,160),
+              maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
+              compress=TRUE, multithread=TRUE) # On Windows set multithread=FALSE
+
 5. Clustering
 
 - lots of different ways to do this.

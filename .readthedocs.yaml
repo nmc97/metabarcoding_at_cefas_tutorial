@@ -5,8 +5,8 @@ build:
   tools:
     python: "3.9"
 
-#formats:
-#    - pdf
+formats:
+    - pdf
 
 sphinx:
   fail_on_warning: False
