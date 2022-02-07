@@ -25,7 +25,8 @@ Read files (fastq.gz, metadata)
 
 - trimming - remove low quality reads, adapters and trim low quality read ends.
 - deduplicating - removing reads which appear more than once in the dataset (reads can be overalappinga and highly similar but reads that are identical are redundant)
- e.g.: in Dada2 tutorial
+
+e.g. in Dada2 tutorial
 
 .. code::
 
