@@ -9,6 +9,7 @@ As a starting point, check out the :doc:`metabarcoding-getting_started` section.
 .. note::
 
    This project is under active development.
+
    Please email `nicola.coyle@cefas.co.uk` with suggestions or queries.
 
 Contents
@@ -22,4 +23,5 @@ Contents
    dada2
    frogs
    list_programs_resources
+   glossary
    api

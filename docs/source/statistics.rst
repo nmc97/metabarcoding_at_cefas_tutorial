@@ -37,11 +37,20 @@ Additionally,
 
 
 
-alpha diversity
----------------
+Alpha Diversity
+^^^^^^^^^^^^^^^
 
+:term:`Alpha diversity`
+
+
+Beta Diversity
+^^^^^^^^^^^^^^
+
+:term:`Beta diversity`
+
+:term:`Bray Curtis distance`
 
 Differential Abundance
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
 `Analysis of microbial compositions: a review of normalization and differential abundance analysis <https://www.nature.com/articles/s41522-020-00160-w>`_
