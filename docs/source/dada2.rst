@@ -105,10 +105,12 @@ Install `phyloseq` and `Biostrings` in R
 
 	BiocManager::install("Biostrings")
 
-Dadaist2 - a command line wrapper for Dada2
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Dadaist2
+^^^^^^^^
 
-New : Wrapper - `Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>`_
+Dadaist2 is a command line wrapper for Dada2
+
+`Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>`_
 
 .. note::
 
