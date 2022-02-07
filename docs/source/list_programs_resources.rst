@@ -101,7 +101,7 @@ Papers, chapters and commentary:
 
 Author = David Ryder
 
-Alpha Diversity
+Testing Alpha Diversity
 ^^^^^^^^^^^^^^^
 `Comment in the Usearch Documentation <https://drive5.com/usearch/manual/alpha_diversity.html>`_
 
@@ -113,7 +113,7 @@ Alpha Diversity
 
 `Chapter on species richness / alpha diversity metrics / population estimates 2001 <http://www.uvm.edu/~ngotelli/manuscriptpdfs/Chapter%204.pdf>`_
 
-Beta Diversity
+Testing Beta Diversity
 ^^^^^^^^^^^^^^
 
 `Paper on normalisation prior to using beta diversity metrics <https://www.nature.com/articles/nmeth.2658>`_

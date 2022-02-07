@@ -178,8 +178,8 @@ Cox-1 gene databases:
 
 - `Automated high throughput animal CO1 metabarcoding classification <https://www.nature.com/articles/s41598-018-22505-4>`_
 
-Statistics
-^^^^^^^^^^
+Diversity Statistics
+^^^^^^^^^^^^^^^^^^^^
 
 Don't do this on POD
 
@@ -206,8 +206,8 @@ Resources:
 
 -
 
-Alpha diversity
----------------
+Metric 1 - Alpha diversity
+--------------------------
 
 Alpha diversity is a measure of species abundance in each sample, or all samples pooled.
 
@@ -221,8 +221,8 @@ Metrics:
 
 - Level of evenness - how evenly they split
 
-Beta diversity
---------------
+Metric 2 - Beta diversity
+-------------------------
 
 - Unsupervised analysis (doesn't know which samples are in which group)
 
@@ -236,8 +236,8 @@ Beta diversity
 
     - lots of different ways to do this
 
-Differential abundance
-----------------------
+Measuring Differential abundance
+--------------------------------
 
 `Microbiome differential abundance methods produce different results across 38 datasets <https://www.nature.com/articles/s41467-022-28034-z>`_
 

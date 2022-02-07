@@ -6,8 +6,8 @@ Frogs
 .. contents::
    :local:
 
-Background & Installation
--------------------------
+Frogs - Background & Installation
+---------------------------------
 
 Frogs is a comprehensive pipeline for metabarcoding work. Users can run it within the command line or use galaxy to launch a graphical user interface.
 It is designed to work regradless of the level of overlap of forward and reverse reads.
