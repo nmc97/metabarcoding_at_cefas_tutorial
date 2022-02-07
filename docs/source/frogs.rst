@@ -82,7 +82,7 @@ find the location of the frogs installaion ( likely will look like:/home/$Userna
 .. code ::
 
   cd $path_to_frogs/test/test.sh
-  sh test.sh ../ 1 2 res
+  sh  test.sh ../ 1 2 res
 
 This resulted in an error because cutadapt has not been installed properly
 Similarly , swarm and emboss needed to be installed individually.
