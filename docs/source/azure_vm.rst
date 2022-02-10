@@ -16,3 +16,8 @@ Command-line
 ^^^^^^^^^^^^
 
 If you would like to stick to the command line, we would recommend using either :ref:`Dada2` or :ref:`Dadaist2`, depending on how comfortable you are with each program.
+
+
+---
+Author: Nicola Coyle, David Ryder
+25/01/2022

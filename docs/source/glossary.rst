@@ -14,5 +14,9 @@ Glossary
     Beta Diversity
 
   Galaxy
-    Galaxy 
+    Galaxy
 
+
+---
+Author: Nicola Coyle
+25/01/2022

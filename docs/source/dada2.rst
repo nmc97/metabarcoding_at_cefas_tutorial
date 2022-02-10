@@ -5,8 +5,8 @@ Dada2
 .. contents::
    :local:
 
-Background & Installation
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Dada2 - Background & Installation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Dada2 is a widely used software for identifying ASV's in metabarcoding studies.
 
@@ -33,7 +33,7 @@ Create a Mamba environment:
 	conda activate dada2 # activate the new environment
 	mamba  install bioconductor-dada2 # install dada2
 
-Alterantively - installing `Dada2` within R:
+Alternatively - installing `Dada2` within R:
 
 .. code::
 
