@@ -5,8 +5,8 @@ Dada2
 .. contents::
    :local:
 
-Background & Installation
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Dada2 - Background & Installation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Dada2 is a widely used software for identifying ASV's in metabarcoding studies.
 
@@ -33,7 +33,7 @@ Create a Mamba environment:
 	conda activate dada2 # activate the new environment
 	mamba  install bioconductor-dada2 # install dada2
 
-Alterantively - installing `Dada2` within R:
+Alternatively - installing `Dada2` within R:
 
 .. code::
 
@@ -105,10 +105,12 @@ Install `phyloseq` and `Biostrings` in R
 
 	BiocManager::install("Biostrings")
 
-Dadaist2 - a command line wrapper for Dada2
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Dadaist2
+^^^^^^^^
 
-New : Wrapper - `Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>`_
+Dadaist2 is a command line wrapper for Dada2
+
+`Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>`_
 
 .. note::
 

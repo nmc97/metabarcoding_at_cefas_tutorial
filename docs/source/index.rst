@@ -26,3 +26,7 @@ Contents
    statistics
    glossary
    api
+
+---
+Author: Nicola Coyle
+25/01/2022

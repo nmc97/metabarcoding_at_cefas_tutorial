@@ -6,8 +6,8 @@ Frogs
 .. contents::
    :local:
 
-Background & Installation
--------------------------
+Frogs - Background & Installation
+---------------------------------
 
 Frogs is a comprehensive pipeline for metabarcoding work. Users can run it within the command line or use galaxy to launch a graphical user interface.
 It is designed to work regradless of the level of overlap of forward and reverse reads.
@@ -81,29 +81,40 @@ find the location of the frogs installaion ( likely will look like:/home/$Userna
 
 .. code ::
 
-  cd $path_to_frogs/test/test.sh
-  sh  test.sh ../ 1 2 res
+  cd $path_to_frogs/test/test.sh # for me path_to_frogs was in /home/nc07/mambaforge/envs/frogs@3.2.3/share/FROGS-3.2.3/test
+  sh test.sh ../ 1 2 res
+
+  msub -I -q S30 -l procs=12,walltime=3:00:00
 
 This resulted in an error because cutadapt has not been installed properly
 Similarly , swarm and emboss needed to be installed individually.
 
 .. code ::
 
-    mamba install cutadapt=2.10
-    mamba install swarm=3.10
-    mamba install emboss=6.6.0
+  mamba install cutadapt=2.10
+  mamba install swarm=3.10
+  mamba install emboss=6.6.0
 
-    # Or all three together :
-    mamba install cutadapt=2.10 swarm=3.10 emboss=6.6.0
+  # Or all three together :
+  mamba install cutadapt=2.10 swarm=3.10 emboss=6.6.0
 
-If you encounter a diffferent error, try to run the command that the program failed on. take a look at the output and see if you can decipher what went wrong. You can check the installation of each program by typing it into the command line separately, if you know it's name.
+Error - R error
+
+.. code ::
+
+  ## Quitting from lines 63-134 (phyloseq_import_data.Rmd)
+  Error: package or namespace load failed for 'phyloseq' in dyn.load(file, DLLpath = DLLpath, ...):
+  unable to load shared object '/home/nc07/mambaforge/envs/frogs@3.2.3/lib/R/library/rhdf5/libs/rhdf5.so':
+  libcrypto.so.1.1: cannot open shared object file: No such file or directory
+
+  Execution halted
+
+If you encounter a different error, try to run the command that the program failed on. take a look at the output and see if you can decipher what went wrong. You can check the installation of each program by typing it into the command line separately, if you know it's name.
 
 Tutorial
 --------
 
 `tutorial <https://tutorials.migale.inra.fr/posts/frogs-16s/#:~:text=FROGS%20%5B%201%5D%20is%20a%20tool%20dedicated%20to,performed%20on%20the%20Migale%20cluster%20migale.jouy.inrae.fr%20and%20rstudio.migale.inrae.fr.>`_
-
-
 
 Parameter Considerations
 ------------------------
@@ -111,12 +122,11 @@ Parameter Considerations
 SWARM - d
 ^^^^^^^^^
 
-SWARM uses a parameter d to determine which sequences to add to a cluser. If a new sequence is d distance from an seqeunces in an existing cluster, the new sequence is added to this cluser. `d` is 1 by default.
+SWARM uses a parameter d to determine which sequences to add to a cluster. If a new sequence is d distance from an sequences in an existing cluster, the new sequence is added to this cluser. `d` is 1 by default.
 
 In `Ershova et al. 2021 <https://academic.oup.com/icesjms/article/78/9/3342/6360557#323435484>`_ they use `d = 13`:
 
 "Step-by-step clustering was performed in SWARM 2.1.13 (Mahé et al., 2015) using a distance value of d = 13 to cluster individual sequences into molecular operational taxonomic units (MOTUs). This distance value has previously been used to cluster similar datasets using the same COI fragment (e.g. Bakker et al., 2019; Antich et al., 2020; Atienza et al., 2020)."
-
 
 ---
 Author: Nicola Coyle

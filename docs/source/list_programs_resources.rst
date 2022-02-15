@@ -27,6 +27,10 @@ Where to find in MicrobiomeAnalyst: `Data Upload > Data Inspection > Data Filter
   The drawbacks are that you cannot automate the process and you loose some control over the details.
   However, you can download the R scripts to ensure you can trace back what you have done.
 
+pipelines
+---------
+
+`micca <https://micca.readthedocs.io/en/latest/index.html>`_
 
 Statistical analysis
 --------------------
@@ -101,8 +105,9 @@ Papers, chapters and commentary:
 
 Author = David Ryder
 
-Alpha Diversity
-^^^^^^^^^^^^^^^
+Testing Alpha Diversity
+^^^^^^^^^^^^^^^^^^^^^^^
+
 `Comment in the Usearch Documentation <https://drive5.com/usearch/manual/alpha_diversity.html>`_
 
 `Comment in the PhyloSeq FAQ <https://www.bioconductor.org/packages/release/bioc/vignettes/phyloseq/inst/doc/phyloseq-FAQ.html#should-i-normalize-my-data-before-alpha-diversity-analysis>`_
@@ -113,8 +118,8 @@ Alpha Diversity
 
 `Chapter on species richness / alpha diversity metrics / population estimates 2001 <http://www.uvm.edu/~ngotelli/manuscriptpdfs/Chapter%204.pdf>`_
 
-Beta Diversity
-^^^^^^^^^^^^^^
+Testing Beta Diversity
+^^^^^^^^^^^^^^^^^^^^^^
 
 `Paper on normalisation prior to using beta diversity metrics <https://www.nature.com/articles/nmeth.2658>`_
 
@@ -138,3 +143,7 @@ Databases (lots of others)
 `PR2 database <https://github.com/pr2database/pr2database/releases>`_
 
 `Silvia database <https://www.arb-silva.de/>`_
+
+---
+Author: Nicola Coyle
+25/01/2022

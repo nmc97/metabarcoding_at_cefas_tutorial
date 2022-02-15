@@ -30,12 +30,7 @@ The major drawback of this approach is loss of data. "Despite its current popula
 
 Additionally,
 
-
-
 `Benchmarking microbiome transformations favors experimental quantitative approaches to address compositionality and sampling depth biases <https://www.nature.com/articles/s41467-021-23821-6>`_
-
-
-
 
 Alpha Diversity
 ^^^^^^^^^^^^^^^
@@ -54,3 +49,7 @@ Differential Abundance
 ^^^^^^^^^^^^^^^^^^^^^^
 
 `Analysis of microbial compositions: a review of normalization and differential abundance analysis <https://www.nature.com/articles/s41522-020-00160-w>`_
+
+---
+Author: Nicola Coyle
+25/01/2022

@@ -13,15 +13,40 @@ General Process:
 Keep the rest of the analysis in mind when setting up the experiment
 Choose a target sequence
 
+.. note::
+
+  *Questions to consider:*
+
+  What kind of organisms do I want to find (prokaryotic, eukaryotic etc.)
+
+Papers:
+
+`Non-specific amplification compromises 2 environmental DNA metabarcoding with COI <https://besjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/2041-210X.13276>`_
+
+
 2. Sequencing
 
-note: Nanopore metabarcoding while produces longer sequences, the databases for assigning taxonomy to these sequences may be poor in comparison to other metabarcoding approaches
+What sequencing platform is available and most appropriate for the study?
+
+note: Nanopore metabarcoding allows for longer sequences to be produced, but the databases for assigning taxonomy to these sequences may be poor in comparison to other metabarcoding approaches.
 
 3. Data archiving
 
 Read files (fastq.gz, metadata)
 
-4. Quality control
+4. Quality control - reads
+
+- First step: view read metrics using fastqc and multiqc
+
+.. code::
+
+  # run fastqc in read file directory
+  fastqc * -o fastqc  # output files can be found in ./fastqc/
+  # run multqc.
+  multiqc  fastqc/* -o multiqc # summarises fastqc files into one interactive file
+
+  # if you have a big dataset you may need to use --interactive to force multiqc to make an interactive report:
+  multiqc  fastqc/* -o multiqc --interactive
 
 - trimming - remove low quality reads, adapters and trim low quality read ends.
 - deduplicating - removing reads which appear more than once in the dataset (reads can be overalappinga and highly similar but reads that are identical are redundant)
@@ -148,6 +173,10 @@ Accounts for sequencing errors
 * `SWARM <https://github.com/torognes/swarm>`_
 * `DADA2 <https://benjjneb.github.io/dada2/>`_
 
+Papers of interest:
+
+'Minimum entropy decomposition: Unsupervised oligotyping for sensitive partitioning of high-throughput marker gene sequences <https://www.nature.com/articles/ismej2014195>`_
+
 Identifying Chimeras
 ^^^^^^^^^^^^^^^^^^^^
 [fill in]
@@ -160,10 +189,12 @@ Identifying Chimeras
 5.  More abundant OTU's more likely to be real
 6.  OTU's for every library and them split]
 
-
 Taxonomic assignment:
 ^^^^^^^^^^^^^^^^^^^^^
 [fill in]
+
+Papers:
+`Identifying accurate metagenome and amplicon software via a meta-analysis of sequence to taxonomy benchmarking studies <https://peerj.com/articles/6160/>`_
 
 Useful databases
 ----------------
@@ -174,19 +205,19 @@ Choosing a database ... [fill in]
 - PR2 - `18S database <https://pr2-database.org/>`_
 
 Cox-1 gene databases:
-- costom database: `DUFA <github.com/uit-metabarcoding/DUFA>`_ : `Paper <https://academic.oup.com/icesjms/article/78/9/3342/6360557#323435484>`_
+- Custom database: `DUFA <github.com/uit-metabarcoding/DUFA>`_ : `Paper <https://academic.oup.com/icesjms/article/78/9/3342/6360557#323435484>`_
 
 - `Automated high throughput animal CO1 metabarcoding classification <https://www.nature.com/articles/s41598-018-22505-4>`_
 
-Statistics
-^^^^^^^^^^
+Diversity Statistics
+^^^^^^^^^^^^^^^^^^^^
 
 Don't do this on POD
 
 Phyloseq is good but is limited due to the developer
+`FAQ <https://www.bioconductor.org/packages/release/bioc/vignettes/phyloseq/inst/doc/phyloseq-FAQ.html#should-i-normalize-my-data-before-alpha-diversity-analysis>`_
 
 Output files/ abundance file - try to have them in `.biom` format - relatively universal
-
 
 Normalising
 -----------
@@ -206,8 +237,8 @@ Resources:
 
 -
 
-Alpha diversity
----------------
+Metric 1 - Alpha diversity
+--------------------------
 
 Alpha diversity is a measure of species abundance in each sample, or all samples pooled.
 
@@ -221,8 +252,8 @@ Metrics:
 
 - Level of evenness - how evenly they split
 
-Beta diversity
---------------
+Metric 2 - Beta diversity
+-------------------------
 
 - Unsupervised analysis (doesn't know which samples are in which group)
 
@@ -236,8 +267,8 @@ Beta diversity
 
     - lots of different ways to do this
 
-Differential abundance
-----------------------
+Measuring Differential abundance
+--------------------------------
 
 `Microbiome differential abundance methods produce different results across 38 datasets <https://www.nature.com/articles/s41467-022-28034-z>`_
 
@@ -257,3 +288,8 @@ Microbiome R package
 MicrobiomeAnalyst
 Rhea
 Indecspecies
+
+
+---
+Author: Nicola Coyle, David Ryder
+25/01/2022
