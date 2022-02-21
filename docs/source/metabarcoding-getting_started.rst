@@ -6,6 +6,21 @@ What is metabarcoding?
 
 # insert description and/or links
 
+Recommended reading:
+--------------------
+
+`The Madness of Microbiome: Attempting To Find Consensus “Best Practice” for 16S Microbiome Studies <https://journals.asm.org/doi/10.1128/AEM.02627-17>`_
+
+*Notes:*
+
+Reviews process of metabarcoding from sample collection onwards.
+
+`Optimizing methods and dodging pitfalls in microbiome research <https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0267-5>`_
+
+*Notes*
+
+Setting up your study
+
 General Process:
 ^^^^^^^^^^^^^^^^
 
@@ -48,8 +63,14 @@ Read files (fastq.gz, metadata)
   # if you have a big dataset you may need to use --interactive to force multiqc to make an interactive report:
   multiqc  fastqc/* -o multiqc --interactive
 
-- trimming - remove low quality reads, adapters and trim low quality read ends.
-- deduplicating - removing reads which appear more than once in the dataset (reads can be overalappinga and highly similar but reads that are identical are redundant)
+- Read trimming - remove low quality reads, adapters and truncate reads.
+
+  Programs
+  - Dada2 (see below)
+  - `Trimmomatic <http://www.usadellab.org/cms/?page=trimmomatic>`_
+  - `fastp <https://github.com/OpenGene/fastp>`_
+
+# - deduplicating - removing reads which appear more than once in the dataset (reads can be overlapping and highly similar but reads that are identical are redundant)
 
 e.g. in Dada2 tutorial
 
