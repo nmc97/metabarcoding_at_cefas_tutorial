@@ -41,7 +41,6 @@ Alternatively - installing `Dada2` within R:
 		install.packages("BiocManager")
 
 	BiocManager::install("dada2")
-	# note: not tested by NC
 
 Dada2 Tutorial
 ^^^^^^^^^^^^^^
@@ -129,6 +128,11 @@ Installation
 
   # additionally install from github
   git clone https://github.com/quadram-institute-bioscience/dadaist2
+
+  # replace r curl version and reinstall PhyloSeq
+  # Rcurl Version: 1.98-1.5
+
+  uninstall.packages(RCurl)
 
 Usage
 -----
