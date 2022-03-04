@@ -9,4 +9,4 @@ formats:
     - pdf
 
 sphinx:
-  fail_on_warning: False
+  fail_on_warning: True
