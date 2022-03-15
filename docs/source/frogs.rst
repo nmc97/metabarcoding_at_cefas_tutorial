@@ -13,7 +13,7 @@ Frogs is a comprehensive pipeline for metabarcoding work. Users can run it withi
 It is designed to work regardless of the level of overlap of forward and reverse reads.
 
 Installation on command-line:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Install using mamba:
 This requires first downloading a file which specifies dependencies : `frogs-conda-requirements.yaml <https://github.com/geraldinepascal/FROGS/blob/master/frogs-conda-requirements.yaml>`_
