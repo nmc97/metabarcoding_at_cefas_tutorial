@@ -80,7 +80,27 @@ Species Dataset. File location: https://zenodo.org/record/4587955/files/silva_sp
 	mv silva_species_assignment_v138.1.fa.gz?download=1 silva_species_assignment_v138.1.fa.gz # renames the file to remove "?download=1"
 
 
-.. note:: Check that these downloadable datasets are up to date.
+.. note:: Check that these downloadable datasets are up to date before downloading!
+
+DADA2 Usage
+^^^^^^^^^^^
+
+optional: Before using Dada2 you can do some quality testing suing fastqc and multiqc. See script `metabarcoding_qc.sh`
+
+To start using Dada2 on POD, start an interactive session. Navigate to a working directory, activate dada2 conda environment, and start R.
+
+.. code::
+
+  msub -I -q S30 -l procs=12,walltime=6:00:00 # change depending on what yo think you need.
+
+  conda activate dada2
+
+  cd /path/to/project/folder
+
+  # start R
+  R
+
+Once in R you can follow the script `run_dada2.R`.
 
 Follow up Statistics:
 ^^^^^^^^^^^^^^^^^^^^^
@@ -103,6 +123,11 @@ Install `phyloseq` and `Biostrings` in R
 		install.packages("BiocManager")
 
 	BiocManager::install("Biostrings")
+
+
+Alternative tutorial:
+^^^^^^^^^^^^^^^^^^^^^
+https://replikation.github.io/bioinformatics_side/metagenome/metabarcoding/
 
 Dadaist2
 ^^^^^^^^
@@ -139,7 +164,7 @@ Usage
 
 note 1 - file names must not start with a number
 
-note 2 - can be run in POD using singularity and nextflow
+note 2 - can be run in POD using singularity and Nextflow
 
 Tutorial: https://quadram-institute-bioscience.github.io/dadaist2/tutorial
 

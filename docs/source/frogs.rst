@@ -10,10 +10,10 @@ Frogs - Background & Installation
 ---------------------------------
 
 Frogs is a comprehensive pipeline for metabarcoding work. Users can run it within the command line or use galaxy to launch a graphical user interface.
-It is designed to work regradless of the level of overlap of forward and reverse reads.
+It is designed to work regardless of the level of overlap of forward and reverse reads.
 
-Installation on commandline:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installation on command-line:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Install using mamba:
 This requires first downloading a file which specifies dependencies : `frogs-conda-requirements.yaml <https://github.com/geraldinepascal/FROGS/blob/master/frogs-conda-requirements.yaml>`_
@@ -81,33 +81,20 @@ find the location of the frogs installaion ( likely will look like:/home/$Userna
 
 .. code ::
 
-  cd $path_to_frogs/test/test.sh # for me path_to_frogs was in /home/nc07/mambaforge/envs/frogs@3.2.3/share/FROGS-3.2.3/test
+  cd $path_to_frogs/test # for me path_to_frogs was in /home/nc07/mambaforge/envs/frogs@3.2.3/share/FROGS-3.2.3/test
+  cd /home/nc07/mambaforge/envs/frogs@3.2.3/share/FROGS-3.2.3/test
+
   sh test.sh ../ 1 2 res
 
-  msub -I -q S30 -l procs=12,walltime=3:00:00
-
 This resulted in an error because cutadapt has not been installed properly
-Similarly , swarm and emboss needed to be installed individually.
+Similarly, swarm and emboss needed to be installed individually. In addition openssl need to be downgraded.
 
 .. code ::
 
   mamba install cutadapt=2.10
   mamba install swarm=3.10
   mamba install emboss=6.6.0
-
-  # Or all three together :
-  mamba install cutadapt=2.10 swarm=3.10 emboss=6.6.0
-
-Error - R error
-
-.. code ::
-
-  ## Quitting from lines 63-134 (phyloseq_import_data.Rmd)
-  Error: package or namespace load failed for 'phyloseq' in dyn.load(file, DLLpath = DLLpath, ...):
-  unable to load shared object '/home/nc07/mambaforge/envs/frogs@3.2.3/lib/R/library/rhdf5/libs/rhdf5.so':
-  libcrypto.so.1.1: cannot open shared object file: No such file or directory
-
-  Execution halted
+  mamba install openssl=1.1.1m
 
 If you encounter a different error, try to run the command that the program failed on. take a look at the output and see if you can decipher what went wrong. You can check the installation of each program by typing it into the command line separately, if you know it's name.
 

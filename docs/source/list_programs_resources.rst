@@ -27,10 +27,16 @@ Where to find in MicrobiomeAnalyst: `Data Upload > Data Inspection > Data Filter
   The drawbacks are that you cannot automate the process and you loose some control over the details.
   However, you can download the R scripts to ensure you can trace back what you have done.
 
-pipelines
+Pipelines
 ---------
 
 `micca <https://micca.readthedocs.io/en/latest/index.html>`_
+
+"micca (MICrobial Community Analysis) is a software pipeline for the processing of amplicon sequencing data, from raw sequences to OTU tables, taxonomy classification and phylogenetic tree inference. The pipeline can be applied to a range of highly conserved genes/spacers, such as 16S rRNA gene, Internal Transcribed Spacer (ITS) 18S and 28S rRNA. micca is an open-source, GPLv3-licensed software."
+
+`nf-core ampliseq <https://github.com/nf-core/ampliseq>`_
+
+"nfcore/ampliseq is a bioinformatics analysis pipeline used for amplicon sequencing, supporting denoising of any amplicon and, currently, taxonomic assignment of 16S, ITS and 18S amplicons. Supported is paired-end Illumina or single-end Illumina, PacBio and IonTorrent data. Default is the analysis of 16S rRNA gene amplicons sequenced paired-end with Illumina."
 
 Statistical analysis
 --------------------
