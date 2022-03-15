@@ -4,7 +4,7 @@ Metabarcoding
 What is metabarcoding?
 ^^^^^^^^^^^^^^^^^^^^^^
 
-# insert description and/or links
+# [insert description and/or links]
 
 Recommended reading:
 --------------------
