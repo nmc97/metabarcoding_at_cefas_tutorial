@@ -89,18 +89,16 @@ optional: Before using Dada2 you can do some quality testing suing fastqc and mu
 
 To start using Dada2 on POD, start an interactive session. Navigate to a working directory, activate dada2 conda environment, and start R.
 
-``` bash 
+.. code::
 
-msub -I -q S30 -l procs=12,walltime=6:00:00 # change depending on what yo think you need.
+  msub -I -q S30 -l procs=12,walltime=6:00:00 # change depending on what yo think you need.
 
-conda activate dada2
+  conda activate dada2
 
-cd /path/to/project/folder
+  cd /path/to/project/folder
 
-# start R
-R
-
-```
+  # start R
+  R
 
 Once in R you can follow the script `run_dada2.R`.
 
