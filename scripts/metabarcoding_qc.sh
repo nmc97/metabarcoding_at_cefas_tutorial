@@ -13,15 +13,15 @@
 ##=================================================================================#
 
 # uses fastqc and multiqc so create a mamba environment with these programs
-mamba create -n fastqc fastqc MultiQC
+# mamba create -n fastqc fastqc MultiQC
 # check they both work and them proceed
 
 # start interactive session (alterantively run a job)
-msub -I -q S30 -l procs=12,walltime=1:00:00 # change depending on what yo think you need.
+msub -I -q S30 -l procs=12,walltime=3:00:00 # change depending on what yo think you need.
 
 conda activate fastqc
 
-cd /path/to/directory/containing/read/files
+cd /path/to/directory/containing/read/files ##change_me
 
 fastqc *.fastq.gz -t 12 # runs fastqc on all fastq.gz n current directory
 mkdir fastqc_out

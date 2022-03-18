@@ -12,7 +12,7 @@ Dada2 is a widely used software for identifying ASV's in metabarcoding studies.
 
 Papers:
 
-`DADA2: High resolution sample inference from Illumina amplicon data, Challahan et al. 2016, Nature Methods <DADA2: High resolution sample inference from Illumina amplicon data>`_
+`DADA2: High resolution sample inference from Illumina amplicon data, Challahan et al. 2016, Nature Methods <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/>`_
 
 `Bioconductor Workflow for Microbiome Data Analysis: from raw reads to community analyses, Challahan et al. 2016, F1000Research <https://f1000research.com/articles/5-1492>`_ (includes code)
 
