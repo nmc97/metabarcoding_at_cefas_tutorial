@@ -21,6 +21,8 @@ Reviews process of metabarcoding from sample collection onwards.
 
 Setting up your study
 
+`https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0267-5`
+
 General Process:
 ^^^^^^^^^^^^^^^^
 
