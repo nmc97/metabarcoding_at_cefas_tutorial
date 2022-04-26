@@ -108,7 +108,7 @@ names(derep_reverse) <- sample.names
 # Forward
 dadaFs <- dada(derep_forward, err=errF, multithread=TRUE)
 # Reverse
-dadaFs <- dada(derep_reverse, err=errF, multithread=TRUE)
+dadaRs <- dada(derep_reverse, err=errR, multithread=TRUE)
 
 # merged paired read data
 mergers <- mergePairs(dadaFs, filtFs, dadaRs, filtRs, verbose=TRUE)
@@ -129,7 +129,7 @@ seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE
 dim(seqtab.nochim) # check size of data.frame
 sum(seqtab.nochim)/sum(seqtab) # check proportion of reads are left after chimeras removed
 
-write.table(seqtab.nochim, file = paste(outpath,"/taxa_with_bootstraps.tsv",sep=""),sep="\t",row.names=F)
+write.table(seqtab.nochim, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=F)
 
 #=========================#
 # track reads
@@ -144,7 +144,7 @@ getN <- function(x) sum(getUniques(x))
 
 # Combine filtering, dada2, and chimera removal data into one dataframe
 # If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
-track <- cbind(out, sapply(dadaFs, getN), rowSums(seqtab.nochim))
+track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), rowSums(seqtab.nochim))
 colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nonchim")
 rownames(track) <- sample.names
 head(track) # check output
@@ -162,6 +162,8 @@ write.table(track, paste(outpath,"/track_reads.tsv", sep=""), sep="\t")
 # dataset - SILVA:
 # taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "/path/to/ref/dataset/silva_nr99_v138.1_train_set.fa.gz", outputBootstraps=TRUE, multithread=TRUE) ##change_me
 # taxa_all <- taxa_with_bootstraps$taxa
+# optionally add species:
+# taxa_species <- addSpecies(taxa_with_bootstraps$taxa, "/home/nc07/projects/metabarcoding/programs/dada2/silva_species_assignment_v132.fa.gz")
 
 # dataset - Pr2:
 # must define taxlevels for Pr2

@@ -4,7 +4,10 @@ Metabarcoding
 What is metabarcoding?
 ^^^^^^^^^^^^^^^^^^^^^^
 
-# [insert description and/or links]
+Getting started:
+
+` <researchgate.net/publication/323790595_DNA_Barcoding_Bioinformatics_Workflows_for_Beginners>_`
+
 
 Recommended reading:
 --------------------
@@ -20,6 +23,8 @@ Reviews process of metabarcoding from sample collection onwards.
 *Notes*
 
 Setting up your study
+
+`https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0267-5`
 
 General Process:
 ^^^^^^^^^^^^^^^^
