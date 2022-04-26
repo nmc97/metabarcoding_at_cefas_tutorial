@@ -150,13 +150,25 @@ Installation
   mamba create -n dadaist2
   conda activate dadaist2
   mamba install -y -c conda-forge -c bioconda dadaist2
+  mamba install bioconductor-dada2=1.20
 
-  # additionally install from github
+**Additionally install from github**
+Navigate to the directory that has been made for the new envrionment:
+`cd /path/to/conda/environment/dadaist2/directory`
+eg:
+
+.. code::
+  $ whereis dadaist2
+  dadaist2: /home/nc07/mambaforge/envs/dadaist2/bin/dadaist2
+  $ cd /home/nc07/mambaforge/envs/dadaist2/bin/
+
+  # install from github
   git clone https://github.com/quadram-institute-bioscience/dadaist2
 
-  # replace r curl version and reinstall PhyloSeq
-  # Rcurl Version: 1.98-1.5
+replace r curl version and reinstall PhyloSeq # why ..?
+Rcurl Version: 1.98-1.5
 
+.. code ::
   uninstall.packages(RCurl)
 
 Usage

@@ -6,7 +6,6 @@ What is metabarcoding?
 
 Getting started:
 
-` <researchgate.net/publication/323790595_DNA_Barcoding_Bioinformatics_Workflows_for_Beginners>_`
 
 
 Recommended reading:
