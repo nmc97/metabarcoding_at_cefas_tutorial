@@ -44,6 +44,7 @@ cd /path/to/conda/environment/dadaist2/directory
 git clone https://github.com/quadram-institute-bioscience/dadaist2
 ```
 
+# why did I do this last tie ??not replacted
 replace r curl version and reinstall PhyloSeq
 Rcurl Version: 1.98-1.5
 
