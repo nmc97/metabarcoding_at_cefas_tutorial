@@ -13,7 +13,7 @@
 ##=================================================================================#
 
 # uses fastqc and multiqc so create a mamba environment with these programs
-# create a conda environment with: mamba create -n fastqc fastqc MultiQC
+# create a conda environment with: `mamba create -n fastqc fastqc MultiQC`
 # check both programs work and then proceed
 
 # start interactive session (alterantively run a job)

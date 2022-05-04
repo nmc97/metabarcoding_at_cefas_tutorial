@@ -158,6 +158,7 @@ Navigate to the directory that has been made for the new envrionment:
 eg:
 
 .. code::
+
   $ whereis dadaist2
   dadaist2: /home/nc07/mambaforge/envs/dadaist2/bin/dadaist2
   $ cd /home/nc07/mambaforge/envs/dadaist2/bin/
@@ -169,6 +170,7 @@ replace r curl version and reinstall PhyloSeq # why ..?
 Rcurl Version: 1.98-1.5
 
 .. code ::
+
   uninstall.packages(RCurl)
 
 Usage

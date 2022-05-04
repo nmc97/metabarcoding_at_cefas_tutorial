@@ -2,7 +2,7 @@
 ##
 ## Rscript to run dada2
 ##
-## Expects demultiplexed reads stored in a single folder
+## Expects demultiplexed reads stored in a single folder (path)
 ##
 ## Author: Nicola Coyle, Diana Minardi, David Ryder?
 ## Institution: Cefas
@@ -268,29 +268,27 @@ if(tax_file_species != ''){write.table(taxa_species, file = paste(outpath,"/taxa
 print(paste("Taxa species table written to file ", paste(outpath,"/taxa.species.tsv", sep=""),sep=""))
 
 # create files to go into MicrobiomeAnalyst
+if(MicrobiomeAnalyst==TRUE){
+  MA_outpath<-paste(outpath,"/MicrobiomeAnalyst",sep="")
+  if (file.exists(MA_outpath)) {
+  cat("Output directory already exists")
+  } else {
+  dir.create(MA_outpath)
+  cat("Output directory created")
+  }
 
-if (file.exists(outpath)) {
- cat("Output directory already exists")
-} else {
- dir.create(outpath)
- cat("Output directory created")
+  ma_seqtab.nochim<- tibble::rownames_to_column(as.data.frame(t(seqtab.nochim)), "#NAME")
+  write.table(ma_seqtab.nochim, file = paste(MA_outpath,"/asv_table.MA.dada2.csv",sep=""),sep=",",row.names=F, quote=F)
+
+  ma_taxa_all<- tibble::rownames_to_column(as.data.frame((taxa_all)), "#TAXONOMY")
+  write.table(ma_taxa_all, file = paste(MA_outpath,"/taxa.MA.csv",sep=""),sep=",",row.names=F, quote=F, na = "")
+  print(paste("Taxa table written to file ", paste(MA_outpath,"/taxa.MA.csv", sep=""),sep=""))
+  # Only write to a species file if a species reference dataset was provided:
+  if(tax_file_species != ''){
+    ma_taxa_species<- tibble::rownames_to_column(as.data.frame((taxa_species)), "#TAXONOMY")
+    write.table(ma_taxa_species, file = paste(MA_outpath,"/taxa.species.MA.csv",sep=""),sep=",",row.names=F, quote=F, na = "")
+    print(paste("Taxa species table written to file ", paste(MA_outpath,"/taxa.species.MA.tsv", sep=""),sep=""))
+  }
 }
-
-ma_seqtab.nochim<- tibble::rownames_to_column(as.data.frame(t(seqtab.nochim)), "#NAME")
-write.table(ma_seqtab.nochim, file = paste(outpath,"/asv_table.MA.dada2.csv",sep=""),sep=",",row.names=F, quote=F)
-
-ma_taxa_with_bootstraps<- tibble::rownames_to_column(as.data.frame((taxa_with_bootstraps)), "#TAXONOMY")
-write.table(ma_taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.MA.csv",sep=""),sep=",",row.names=F, quote=F, na = "")
-print(paste("Taxa bootstrap table written to file ", paste(outpath,"/taxa_with_bootstraps.MA.csv", sep=""),sep=""))
-ma_taxa_all<- tibble::rownames_to_column(as.data.frame((taxa_all)), "#TAXONOMY")
-write.table(ma_taxa_all, file = paste(outpath,"/taxa.MA.csv",sep=""),sep=",",row.names=F, quote=F, na = "")
-print(paste("Taxa table written to file ", paste(outpath,"/taxa.MA.csv", sep=""),sep=""))
-# Only write to a species file if a species reference dataset was provided:
-if(tax_file_species != ''){
-  ma_taxa_species<- tibble::rownames_to_column(as.data.frame((taxa_species)), "#TAXONOMY")
-  write.table(ma_taxa_species, file = paste(outpath,"/taxa.species.MA.csv",sep=""),sep=",",row.names=F, quote=F, na = "")
-  print(paste("Taxa species table written to file ", paste(outpath,"/taxa.species.MA.tsv", sep=""),sep=""))
-}
-
 
 print(done)
