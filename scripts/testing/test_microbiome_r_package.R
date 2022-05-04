@@ -10,7 +10,7 @@
 ##======================================================##
 
 #================================================#
-# Install libraries 
+# Install libraries
 #================================================#
 
 # Install microbiome
@@ -22,8 +22,8 @@ install.packages("devtools")
 devtools::install_github("microsud/microbiomeutilities")
 
 # load libraries
-library(microbiome) 
-library(microbiomeutilities) 
+library(microbiome)
+library(microbiomeutilities)
 
 #================================================#
 # Importing standard formats (CSV, Mothur, BIOM)
@@ -46,7 +46,7 @@ pseq3 <- read_phyloseq(otu.file, taxonomy.file, metadata.file, type = "biom")
 #================================================#
 
 # Data citation doi: 10.1038/ncomms5344
-data(atlas1006) 
+data(atlas1006)
 print(atlas1006)
 
 # Data citation doi: 10.1038/ncomms7342
@@ -63,13 +63,13 @@ print(names(peerj32))
 
 # https://microbiome.github.io/tutorials/Preprocessing.html
 
-data(atlas1006)   
+data(atlas1006)
 # Rename the example data (which is a phyloseq object)
 pseq <- atlas1006
 
 summarize_phyloseq(pseq)
 
-# metadata extract 
+# metadata extract
 meta <- meta(pseq)
 
 # taxtable extract
@@ -101,7 +101,7 @@ kable(head(df))
 # sample sums function - how many OTU per sample
 s <- sample_sums(pseq)
 
-# look for specific taxa  
+# look for specific taxa
 head(abundances(pseq)["Akkermansia",])
 abundances(pseq)[1:10,1:10]
 
@@ -111,7 +111,7 @@ pseq.subset <- subset_samples(pseq, nationality == "AFR")
 # pseq
 sample_variables(pseq)
 
-# get values for first variable 
+# get values for first variable
 head(get_variable(pseq, sample_variables(pseq)[1]))
 
 # Calculate diversity for samples
@@ -134,7 +134,7 @@ taxa  <- taxa(pseq)        # Taxa names at the analysed level
 #Subset taxa
 pseq.bac <- subset_taxa(pseq, Phylum == "Bacteroidetes")
 #Prune (select) taxa:
-  
+
 # List of Genera in the Bacteroideted Phylum
 taxa <- map_levels(NULL, "Phylum", "Genus", pseq)$Bacteroidetes
 
@@ -168,7 +168,7 @@ taxa_names(ps)[1:2]
 ps <- microbiome::add_besthit(ps)
 taxa_names(ps)[1:2]
 
-# 
+#
 pseq.rarified <- rarefy_even_depth(pseq)
 
 #==
@@ -189,35 +189,35 @@ pseq2 <- merge_phyloseq(pseq, sample_data(df))
 # data cleaning
 #================================================#
 
-# load data: 
+# load data:
 ps <- zackular2014
 
 # summarise data
 microbiome::summarize_phyloseq(ps)
 
-# OTU table  
+# OTU table
 otu_tab <- microbiome::abundances(ps)
-# check 
+# check
 otu_tab[1:5,1:5] # for my table show me [1 to 5 rows, 1 to 5 columns]
 
 # Taxonomy table
 tax_tab <- phyloseq::tax_table(ps)
-# check 
+# check
 tax_tab[1:5,1:5] # for my table show me [1 to 5 otu ids, 1 to 5 first five ranks]
 
-# accessing the OTUids 
+# accessing the OTUids
 taxa_names(ps)[1:5] # print first 5 ids
 
 # find and substitute
-taxa_names(ps) <- gsub(taxa_names(ps), pattern = "d__", replacement = "")  
+taxa_names(ps) <- gsub(taxa_names(ps), pattern = "d__", replacement = "")
 
 # Check again Taxonomy table
 phyloseq::tax_table(ps)[1:3,1:3] # check for my table show me [1 to 3 otu ids, 1 to 3 first three ranks].
 
 # find and substitute
-taxa_names(ps) <- gsub(taxa_names(ps), pattern = "denovo", replacement = "OTU-")  
+taxa_names(ps) <- gsub(taxa_names(ps), pattern = "denovo", replacement = "OTU-")
 
-# extending gsub to entire table 
+# extending gsub to entire table
 tax_table(ps)[, colnames(tax_table(ps))] <- gsub(tax_table(ps)[, colnames(tax_table(ps))],     pattern = "[a-z]__", replacement = "")
 
 colnames(tax_table(ps))
@@ -227,7 +227,7 @@ taxa_names(ps) <- paste0("ASV", seq(ntaxa(ps)))
 
 
 # remove asterisk
-tax_table(ps)[,colnames(tax_table(ps))] <- gsub(tax_table(ps)[,colnames(tax_table(ps))],pattern="[*]",replacement="") # notice here the square brackets. These are required when special characters such as * and ~ below are used as they have functional role in R base programming. 
+tax_table(ps)[,colnames(tax_table(ps))] <- gsub(tax_table(ps)[,colnames(tax_table(ps))],pattern="[*]",replacement="") # notice here the square brackets. These are required when special characters such as * and ~ below are used as they have functional role in R base programming.
 
 # remove ~
 tax_table(ps)[,colnames(tax_table(ps))] <- gsub(tax_table(ps)[,colnames(tax_table(ps))],pattern="[~]",replacement="")
@@ -239,7 +239,7 @@ tax_table(ps)[tax_table(ps) == "c__<empty>"] <- ""
 tax_table(ps)[tax_table(ps) == "o__<empty>"] <- ""
 tax_table(ps)[tax_table(ps) == "f__<empty>"] <- ""
 tax_table(ps)[tax_table(ps) == "g__<empty>"] <- ""
-# some more ambiguities 
+# some more ambiguities
 tax_table(ps)[tax_table(ps) == "o__Unknown_Order"] <- ""
 tax_table(ps)[tax_table(ps) == "c__Unknown_Class"] <- ""
 tax_table(ps)[tax_table(ps) == "f__Unknown_Family"] <- ""
@@ -256,17 +256,7 @@ taxa_names(ps) <- gsub(" ", ".", taxa_names(ps))
 # change [name] to name
 taxa_names(ps) <- gsub("\\[|\\]", "", taxa_names(ps))
 
-# change - to . 
+# change - to .
 taxa_names(ps) <- gsub("-", ".", taxa_names(ps))
 
-# 
-
-
-
-
-
-
-
-
-
-
+#
