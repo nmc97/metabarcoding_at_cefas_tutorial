@@ -58,6 +58,8 @@ rm.phix <- TRUE
 compress <- TRUE
 multithread <- TRUE  # On Windows set multithread=FALSE
 
+MicrobiomeAnalyst <- TRUE
+
 #=========================#
 # setup directories and files
 #=========================#

@@ -144,7 +144,7 @@ getN <- function(x) sum(getUniques(x))
 
 # Combine filtering, dada2, and chimera removal data into one dataframe
 # If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
-track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), rowSums(seqtab.nochim))
+track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(merged, getN), rowSums(seqtab.nochim))
 colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nonchim")
 rownames(track) <- sample.names
 head(track) # check output
@@ -163,13 +163,13 @@ write.table(track, paste(outpath,"/track_reads.tsv", sep=""), sep="\t")
 # taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "/path/to/ref/dataset/silva_nr99_v138.1_train_set.fa.gz", outputBootstraps=TRUE, multithread=TRUE) ##change_me
 # taxa_all <- taxa_with_bootstraps$taxa
 # optionally add species:
-# taxa_species <- addSpecies(taxa_with_bootstraps$taxa, "/home/nc07/projects/metabarcoding/programs/dada2/silva_species_assignment_v132.fa.gz")
+# taxa_species <- addSpecies(taxa_with_bootstraps$taxa, "/path/to/ref/dataset/silva_species_assignment_v132.fa.gz")
 
 # dataset - Pr2:
 # must define taxlevels for Pr2
-taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "/path/to/ref/dataset/pr2_version_4.14.0_SSU_dada2.fasta.gz", taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"), outputBootstraps=TRUE, multithread=TRUE) ##change_me
-taxa_all <- taxa_with_bootstraps$taxa
+#taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "/path/to/ref/dataset/pr2_version_4.14.0_SSU_dada2.fasta.gz", taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"), outputBootstraps=TRUE, multithread=TRUE) ##change_me
+#taxa_all <- taxa_with_bootstraps$tax
 
 # write to files
 write.table(taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.tsv",sep=""),sep="\t",row.names=F)
-write.table(taxa, file = paste(outpath,"/taxa.tsv",sep=""),sep="\t",row.names=F)
+write.table(taxa_all, file = paste(outpath,"/taxa.tsv",sep=""),sep="\t",row.names=F)

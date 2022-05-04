@@ -85,7 +85,7 @@ Species Dataset. File location: https://zenodo.org/record/4587955/files/silva_sp
 DADA2 Usage
 ^^^^^^^^^^^
 
-optional: Before using Dada2 you can do some quality testing suing fastqc and multiqc. See script `metabarcoding_qc.sh`
+**Optional:** Before using Dada2 you can do some quality testing suing fastqc and multiqc. See script `<https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/metabarcoding_qc.sh>`_
 
 To start using Dada2 on POD, start an interactive session. Navigate to a working directory, activate dada2 conda environment, and start R.
 
@@ -100,7 +100,7 @@ To start using Dada2 on POD, start an interactive session. Navigate to a working
   # start R
   R
 
-Once in R you can follow the script `run_dada2.R <https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R>`.
+Once in R you can follow the script `run_dada2.R <https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R>`_.
 
 Follow up Statistics:
 ^^^^^^^^^^^^^^^^^^^^^
