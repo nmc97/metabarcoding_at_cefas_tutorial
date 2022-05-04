@@ -12,13 +12,18 @@
 ##
 ##=================================================================================#
 
-
 #=========================#
 # Prerequisites
 # - DADA2
 # - dplyr
 #=========================#
 
+#=========================#
+# load libraries
+#=========================#
+
+library(dada2)
+library(dplyr)
 
 #=========================#
 # Set paths and parameters here
@@ -51,14 +56,7 @@ maxEE <- 2
 truncQ <- 2
 rm.phix <- TRUE
 compress <- TRUE
-multithread <- TRUE
-
-#=========================#
-# load libraries
-#=========================#
-
-library(dada2)
-library(dplyr)
+multithread <- TRUE  # On Windows set multithread=FALSE
 
 #=========================#
 # setup directories and files
@@ -110,17 +108,15 @@ if(filter_reads ==TRUE){
   if(forward == FALSE){filtRs <- file.path(path, "filtered", paste0(sample.names, "_R_filt.fastq.gz")) # reverse reads
   names(filtRs) <- sample.names}
 
-  # Action required: Change trunclen=c(xx,xx) to match what you want to truncate your forward and reverse reads to. ##change_me
-  # this will create a directory called filtered in the read directory and filter reads are placed there.
+  # check filter and trim parameters !
+  # this function will create a directory called "filtered" in the read directory
   if(forward == FALSE){
-    print(paste("Filtering and trimming paired reads using parameters: filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=",trimLeft,", truncLen=",truncLen,", maxN=",maxN,", maxEE=",maxEE,", truncQ=",truncQ,", rm.phix=",rm.phix,", compress=",compress,", multithread=",multithread,")", sep=""))
-    print(paste("Filtered reads can be found in directory: ",path, "/filtered",sep=""))
-    out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=trimLeft, truncLen=truncLen, maxN=maxN, maxEE=maxEE, truncQ=truncQ, rm.phix=rm.phix, compress=compress, multithread=multithread) # On Windows set multithread=FALSE
+    out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=trimLeft, truncLen=truncLen, maxN=maxN, maxEE=maxEE, truncQ=truncQ, rm.phix=rm.phix, compress=compress, multithread=multithread)
   } else {
-    print(paste("Filtering and trimming forward reads using parameters: filterAndTrim(fnFs, filtFs, trimLeft=",trimLeft,", truncLen=",truncLen,", maxN=",maxN,", maxEE=",maxEE,", truncQ=",truncQ,", rm.phix=",rm.phix,", compress=",compress,", multithread=",multithread,")", sep=""))
-    print(paste("Filtered reads can be found in directory: ",path, "/filtered",sep=""))
-    out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=trimLeft, truncLen=truncLen, maxN=maxN, maxEE=maxEE, truncQ=truncQ, rm.phix=rm.phix, compress=compress, multithread=multithread) # On Windows set multithread=FALSE
+    out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=trimLeft, truncLen=truncLen, maxN=maxN, maxEE=maxEE, truncQ=truncQ, rm.phix=rm.phix, compress=compress, multithread=multithread)
   }
+
+  print(paste("Filtered reads can be found in directory: ",path, "/filtered",sep=""))
 
   print("Review percentage of lost reads:")
   print(as.data.frame(out) %>% mutate(pc.reads.lost=(((reads.in-reads.out)/reads.in)*100)))
@@ -209,8 +205,6 @@ dim(seqtab.nochim) # check size of data.frame
 sum(seqtab.nochim)/sum(seqtab) # check proportion of reads are left after chimeras removed
 
 write.table(seqtab.nochim, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
-ma_seqtab.nochim<- tibble::rownames_to_column(as.data.frame(t(seqtab.nochim)), "#NAME")
-write.table(ma_seqtab.nochim, file = paste(outpath,"/asv_table.MA.dada2.tsv",sep=""),sep="\t",row.names=F)
 
 #=========================#
 # track reads
@@ -273,17 +267,30 @@ print(paste("Taxa table written to file ", paste(outpath,"/taxa.tsv", sep=""),se
 if(tax_file_species != ''){write.table(taxa_species, file = paste(outpath,"/taxa.species.tsv",sep=""),sep="\t",row.names=T)}
 print(paste("Taxa species table written to file ", paste(outpath,"/taxa.species.tsv", sep=""),sep=""))
 
-ma_taxa_with_bootstraps<- tibble::rownames_to_column(as.data.frame(t(taxa_with_bootstraps)), "#NAME")
-write.table(ma_taxa_with_bootstraps, file = paste(outpath,"/asv_table.MA.dada2.tsv",sep=""),sep="\t",row.names=F)
+# create files to go into MicrobiomeAnalyst
 
-write.table(taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.tsv",sep=""),sep="\t",row.names=T)
-print(paste("Taxa bootstrap table written to file ", paste(outpath,"/taxa_with_bootstraps.tsv", sep=""),sep=""))
-write.table(taxa_all, file = paste(outpath,"/taxa.tsv",sep=""),sep="\t",row.names=T)
-print(paste("Taxa table written to file ", paste(outpath,"/taxa.tsv", sep=""),sep=""))
+if (file.exists(outpath)) {
+ cat("Output directory already exists")
+} else {
+ dir.create(outpath)
+ cat("Output directory created")
+}
+
+ma_seqtab.nochim<- tibble::rownames_to_column(as.data.frame(t(seqtab.nochim)), "#NAME")
+write.table(ma_seqtab.nochim, file = paste(outpath,"/asv_table.MA.dada2.csv",sep=""),sep=",",row.names=F, quote=F)
+
+ma_taxa_with_bootstraps<- tibble::rownames_to_column(as.data.frame((taxa_with_bootstraps)), "#TAXONOMY")
+write.table(ma_taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.MA.csv",sep=""),sep=",",row.names=F, quote=F, na = "")
+print(paste("Taxa bootstrap table written to file ", paste(outpath,"/taxa_with_bootstraps.MA.csv", sep=""),sep=""))
+ma_taxa_all<- tibble::rownames_to_column(as.data.frame((taxa_all)), "#TAXONOMY")
+write.table(ma_taxa_all, file = paste(outpath,"/taxa.MA.csv",sep=""),sep=",",row.names=F, quote=F, na = "")
+print(paste("Taxa table written to file ", paste(outpath,"/taxa.MA.csv", sep=""),sep=""))
 # Only write to a species file if a species reference dataset was provided:
-if(tax_file_species != ''){write.table(taxa_species, file = paste(outpath,"/taxa.species.tsv",sep=""),sep="\t",row.names=T)}
-print(paste("Taxa species table written to file ", paste(outpath,"/taxa.species.tsv", sep=""),sep=""))
-
+if(tax_file_species != ''){
+  ma_taxa_species<- tibble::rownames_to_column(as.data.frame((taxa_species)), "#TAXONOMY")
+  write.table(ma_taxa_species, file = paste(outpath,"/taxa.species.MA.csv",sep=""),sep=",",row.names=F, quote=F, na = "")
+  print(paste("Taxa species table written to file ", paste(outpath,"/taxa.species.MA.tsv", sep=""),sep=""))
+}
 
 
 print(done)

@@ -100,7 +100,7 @@ To start using Dada2 on POD, start an interactive session. Navigate to a working
   # start R
   R
 
-Once in R you can follow the script `run_dada2.R`.
+Once in R you can follow the script `run_dada2.R <https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R>`.
 
 Follow up Statistics:
 ^^^^^^^^^^^^^^^^^^^^^
