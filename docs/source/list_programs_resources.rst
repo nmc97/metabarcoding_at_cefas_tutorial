@@ -44,6 +44,7 @@ Statistical analysis
 `PhyloSeq <https://micca.readthedocs.io/en/latest/phyloseq.html>`_
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+`<Shiny-phyloseq: Web application for interactive microbiome analysis with provenance tracking <https://academic.oup.com/bioinformatics/article/31/2/282/2365643>`_
 
 
 `Rhea <https://lagkouvardos.github.io/Rhea/>`_ - statistical methods package for R

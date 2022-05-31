@@ -140,7 +140,7 @@ Dadaist2 is a command line wrapper for Dada2
 
   When to use:
 
-  If you like working within the command line instead of R, this could be ideal. Familiarity with Dada2 methods is necessary to ensure the parameters involved are correct for your data. It has many automatically generted outputs that may be very useful e.g. MicrobiomeAnalyst, phyloseq and Rhea input files, and very nice html log files. Rhea is incorporated into Dadaist2 so some statistical analysis can be conducted using this package. The only con is that there are a lot of scripts to become familiar with before the full potential of the pipeline is available to a user.
+  If you like working within the command line instead of R, this could be ideal. Familiarity with Dada2 methods is necessary to ensure the parameters involved are correct for your data. It has many automatically generted outputs that may be very useful e.g. MicrobiomeAnalyst, phyloseq and Rhea input files, and very nice html log files. Rhea is incorporated into Dadaist2 so some statistical analysis can be conducted using this package.
 
 Installation
 ------------
@@ -153,34 +153,29 @@ Installation
   mamba install bioconductor-dada2=1.20
 
 **Additionally install from github**
-Navigate to the directory that has been made for the new envrionment:
+Navigate to the directory that has been made for the new environment:
 `cd /path/to/conda/environment/dadaist2/directory`
 eg:
 
 .. code::
 
-  $ whereis dadaist2
-  dadaist2: /home/nc07/mambaforge/envs/dadaist2/bin/dadaist2
-  $ cd /home/nc07/mambaforge/envs/dadaist2/bin/
-
-  # install from github
-  git clone https://github.com/quadram-institute-bioscience/dadaist2
-
-replace r curl version and reinstall PhyloSeq # why ..?
-Rcurl Version: 1.98-1.5
-
-.. code ::
-
-  uninstall.packages(RCurl)
+  $ whereis dadaist2 # finds where the command is located
+  dadaist2: /home/username/mambaforge/envs/dadaist2/bin/dadaist2
+  $ cd /home/username/mambaforge/envs/dadaist2/bin/ # navigate to that directory
+  $ git clone https://github.com/quadram-institute-bioscience/dadaist2 # install from github
 
 Usage
 -----
 
-note 1 - file names must not start with a number
+Note - File names must not start with a number
 
-note 2 - can be run in POD using singularity and Nextflow
+You can follow a tutorial and view documentation here: https://quadram-institute-bioscience.github.io/dadaist2/tutorial
+Download github code to access test data:
 
-Tutorial: https://quadram-institute-bioscience.github.io/dadaist2/tutorial
+.. code ::
+
+  git clone https://github.com/quadram-institute-bioscience/dadaist2
+  cd dadaist2
 
 Minimal use case:
 
@@ -195,6 +190,36 @@ Minimal use case:
   # -d is the reference database in DADA2 or DECIPHER format (we downloaded a DECIPHER database)
   # -m link to the metadata file (if not supplied a blank one will be generated and used)
   # -t is the number of processing threads
+
+Note: Can be run in POD using singularity and Nextflow
+
+More extensive example:
+
+.. code::
+
+  conda activate dadaist2 # not sure y the other one didn't work
+
+  cd /home/user/path/to/project/directory/
+
+  # make a metadata file if one has not already been made
+  dadaist2-metadata -i /home/user/path/to/project/directory/
+
+  dadaist2 \
+  -input-directory /home/user/path/to/read/directory/ \
+  -output-directory /home/user/path/to/read/directory/output \
+  -database /home/nc07/path/to/database/silva_nr99_v138.1_train_set.fa.gz \
+  -threads 12 \
+  -for-tag _L001_R1_001.fastq.gz -rev-tag _L001_R2_001.fastq.gz \
+  -trunc-len-1 250 \
+  -trunc-len-2 0 \
+  -maxee1 2 \
+  -maxee2 2 \
+  -verbose
+
+  dadaist2-exporter -i /home/user/path/to/read/directory/output
+  dadaist2-mqc-report  -i /home/user/path/to/read/directory/output  -o /home/user/path/to/read/directory/output/multiqc
+  dadaist2-normalize  -i /home/user/path/to/read/directory/output/MetagenomeAnalyist -o OUTDIR
+
 
 Plotting Taxonomy Dadaist2 vs PhyloSeq
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
