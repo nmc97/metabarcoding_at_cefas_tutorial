@@ -204,20 +204,26 @@ More extensive example:
   # make a metadata file if one has not already been made
   dadaist2-metadata -i /home/user/path/to/project/directory/
 
+  # main command - check parameters
   dadaist2 \
   -input-directory /home/user/path/to/read/directory/ \
   -output-directory /home/user/path/to/read/directory/output \
   -database /home/nc07/path/to/database/silva_nr99_v138.1_train_set.fa.gz \
+  -metadata /home/user/path/to/metadatafile.csv \
   -threads 12 \
-  -for-tag _L001_R1_001.fastq.gz -rev-tag _L001_R2_001.fastq.gz \
   -trunc-len-1 250 \
   -trunc-len-2 0 \
+  -min-qual 28 \
   -maxee1 2 \
   -maxee2 2 \
+  -save-rds \
   -verbose
 
+  # export to get MetagenomeAnalyist compatable files
   dadaist2-exporter -i /home/user/path/to/read/directory/output
+  # make a multiqc report
   dadaist2-mqc-report  -i /home/user/path/to/read/directory/output  -o /home/user/path/to/read/directory/output/multiqc
+  # find alpha diversities
   dadaist2-normalize  -i /home/user/path/to/read/directory/output/MetagenomeAnalyist -o OUTDIR
 
 

@@ -24,6 +24,7 @@ devtools::install_github("microsud/microbiomeutilities")
 # load libraries
 library(microbiome)
 library(microbiomeutilities)
+library(dplyr)
 
 #================================================#
 # Importing standard formats (CSV, Mothur, BIOM)
