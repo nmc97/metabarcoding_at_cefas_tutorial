@@ -96,5 +96,57 @@ dadaist2-exporter -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/d
 dadaist2-mqc-report -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01  -o /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/multiqc
 # find alpha diversities - note -won't work if R packages aren't installed outside of a virtual env first Rhea automatically downloads before running if not available. Won't work in a virtual env with no internet. Missing GUniFrac for following script
 dadaist2-normalize  -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/feature-table.tsv -o /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/normalise
-dadaist2-alpha  -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/noramlise/OTUs_Table-norm-rel-tax.tab -o /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/alpha
+dadaist2-alpha  -o /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/alpha -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/normalise/OTUs_Table-norm.tab # input file not found
 ```
+
+
+
+test
+/home/nc07/projects/gene_pools/data/GenePool_16S_MiSeq_DM13/16S_v3/
+
+```
+# User input: set file paths
+
+in_dir=/home/user/path/to/read/directory/
+out_dir=/home/user/path/to/read/directory/output
+database=/home/nc07/path/to/database/silva_nr99_v138.1_train_set.fa.gz
+meta=/home/user/path/to/metadatafile.csv # make one using dadaist2-metadata below
+
+# example of test data
+in_dir=/home/nc07/projects/gene_pools/data/GenePool_16S_MiSeq_DM13/16S_v3
+out_dir=/home/nc07/projects/gene_pools/outputs_test_dadaist2
+database=/home/nc07/projects/metabarcoding/programs/dada2/silva_nr99_v138.1_train_set.fa.gz
+meta=/home/nc07/projects/gene_pools/data/GenePool_16S_MiSeq_DM13/16S_v3/metadata2.tsv # make one using dadaist2-metadata below
+
+# activate conda environment
+conda activate dadaist2-2
+
+# optionally move into project directory
+cd $in_dir
+
+# make a metadata file if one has not already been made
+dadaist2-metadata -i $in_dir -o $meta
+
+# main command - check parameters
+# note - if primers not supplied switch on fastp trimming. It will skip trimming if primers are not supplied and cutadapt trimming is selected.
+time dadaist2 \
+-input-directory $in_dir  \
+-output-directory $out_dir \
+-database  $database \
+-metadata $meta \
+-threads 12 \
+-trunc-len-1 250 \
+-trunc-len-2 0 \
+-min-qual 28 \
+-maxee1 2 \
+-maxee2 2 \
+-save-rds \
+-fastp \
+-verbose
+
+# export to get MetagenomeAnalyist compatable files
+dadaist2-exporter -i $in_dir
+# make a multiqc report
+dadaist2-mqc-report  -i $in_dir  -o $out_dir
+# find alpha diversities
+dadaist2-normalize  -i $out_dir/MicrobiomeAnalyst -o OUTDIR

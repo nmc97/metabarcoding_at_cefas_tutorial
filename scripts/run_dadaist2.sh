@@ -1,4 +1,4 @@
-#  Scipt to run dadaist2: https://quadram-institute-bioscience.github.io/dadaist2/
+#  script to run dadaist2: https://quadram-institute-bioscience.github.io/dadaist2/
 
 # User input: set file paths
 
@@ -7,7 +7,7 @@ out_dir=/home/user/path/to/read/directory/output
 database=/home/nc07/path/to/database/silva_nr99_v138.1_train_set.fa.gz
 meta=/home/user/path/to/metadatafile.csv # make one using dadaist2-metadata below
 
-# test data
+# example of test data
 in_dir=/home/nc07/projects/metabarcoding/programs/dada2/dadaist2/data/16S_rename
 out_dir=/home/nc07/projects/metabarcoding/programs/dada2/dadaist2/example-output7
 database=/home/nc07/projects/metabarcoding/programs/dada2/silva_nr99_v138.1_train_set.fa.gz
