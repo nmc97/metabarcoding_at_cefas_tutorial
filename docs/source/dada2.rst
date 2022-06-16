@@ -151,6 +151,7 @@ Installation
   conda activate dadaist2
   mamba install -y -c conda-forge -c bioconda dadaist2
   mamba install bioconductor-dada2=1.20
+  mamba install -c conda-forge pyyaml # optional: needed to run dadaist2-mqc-report
 
 **Additionally install from github**
 Navigate to the directory that has been made for the new environment:
@@ -164,12 +165,38 @@ eg:
   $ cd /home/username/mambaforge/envs/dadaist2/bin/ # navigate to that directory
   $ git clone https://github.com/quadram-institute-bioscience/dadaist2 # install from github
 
+Install Rhea packages for downstream analysis. Rhea is used in some dadaist2 scripts to assess diversity. In order to use these scripts within a POD virtual environment which cannot access the internet to download new packages, you will need to down;oad Rhea prerequisites yourself first.
+
+Open R and use the following to check if GUniFrac and vegan are installed and install them.
+
+.. code::
+  # code from https://github.com/Lagkouvardos/Rhea/blob/master/install_packages.R
+  # Check if required packages are already installed, and install if missing
+  packages <- c("GUniFrac","vegan")
+
+  # Function to check whether the package is installed
+  InsPack <- function(pack)
+  {
+    if ((pack %in% installed.packages()) == FALSE) {
+      install.packages(pack,repos = "http://cloud.r-project.org/")
+    }
+  }
+
+  # Applying the installation on the list of packages
+  lapply(packages, InsPack)
+
+  # Make the libraries
+  lib <- lapply(packages, require, character.only = TRUE)
+
+  # Check if it was possible to install all required libraries
+  flag <- all(as.logical(lib))
+
 Usage
 -----
 
-Note - File names must not start with a number
+Note - File names must not start with a number! An unfortunate issue, but likely due to R not liking names beginning with a number.
 
-You can follow a tutorial and view documentation here: https://quadram-institute-bioscience.github.io/dadaist2/tutorial
+You can follow a tutorial and view documentation here: https://quadram-institute-bioscience.github.io/dadaist2/tutorial. Note that the test data results cannot be loaded into MicrobiomeAnlaysist becasue there are too many OTU's unique to each sample, meaning they have nothing to show.
 Download github code to access test data:
 
 .. code ::
@@ -191,8 +218,6 @@ Minimal use case:
   # -m link to the metadata file (if not supplied a blank one will be generated and used)
   # -t is the number of processing threads
 
-Note: Can be run in POD using singularity and Nextflow
-
 More extensive example:
 
 .. code::
@@ -202,13 +227,13 @@ More extensive example:
   cd /home/user/path/to/project/directory/
 
   # make a metadata file if one has not already been made
-  dadaist2-metadata -i /home/user/path/to/project/directory/
+  dadaist2-metadata -i /home/user/path/to/project/directory/ -o  /home/user/path/to/project/directory/metadatafile.tsv
 
   # main command - check parameters
   dadaist2 \
   -input-directory /home/user/path/to/read/directory/ \
   -output-directory /home/user/path/to/read/directory/output \
-  -database /home/nc07/path/to/database/silva_nr99_v138.1_train_set.fa.gz \
+  -database /home/user/path/to/database/silva_nr99_v138.1_train_set.fa.gz \
   -metadata /home/user/path/to/metadatafile.csv \
   -threads 12 \
   -trunc-len-1 250 \
@@ -225,6 +250,10 @@ More extensive example:
   dadaist2-mqc-report  -i /home/user/path/to/read/directory/output  -o /home/user/path/to/read/directory/output/multiqc
   # find alpha diversities
   dadaist2-normalize  -i /home/user/path/to/read/directory/output/MetagenomeAnalyist -o OUTDIR
+
+You can follow the script `run_dadaist2.sh <https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dadaist2.sh>`_ to apply the above to your data with more ease.
+
+Note : if primers not supplied switch on fastp trimming using the `--fastp` flag. It will skip trimming entirely if primer sequences are not supplied and the default cutadapt trimming is selected.
 
 
 Plotting Taxonomy Dadaist2 vs PhyloSeq

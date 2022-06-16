@@ -64,3 +64,37 @@ dadaist2-exporter -i example-output
 
 
 ```
+
+
+```
+conda activate dadaist2 # not sure y the other one didn't work
+
+cd /home/nc07/projects/metabarcoding/programs/dada2/dadaist2
+
+# make a metadata file if one has not already been made
+dadaist2-metadata -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/data/16S_rename -o /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/data/16S_rename/metadatafile.tsv
+
+# main command - check parameters
+dadaist2 \
+-input-directory /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/data/16S_rename \
+-output-directory /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01 \
+-database /home/nc07/projects/metabarcoding/programs/dada2/silva_nr99_v138.1_train_set.fa.gz \
+-metadata /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/data/16S_rename/metadatafile.tsv \
+-threads 8 \
+-trunc-len-1 250 \
+-trunc-len-2 0 \
+-min-qual 28 \
+-maxee1 2 \
+-maxee2 2 \
+-save-rds \
+-fastp \
+-verbose
+
+# export to get MicrobiomeAnalyst compatable files
+dadaist2-exporter -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01
+# make a multiqc report
+dadaist2-mqc-report -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01  -o /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/multiqc
+# find alpha diversities - note -won't work if R packages aren't installed outside of a virtual env first Rhea automatically downloads before running if not available. Won't work in a virtual env with no internet. Missing GUniFrac for following script
+dadaist2-normalize  -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/feature-table.tsv -o /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/normalise
+dadaist2-alpha  -i /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/noramlise/OTUs_Table-norm-rel-tax.tab -o /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/dadaist2-14-6_01/alpha
+```

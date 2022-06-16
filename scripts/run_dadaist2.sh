@@ -1,12 +1,11 @@
+#  Scipt to run dadaist2: https://quadram-institute-bioscience.github.io/dadaist2/
 
-
-
-# set file paths
+# User input: set file paths
 
 in_dir=/home/user/path/to/read/directory/
 out_dir=/home/user/path/to/read/directory/output
 database=/home/nc07/path/to/database/silva_nr99_v138.1_train_set.fa.gz
-meta=/home/user/path/to/metadatafile.csv # make one using   dadaist2-metadata  below
+meta=/home/user/path/to/metadatafile.csv # make one using dadaist2-metadata below
 
 # test data
 in_dir=/home/nc07/projects/metabarcoding/programs/dada2/dadaist2/data/16S_rename
@@ -24,6 +23,7 @@ cd $in_dir
 dadaist2-metadata -i $in_dir -o $meta
 
 # main command - check parameters
+# note - if primers not supplied switch on fastp trimming. It will skip trimming if primers are not supplied and cutadapt trimming is selected.
 dadaist2 \
 -input-directory $in_dir  \
 -output-directory $out_dir \
@@ -36,6 +36,7 @@ dadaist2 \
 -maxee1 2 \
 -maxee2 2 \
 -save-rds \
+-fastp \
 -verbose
 
 # export to get MetagenomeAnalyist compatable files
