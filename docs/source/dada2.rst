@@ -150,6 +150,7 @@ Install Rhea packages for downstream analysis. Rhea is used in some dadaist2 scr
 Open R and use the following to check if GUniFrac and vegan are installed and install them.
 
 .. code::
+
   # code from https://github.com/Lagkouvardos/Rhea/blob/master/install_packages.R
   # Check if required packages are already installed, and install if missing
   packages <- c("GUniFrac","vegan")
