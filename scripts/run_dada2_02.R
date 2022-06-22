@@ -15,6 +15,7 @@
 #=========================#
 # Prerequisites
 # - DADA2
+#   install DADA2 - https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/dada2.html#dada2-background-installation
 # - dplyr
 #=========================#
 

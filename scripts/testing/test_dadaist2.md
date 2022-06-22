@@ -145,8 +145,8 @@ time dadaist2 \
 -verbose
 
 # export to get MetagenomeAnalyist compatable files
-dadaist2-exporter -i $in_dir
+dadaist2-exporter -i $out_dir
 # make a multiqc report
-dadaist2-mqc-report  -i $in_dir  -o $out_dir
+dadaist2-mqc-report  -i $out_dir  -o $out_dir/multiqc
 # find alpha diversities
-dadaist2-normalize  -i $out_dir/MicrobiomeAnalyst -o OUTDIR
+dadaist2-normalize  -i $out_dir/feature-table.tsv -o $out_dir/normalise

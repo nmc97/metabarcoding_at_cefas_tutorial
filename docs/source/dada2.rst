@@ -23,7 +23,7 @@ Papers:
 Installation with mamba
 -----------------------
 
-Dada2 is an R package. One option for installing Dada2 in linux is to build a `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_ environment. Some R packages can be install directly using `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_. Others will need to be intstalled within R.
+Dada2 is an R package. One option for installing Dada2 in Linux is to build a `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_ environment. Some R packages can be install directly using `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_. Others will need to be installed within R.
 
 Create a Mamba environment:
 
@@ -33,7 +33,8 @@ Create a Mamba environment:
 	conda activate dada2 # activate the new environment
 	mamba  install bioconductor-dada2 # install dada2
 
-Alternatively - installing `Dada2` within R:
+Installation within R:
+--------------------------------------------
 
 .. code::
 
@@ -42,19 +43,6 @@ Alternatively - installing `Dada2` within R:
 
 	BiocManager::install("dada2")
 
-Dada2 Tutorial
-^^^^^^^^^^^^^^
-
-Dada2 tutorial can be found `here <https://benjjneb.github.io/dada2/tutorial.html>`_ : https://benjjneb.github.io/dada2/tutorial.html
-
-Tutorial Data:
-https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
-
-.. code::
-
-	# download the tutorial data
-	cd /path/to/tutorial_data/directory # set a directory to store the tutorial data
-	wget https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
 
 Download Silva datasets. Curated for Dada2:
 -------------------------------------------
@@ -102,27 +90,19 @@ To start using Dada2 on POD, start an interactive session. Navigate to a working
 
 Once in R you can follow the script `run_dada2.R <https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R>`_.
 
-Follow up Statistics:
-^^^^^^^^^^^^^^^^^^^^^
+Dada2 Tutorial
+^^^^^^^^^^^^^^
 
-Install `phyloseq` and `Biostrings` in R
-----------------------------------------
+To familiarise yourself with Dada2 see the Dada2 tutorial `here <https://benjjneb.github.io/dada2/tutorial.html>`_ : https://benjjneb.github.io/dada2/tutorial.html
+
+The tutorial data is available here:
+https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
 
 .. code::
 
-	# install phyloseq within R - biocLite not working anymore, instead using BiocManager
-
-	if (!require("BiocManager", quietly = TRUE))
-		install.packages("BiocManager")
-
-	BiocManager::install("phyloseq")
-
-	# installing Biostrings
-
-	if (!requireNamespace("BiocManager", quietly = TRUE))
-		install.packages("BiocManager")
-
-	BiocManager::install("Biostrings")
+	# download the tutorial data
+	cd /path/to/tutorial_data/directory # set a directory to store the tutorial data
+	wget https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
 
 
 Alternative tutorial:
@@ -263,6 +243,28 @@ Use script `dadaist2-taxplot` in Dadaist2
 
 `Notes on comparison <https://quadram-institute-bioscience.github.io/dadaist2/notes/6_Rscripts.html>`_
 `Phyloseq script <https://quadram-institute-bioscience.github.io/dadaist2/notes/plot.html>`_
+
+Follow up Statistics:
+^^^^^^^^^^^^^^^^^^^^^
+
+Install `phyloseq` and `Biostrings` in R
+----------------------------------------
+
+.. code::
+
+	# install phyloseq within R - biocLite not working anymore, instead using BiocManager
+
+	if (!require("BiocManager", quietly = TRUE))
+		install.packages("BiocManager")
+
+	BiocManager::install("phyloseq")
+
+	# installing Biostrings
+
+	if (!requireNamespace("BiocManager", quietly = TRUE))
+		install.packages("BiocManager")
+
+	BiocManager::install("Biostrings")
 
 
 ---
