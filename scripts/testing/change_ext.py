@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Script to change fatq paire read file extensions on all paried reads in a folder
+# Script to change fastq paired read file extensions on all paried reads in a folder
 # Nicola Coyle
 # 27/04/2022
 # For use with dadaist2 ( produce usable Microbiomeanalyist files first go)

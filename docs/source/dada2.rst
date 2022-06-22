@@ -23,7 +23,7 @@ Papers:
 Installation with mamba
 -----------------------
 
-Dada2 is an R package. One option for installing Dada2 in linux is to build a `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_ environment. Some R packages can be install directly using `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_. Others will need to be intstalled within R.
+Dada2 is an R package. One option for installing Dada2 in Linux is to build a `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_ environment. Some R packages can be install directly using `Mamba <https://mamba.readthedocs.io/en/latest/user_guide/mamba.html>`_. Others will need to be installed within R.
 
 Create a Mamba environment:
 
@@ -33,7 +33,8 @@ Create a Mamba environment:
 	conda activate dada2 # activate the new environment
 	mamba  install bioconductor-dada2 # install dada2
 
-Alternatively - installing `Dada2` within R:
+Installation within R:
+--------------------------------------------
 
 .. code::
 
@@ -42,19 +43,6 @@ Alternatively - installing `Dada2` within R:
 
 	BiocManager::install("dada2")
 
-Dada2 Tutorial
-^^^^^^^^^^^^^^
-
-Dada2 tutorial can be found `here <https://benjjneb.github.io/dada2/tutorial.html>`_ : https://benjjneb.github.io/dada2/tutorial.html
-
-Tutorial Data:
-https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
-
-.. code::
-
-	# download the tutorial data
-	cd /path/to/tutorial_data/directory # set a directory to store the tutorial data
-	wget https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
 
 Download Silva datasets. Curated for Dada2:
 -------------------------------------------
@@ -85,7 +73,7 @@ Species Dataset. File location: https://zenodo.org/record/4587955/files/silva_sp
 DADA2 Usage
 ^^^^^^^^^^^
 
-optional: Before using Dada2 you can do some quality testing suing fastqc and multiqc. See script `metabarcoding_qc.sh`
+**Optional:** Before using Dada2 you can do some quality testing suing fastqc and multiqc. See script `<https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/metabarcoding_qc.sh>`_
 
 To start using Dada2 on POD, start an interactive session. Navigate to a working directory, activate dada2 conda environment, and start R.
 
@@ -100,7 +88,162 @@ To start using Dada2 on POD, start an interactive session. Navigate to a working
   # start R
   R
 
-Once in R you can follow the script `run_dada2.R <https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R>`.
+Once in R you can follow the script `run_dada2.R <https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R>`_.
+
+Dada2 Tutorial
+^^^^^^^^^^^^^^
+
+To familiarise yourself with Dada2 see the Dada2 tutorial `here <https://benjjneb.github.io/dada2/tutorial.html>`_ : https://benjjneb.github.io/dada2/tutorial.html
+
+The tutorial data is available here:
+https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
+
+.. code::
+
+	# download the tutorial data
+	cd /path/to/tutorial_data/directory # set a directory to store the tutorial data
+	wget https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
+
+
+Alternative tutorial:
+^^^^^^^^^^^^^^^^^^^^^
+https://replikation.github.io/bioinformatics_side/metagenome/metabarcoding/
+
+Dadaist2
+^^^^^^^^
+
+Dadaist2 is a command line wrapper for Dada2
+
+`Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>`_
+
+.. note::
+
+  When to use:
+
+  If you like working within the command line instead of R, this could be ideal. Familiarity with Dada2 methods is necessary to ensure the parameters involved are correct for your data. It has many automatically generted outputs that may be very useful e.g. MicrobiomeAnalyst, phyloseq and Rhea input files, and very nice html log files. Rhea is incorporated into Dadaist2 so some statistical analysis can be conducted using this package.
+
+Installation
+------------
+
+.. code ::
+
+  mamba create -n dadaist2
+  conda activate dadaist2
+  mamba install -y -c conda-forge -c bioconda dadaist2
+  mamba install bioconductor-dada2=1.20
+  mamba install -c conda-forge pyyaml # optional: needed to run dadaist2-mqc-report
+
+**Additionally install from github**
+Navigate to the directory that has been made for the new environment:
+`cd /path/to/conda/environment/dadaist2/directory`
+eg:
+
+.. code::
+
+  $ whereis dadaist2 # finds where the command is located
+  dadaist2: /home/username/mambaforge/envs/dadaist2/bin/dadaist2
+  $ cd /home/username/mambaforge/envs/dadaist2/bin/ # navigate to that directory
+  $ git clone https://github.com/quadram-institute-bioscience/dadaist2 # install from github
+
+Install Rhea packages for downstream analysis. Rhea is used in some dadaist2 scripts to assess diversity. In order to use these scripts within a POD virtual environment which cannot access the internet to download new packages, you will need to down;oad Rhea prerequisites yourself first.
+
+Open R and use the following to check if GUniFrac and vegan are installed and install them.
+
+.. code::
+
+  # code from https://github.com/Lagkouvardos/Rhea/blob/master/install_packages.R
+  # Check if required packages are already installed, and install if missing
+  packages <- c("GUniFrac","vegan")
+
+  # Function to check whether the package is installed
+  InsPack <- function(pack)
+  {
+    if ((pack %in% installed.packages()) == FALSE) {
+      install.packages(pack,repos = "http://cloud.r-project.org/")
+    }
+  }
+
+  # Applying the installation on the list of packages
+  lapply(packages, InsPack)
+
+  # Make the libraries
+  lib <- lapply(packages, require, character.only = TRUE)
+
+  # Check if it was possible to install all required libraries
+  flag <- all(as.logical(lib))
+
+Usage
+-----
+
+Note - File names must not start with a number! An unfortunate issue, but likely due to R not liking names beginning with a number.
+
+You can follow a tutorial and view documentation here: https://quadram-institute-bioscience.github.io/dadaist2/tutorial. Note that the test data results cannot be loaded into MicrobiomeAnlaysist becasue there are too many OTU's unique to each sample, meaning they have nothing to show.
+Download github code to access test data:
+
+.. code ::
+
+  git clone https://github.com/quadram-institute-bioscience/dadaist2
+  cd dadaist2
+
+Minimal use case:
+
+.. code ::
+
+  dadaist2 -i data/16S/ -o example-output -d refs/SILVA_SSU_r138_2019.RData -t 8 -m metadata.tsv
+
+  # Briefly:
+
+  # -i points to the input directory containing paired end reads (by default recognised by _R1 and _R2 tags, but this can be customised)
+  # -o is the output directory
+  # -d is the reference database in DADA2 or DECIPHER format (we downloaded a DECIPHER database)
+  # -m link to the metadata file (if not supplied a blank one will be generated and used)
+  # -t is the number of processing threads
+
+More extensive example:
+
+.. code::
+
+  conda activate dadaist2 # not sure y the other one didn't work
+
+  cd /home/user/path/to/project/directory/
+
+  # make a metadata file if one has not already been made
+  dadaist2-metadata -i /home/user/path/to/project/directory/ -o  /home/user/path/to/project/directory/metadatafile.tsv
+
+  # main command - check parameters
+  dadaist2 \
+  -input-directory /home/user/path/to/read/directory/ \
+  -output-directory /home/user/path/to/read/directory/output \
+  -database /home/user/path/to/database/silva_nr99_v138.1_train_set.fa.gz \
+  -metadata /home/user/path/to/metadatafile.csv \
+  -threads 12 \
+  -trunc-len-1 250 \
+  -trunc-len-2 0 \
+  -min-qual 28 \
+  -maxee1 2 \
+  -maxee2 2 \
+  -save-rds \
+  -verbose
+
+  # export to get MetagenomeAnalyist compatable files
+  dadaist2-exporter -i /home/user/path/to/read/directory/output
+  # make a multiqc report
+  dadaist2-mqc-report  -i /home/user/path/to/read/directory/output  -o /home/user/path/to/read/directory/output/multiqc
+  # find alpha diversities
+  dadaist2-normalize  -i /home/user/path/to/read/directory/output/MetagenomeAnalyist -o OUTDIR
+
+You can follow the script `run_dadaist2.sh <https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dadaist2.sh>`_ to apply the above to your data with more ease.
+
+Note : if primers not supplied switch on fastp trimming using the `--fastp` flag. It will skip trimming entirely if primer sequences are not supplied and the default cutadapt trimming is selected.
+
+
+Plotting Taxonomy Dadaist2 vs PhyloSeq
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use script `dadaist2-taxplot` in Dadaist2
+
+`Notes on comparison <https://quadram-institute-bioscience.github.io/dadaist2/notes/6_Rscripts.html>`_
+`Phyloseq script <https://quadram-institute-bioscience.github.io/dadaist2/notes/plot.html>`_
 
 Follow up Statistics:
 ^^^^^^^^^^^^^^^^^^^^^
@@ -123,86 +266,6 @@ Install `phyloseq` and `Biostrings` in R
 		install.packages("BiocManager")
 
 	BiocManager::install("Biostrings")
-
-
-Alternative tutorial:
-^^^^^^^^^^^^^^^^^^^^^
-https://replikation.github.io/bioinformatics_side/metagenome/metabarcoding/
-
-Dadaist2
-^^^^^^^^
-
-Dadaist2 is a command line wrapper for Dada2
-
-`Dadaist2: highway to R <https://quadram-institute-bioscience.github.io/dadaist2/>`_
-
-.. note::
-
-  When to use:
-
-  If you like working within the command line instead of R, this could be ideal. Familiarity with Dada2 methods is necessary to ensure the parameters involved are correct for your data. It has many automatically generted outputs that may be very useful e.g. MicrobiomeAnalyst, phyloseq and Rhea input files, and very nice html log files. Rhea is incorporated into Dadaist2 so some statistical analysis can be conducted using this package. The only con is that there are a lot of scripts to become familiar with before the full potential of the pipeline is available to a user.
-
-Installation
-------------
-
-.. code ::
-
-  mamba create -n dadaist2
-  conda activate dadaist2
-  mamba install -y -c conda-forge -c bioconda dadaist2
-  mamba install bioconductor-dada2=1.20
-
-**Additionally install from github**
-Navigate to the directory that has been made for the new envrionment:
-`cd /path/to/conda/environment/dadaist2/directory`
-eg:
-
-.. code::
-
-  $ whereis dadaist2
-  dadaist2: /home/nc07/mambaforge/envs/dadaist2/bin/dadaist2
-  $ cd /home/nc07/mambaforge/envs/dadaist2/bin/
-
-  # install from github
-  git clone https://github.com/quadram-institute-bioscience/dadaist2
-
-replace r curl version and reinstall PhyloSeq # why ..?
-Rcurl Version: 1.98-1.5
-
-.. code ::
-
-  uninstall.packages(RCurl)
-
-Usage
------
-
-note 1 - file names must not start with a number
-
-note 2 - can be run in POD using singularity and Nextflow
-
-Tutorial: https://quadram-institute-bioscience.github.io/dadaist2/tutorial
-
-Minimal use case:
-
-.. code ::
-
-  dadaist2 -i data/16S/ -o example-output -d refs/SILVA_SSU_r138_2019.RData -t 8 -m metadata.tsv
-
-  # Briefly:
-
-  # -i points to the input directory containing paired end reads (by default recognised by _R1 and _R2 tags, but this can be customised)
-  # -o is the output directory
-  # -d is the reference database in DADA2 or DECIPHER format (we downloaded a DECIPHER database)
-  # -m link to the metadata file (if not supplied a blank one will be generated and used)
-  # -t is the number of processing threads
-
-Plotting Taxonomy Dadaist2 vs PhyloSeq
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Use script `dadaist2-taxplot` in Dadaist2
-
-`Notes on comparison <https://quadram-institute-bioscience.github.io/dadaist2/notes/6_Rscripts.html>`_
-`Phyloseq script <https://quadram-institute-bioscience.github.io/dadaist2/notes/plot.html>`_
 
 
 ---

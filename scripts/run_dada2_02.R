@@ -15,6 +15,7 @@
 #=========================#
 # Prerequisites
 # - DADA2
+#   install DADA2 - https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/dada2.html#dada2-background-installation
 # - dplyr
 #=========================#
 
@@ -57,6 +58,8 @@ truncQ <- 2
 rm.phix <- TRUE
 compress <- TRUE
 multithread <- TRUE  # On Windows set multithread=FALSE
+
+MicrobiomeAnalyst <- TRUE
 
 #=========================#
 # setup directories and files

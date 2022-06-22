@@ -12,9 +12,6 @@
 ##
 ##=================================================================================#
 
-# before using:
-# install dada2 - https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/dada2.html#dada2-background-installation
-
 # note: search for string ##change_me to find lines containing things you need to change for your data
 
 #=========================#
@@ -22,16 +19,18 @@
 #=========================#
 
 library(dada2)
+library(dplyr)
+#library(reshape2)
+#library(tibble) # optional
 
 #=========================#
 # setup file paths
 #=========================#
 
 # set outpath
-outpath <- "/path/to/output/directory" ##change_me
-# set path to data directory and list files
-path <- "/path/to/read/directory" # trimmed reads ##change_me
 outpath <- "/home/nc07/projects/gene_pools/outputs_test_dada2" ##change_me
+# set path to data directory and list files
+path <- "/home/nc07/projects/gene_pools/data/GenePool_16S_MiSeq_DM13/16S_v3" # trimmed reads ##change_me
 
 # if statement makes output folder if doesn't exist
 if (file.exists(outpath)) {
@@ -59,7 +58,7 @@ names(filtFs) <- sample.names
 filtRs <- file.path(path, "filtered", paste0(sample.names, "_R_filt.fastq.gz")) # reverse reads
 names(filtRs) <- sample.names
 
-# Action required: Change trunclen=c(xx,xx) to match what you want to truncate your forward and reverse reads to. Similarly edit trimLeft=c(xx,xx), maxEE=x and truncQ=x. ##change_me
+# Action required: Change trunclen=c(xx,xx) to match what you want to truncate your forward and reverse reads to. ##change_me
 out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=c(17,17), truncLen=c(280,280),
               maxN=0, maxEE=2, truncQ=2, rm.phix=TRUE,
               compress=TRUE, multithread=TRUE) # On Windows set multithread=FALSE
@@ -67,17 +66,20 @@ head(out) # check how many reads have been lost in filtering step
 # save out file in case environment shuts down
 write.table(out,paste(outpath,"/out_save_F1.tsv",sep=""),sep="\t",row.names=F)
 
-# Sometimes files loose all reads at this step. If that happens you need to exclude them from the rest the analysis.
-# if statement checks if samples need to be removed and following statements remove them
+
+# Sometimes files loose all reads at this step. If that happens you need to exclude them from the rest the analysis. Here is an example of how you could do so with two samples "sample_name1" and "sample_name2"
+# ##change_me : uncomment the following lines and change samples names to match your data
+# filtFs<-filtFs %>% filter(filtFs!="sample_name1" & filtFs!="sample_name2") # remove from list of forward filtered read files
+# filtRs<-filtRs %>% filter(filtRs!="sample_name1" & filtRs!="sample_name2") # remove from list of reverse filtered read files
+# sample.names<-sample.names[(sample.names)!="sample_name1" $ (sample.names)!="sample_name2"] # remove from sample name list
 removed_samples<-row.names(as.data.frame(out)[(which(as.data.frame(out)[,2] ==0)),])
 removed_samples.names <- sapply(strsplit(basename(removed_samples), "_"), `[`, 1) # check this works for your data
 if(length(removed_samples) != 0){
   filtFs<-filtFs[(!(names(filtFs) %in% removed_samples.names))] # remove from list of forward filtered read files
-  filtRs<-filtRs[(!(names(filtRs) %in% removed_samples.names))] # remove from list of reverse filtered read files
+  if(forward == FALSE){filtRs<-filtRs[(!(names(filtRs) %in% removed_samples.names))]} # remove from list of reverse filtered read files
   sample.names<-sample.names[!(sample.names) %in% removed_samples.names]
   out<-out[which(!(row.names(out)%in% removed_samples)),]
 }
-
 #=========================#
 # Error rates
 #=========================#
@@ -110,7 +112,7 @@ names(derep_reverse) <- sample.names
 # Sample inference
 #=========================#
 
-# Forward - this clusters forward reads into ASV's. later you will merge forward and reverse reads
+# Forward
 dadaFs <- dada(derep_forward, err=errF, multithread=TRUE)
 # Reverse
 dadaRs <- dada(derep_reverse, err=errR, multithread=TRUE)
@@ -149,7 +151,7 @@ getN <- function(x) sum(getUniques(x))
 
 # Combine filtering, dada2, and chimera removal data into one dataframe
 # If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
-track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(mergers, getN), rowSums(seqtab.nochim))
+track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(merged, getN), rowSums(seqtab.nochim))
 colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nonchim")
 rownames(track) <- sample.names
 head(track) # check output
@@ -165,15 +167,15 @@ write.table(track, paste(outpath,"/track_reads.tsv", sep=""), sep="\t")
 # examples:
 
 # dataset - SILVA:
-taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "/path/to/ref/dataset/silva_nr99_v138.1_train_set.fa.gz", outputBootstraps=TRUE, multithread=TRUE) ##change_me
+taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "~/projects/metabarcoding/programs/dada2/silva_nr99_v138.1_train_set.fa.gz", outputBootstraps=TRUE, multithread=TRUE) ##change_me
 taxa_all <- taxa_with_bootstraps$tax
 # optionally add species:
-taxa_species <- addSpecies(taxa_with_bootstraps$tax, "/path/to/ref/dataset/silva_species_assignment_v132.fa.gz")
+taxa_species <- addSpecies(taxa_with_bootstraps$tax, "/home/nc07/projects/metabarcoding/programs/dada2/silva_species_assignment_v138.1.fa.gz")
 
 # dataset - Pr2:
 # must define taxlevels for Pr2
-#taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "/path/to/ref/dataset/pr2_version_4.14.0_SSU_dada2.fasta.gz", taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"), outputBootstraps=TRUE, multithread=TRUE) ##change_me
-#taxa_all <- taxa_with_bootstraps$tax
+# taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "/path/to/ref/dataset/pr2_version_4.14.0_SSU_dada2.fasta.gz", taxLevels = c("Kingdom","Supergroup","Division","Class","Order","Family","Genus","Species"), outputBootstraps=TRUE, multithread=TRUE) ##change_me
+# taxa_all <- taxa_with_bootstraps$tax
 
 # write to files
 write.table(taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.tsv",sep=""),sep="\t",row.names=F)
