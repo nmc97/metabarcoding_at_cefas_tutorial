@@ -42,7 +42,6 @@ Papers:
 
 `Non-specific amplification compromises 2 environmental DNA metabarcoding with COI <https://besjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/2041-210X.13276>`_
 
-
 2. Sequencing
 
 What sequencing platform is available and most appropriate for the study?
@@ -51,7 +50,7 @@ note: Nanopore metabarcoding allows for longer sequences to be produced, but the
 
 3. Data archiving
 
-Read files (fastq.gz, metadata)
+Read files (fastq.gz, metadata) - where will the raw data be stored/ backed up?
 
 4. Quality control - reads
 
@@ -69,18 +68,18 @@ Read files (fastq.gz, metadata)
 
 - Read trimming - remove low quality reads, adapters and truncate reads.
 
-  Programs
+  Programs:
   - Dada2 (see below)
   - `Trimmomatic <http://www.usadellab.org/cms/?page=trimmomatic>`_
   - `fastp <https://github.com/OpenGene/fastp>`_
 
-# - deduplicating - removing reads which appear more than once in the dataset (reads can be overlapping and highly similar but reads that are identical are redundant)
+- deduplicating - removing reads which appear more than once in the dataset (reads can be overlapping and highly similar but reads that are identical are redundant)
 
 e.g. in Dada2 tutorial
 
 .. code::
 
-  plotQualityProfile(fnFs[1:2]) # plot forward reads
+  plotQualityProfile(fnFs[1:2]) # plot forward reads to view quality across the reads
   plotQualityProfile(fnRs[1:2]) # plot reverse reads
 
   # Place filtered files in filtered/ subdirectory
@@ -94,9 +93,11 @@ e.g. in Dada2 tutorial
               maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
               compress=TRUE, multithread=TRUE) # On Windows set multithread=FALSE
 
+See https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/metabarcoding_qc.sh for code you could consider using.
+
 5. Clustering
 
-- lots of different ways to do this.
+- Lots of different ways to do this.
 - What types of clusters are you looking for? OUT's? ASV's?
 - What type of data do you have? e.g.: 16S, 18S, COI, long/short reads.
 
@@ -204,7 +205,7 @@ Papers of interest:
 
 Identifying Chimeras
 ^^^^^^^^^^^^^^^^^^^^
-[fill in]
+Chimeric sequences are erroneous sequences that could be determined to be novel if they are not removed from the data.
 
 [notes
 1.  What proportion of the reads align to the reference?
@@ -216,7 +217,7 @@ Identifying Chimeras
 
 Taxonomic assignment:
 ^^^^^^^^^^^^^^^^^^^^^
-[fill in]
+Assigning a taxanomic classification to each OTU or ASV identified in a sample. This relies on a reference dataset to compare to.
 
 Papers:
 `Identifying accurate metagenome and amplicon software via a meta-analysis of sequence to taxonomy benchmarking studies <https://peerj.com/articles/6160/>`_
@@ -224,9 +225,7 @@ Papers:
 Useful databases
 ----------------
 
-Choosing a database ... [fill in]
-
-- SILVA
+- SILVA - 16S / 18S
 - PR2 - `18S database <https://pr2-database.org/>`_
 
 Cox-1 gene databases:

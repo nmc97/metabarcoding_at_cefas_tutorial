@@ -10,6 +10,13 @@
 ##
 ## Adapted from dada2 tutorial: https://benjjneb.github.io/dada2/tutorial.html
 ##
+## This version requires inputs at the top of the page and can be run line by line
+## after that. If an error occurs it will be harder to understand since there is
+## more code that could be contributing to the error.
+##
+## Try this script first and if there are issues you cannot solve go back and use
+## the run_dada2.R script line by line instead
+##
 ##=================================================================================#
 
 #=========================#

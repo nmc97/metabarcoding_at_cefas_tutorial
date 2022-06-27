@@ -17,13 +17,13 @@ Contents
 
 .. toctree::
    :maxdepth: 2
-
+   
    metabarcoding-getting_started
-   azure_vm
    list_programs_resources
    dada2
    frogs
    statistics
+   azure_vm
    glossary
    api
 
