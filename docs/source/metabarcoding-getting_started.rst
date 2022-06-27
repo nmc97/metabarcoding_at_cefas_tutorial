@@ -153,7 +153,10 @@ ASV = Amplicon Sequence Variant
 
 See: `MICROBIOME INFORMATICS: OTU VS. ASV <https://www.zymoresearch.com/blogs/blog/microbiome-informatics-otu-vs-asv>`_
 
-**algorithms**
+`Exact sequence variants should replace operational taxonomic units in marker gene data analysis <https://www.nature.com/articles/ismej2017119>`_
+"We argue that the improvements in **reusability**, **reproducibility** and **comprehensiveness** are sufficiently great that ASVs should replace OTUs as the standard unit of marker-gene analysis and reporting."
+
+**Algorithms**
 
 There are three general types of algorithm for clustering metabarcoding reads into OTU's or ASV's:
 
@@ -272,7 +275,7 @@ Metrics:
 
 - Count number of Taxa
 
-- Treat as a sample of the overal population and attempt to calculate the population - Chao
+- Treat as a sample of the overall population and attempt to calculate the population - Chao
 
 - Level of evenness - how evenly they split
 
@@ -281,7 +284,7 @@ Metric 2 - Beta diversity
 
 - Unsupervised analysis (doesn't know which samples are in which group)
 
-- Based on the abundance of these ...
+- Based on abundance
 
 - Do these cluster together or apart
 
@@ -299,11 +302,6 @@ Measuring Differential abundance
 Recommended packages and pipelines:
 -----------------------------------
 
-Depending on your skill level and needs for a given project the following packages and pipelines are Recommended:
-
-# Table showing which processes each does and the environment needed e.g. galaxy. command line or R.
-
-#
 DADA2
 Dadaist2
 FROGS
