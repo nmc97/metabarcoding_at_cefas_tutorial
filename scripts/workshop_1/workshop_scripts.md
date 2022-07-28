@@ -5,12 +5,16 @@ Weymouth
 Author: Nicola Coyle
 Based in part on the Dada2 tutorial: https://benjjneb.github.io/dada2/tutorial.html
 Further resources can be found here: https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html
+
+For a script to apply to your own data see: https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R
+
 ## 1 Set up
 
 ### 1.1 Make a directory to run a the analysis
 ```
 mkdir metabarcoding_ws
 mkdir metabarcoding_ws/data # set directory to save data
+mkdir metabarcoding_ws/data/16S
 mkdir metabarcoding_ws/outputs # set directory to save outputs
 mkdir metabarcoding_ws/db # optionally put databases into a directory within workshop directory
 ```
@@ -41,15 +45,25 @@ conda activate sra-tools
 
 mkdir ~/metabarcoding_ws_001/16S
 cd ~/metabarcoding_ws_001/16S
-# prefetch data - uses file names_16S.txt to find the data (accession: q) and then rename the files (name: p)
-while read p q; do echo $p ; ls $q/$q.sra; time fasterq-dump --split-files $q -o $q/$p ; done < ../names_16S.txt
+
+# download list of sample names and accession
+wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt
+
+# prefetch data - uses file names_16S.txt to find the data (accession: q) download them (prefetch) and then rename the files (name: p)
+while read p q; do echo $p ; time prefetch $q ; done < names_16S.txt
 # extract fastq files
-while read p q; do echo $p ; prefetch $q ; done < names.txt
+while read p q; do echo $p ; ls $q/$q.sra; time fasterq-dump --split-files $q -o $q/$p ; done < names_16S.txt
+
 # move files and zip
 mv ~/metabarcoding_ws_001/16S/*/*.fastq ~/metabarcoding_ws_001/16S/fastqc
 gzip ~/metabarcoding_ws_001/16S/fastqc/*.fastq
 ```
+Or - take it from my POD
 
+``` bash
+# this will take my fastq folder containing read files and place it in your 16S directory
+rsync -ravz /home/nc07/metabarcoding_ws/data/16S/fastq/ ~/metabarcoding_ws/data/16S/
+```
 ### 1.4 Set up conda environments
 
 Set up Fastqc env:
@@ -163,7 +177,6 @@ fnFs <- sort(list.files(path, pattern="_1.fastq", full.names = TRUE)) ##change_m
 fnRs <- sort(list.files(path, pattern="_2.fastq", full.names = TRUE)) ##change_me if the file names are different to this structure
 # Extract sample names, assuming filenames have format: SAMPLENAME_XXX.fastq
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
-
 ```
 
 ## 4.3 Filter and trim:
@@ -222,7 +235,6 @@ if(length(removed_samples) != 0){
 
 Stop here and check the filtering step before moving forward!
 Repeat with new parameters if needed.
-
 
 ### 4.3.2 Run [Fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [Multiqc](https://www.bing.com/search?q=multiqc&cvid=41c889025cf2474eae8615972425b160&aqs=edge..69i57j0l8j69i11004.1847j0j4&FORM=ANAB01&PC=U531)
 
@@ -379,8 +391,10 @@ Error rate plot pdfs:
 
 #### In the command-line:
 ```
+msub -I -q S30 -l procs=8,walltime=1:00:00 # change depending on what you think you need.
+
 in_dir=~/metabarcoding_ws/data/16S/fastq
-out_dir=~/metabarcoding_ws/outputs/dadaist2/cutadapt
+out_dir=~/metabarcoding_ws/outputs/dadaist2
 database=~/metabarcoding_ws/db/silva_nr99_v138.1_train_set.fa.gz
 meta=~/metabarcoding_ws/outputs/dadaist2/metadatafile.csv # make one using dadaist2-metadata below
 # activate conda environment
@@ -404,7 +418,6 @@ dadaist2 \
 -threads 8 \
 -trunc-len-1 200 \
 -trunc-len-2 160 \
--primers GTGYCAGCMGCCGCGGTAA:GGACTACNVGGGTWTCTAAT \
 -s1 0 \
 -s2 0 \
 -min-qual 28 \
@@ -445,17 +458,32 @@ Make a phyloseq object and then apply decontam functions.
 
 ## 6.1 [MicrobiomeAnalyst](https://www.microbiomeanalyst.ca/)
 
+To submit the files in the Dadaist Microbiome analyst directory you will first need to edit some of them.
+
+The table.txt file needs to have file extensions removed from the sample names (use find and replace).
+
+The taxa file doesn't contain enough delimiters. open in excel and save as csv file.
+
+Download metadata file:
+
+```
+wget 
+
+```
+
 ## 6.2 Phyloseq
 
-Create a Phyloseq object
+For this you need R. It would be best to set up r studio on your computer and run this there.
+
+You will need to create a Phyloseq object from the outputs of Dada2 or Dadaist2
 
 For example: Dadaist two code for plots: https://quadram-institute-bioscience.github.io/dadaist2/notes/plot.html
 
 ## 6.3 Microbiome R package
 
-Create a Phyloseq object
-
 For this you need R. It would be best to set up r studio on your computer and run this there.
+
+You will need to create a Phyloseq object from the outputs of Dada2 or Dadaist2
 
 https://microbiome.github.io/tutorials/
 
