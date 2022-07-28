@@ -32,6 +32,23 @@ mv silva_species_assignment_v138.1.fa.gz?download=1 silva_species_assignment_v13
 ```
 ### 1.3 Download test data
 
+Jamie McMurtrie, Shayma Alathari, Dominique L. Chaput, David Bass, Camerson Ghambi, Joseph Nagoli, Jérôme Delamare-Deboutteville, Chadag Vishnumurthy Mohan, Joanne Cable, Ben Temperton, Charles R. Tyler, *Relationships between pond water and tilapia skin microbiomes in aquaculture ponds in Malawi*, Aquaculture, Volume 558, 2022, 738367, ISSN 0044-8486, https://doi.org/10.1016/j.aquaculture.2022.738367.
+
+```bash
+# make and activate a conda env for sra-tools
+mamba create -n sra-tools
+conda activate sra-tools
+
+mkdir ~/metabarcoding_ws_001/16S
+cd ~/metabarcoding_ws_001/16S
+# prefetch data - uses file names_16S.txt to find the data (accession: q) and then rename the files (name: p)
+while read p q; do echo $p ; ls $q/$q.sra; time fasterq-dump --split-files $q -o $q/$p ; done < ../names_16S.txt
+# extract fastq files
+while read p q; do echo $p ; prefetch $q ; done < names.txt
+# move files and zip
+mv ~/metabarcoding_ws_001/16S/*/*.fastq ~/metabarcoding_ws_001/16S/fastqc
+gzip ~/metabarcoding_ws_001/16S/fastqc/*.fastq
+```
 
 ### 1.4 Set up conda environments
 
@@ -57,7 +74,13 @@ mamba install -c conda-forge pyyaml # optional: needed to run dadaist2-mqc-repor
 
 ```
 
-### 1.5 Set up RStudio with ?? (optionally)
+### 1.5 Set up RStudio with packages for vizualisation/ statistics (optionally)
+
+``` R
+
+
+
+```
 
 ## 2. Getting started on the day
 
@@ -104,7 +127,7 @@ msub -I -q S30 -l procs=8,walltime=6:00:00 # change depending on what you think 
 ## 4.1 Activate dada2 environment and start an R session
 
 ```bash
-conda activate R
+conda activate dada2
 R
 ```
 
