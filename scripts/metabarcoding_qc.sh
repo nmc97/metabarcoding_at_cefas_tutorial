@@ -20,19 +20,19 @@
 
 # assuming you are using POD:
 # start interactive session (alterantively run a job)
-msub -I -q S30 -l procs=12,walltime=2:00:00 # change depending on what yo think you need.
+msub -I -q S30 -l procs=12,walltime=6:00:00 # change depending on what yo think you need.
 
 conda activate fastqc
 
-#'cd /path/to/directory/containing/read/files ##change_me
-cd /home/nc07/projects/metabarcoding/programs/dada2/dadaist2/data/16S_rename/ ##change_me
+# move to directory containing read files ##change_me
+cd /path/to/directory/containing/read/files ##change_me
 mkdir fastqc_out # make directory to store oututs
 
 fastqc *.fastq.gz -t 12 -o fastqc_out# runs fastqc on all fastq.gz n current directory. -t threads to use
 
 # run multiqc on fastqc output folder. it automatically detects fastqc outputs
 multiqc fastqc_out/* -o ./fastqc_out/multiq_fastqc --title fastqc # change title
-# force interative if there are lots of files
+# force interative if there are lots of files (it will tell you if it wrote flat files instead)
 # multiqc fastqc_out/* -o ./fastqc_out/multiqc_fastqc --interactive --title fastqc_interactive
 
 # download and inspect output files
