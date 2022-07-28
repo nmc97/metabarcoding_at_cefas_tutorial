@@ -220,7 +220,7 @@ Chimeric sequences are erroneous sequences that could be determined to be novel 
 
 Taxonomic assignment:
 ^^^^^^^^^^^^^^^^^^^^^
-Assigning a taxanomic classification to each OTU or ASV identified in a sample. This relies on a reference dataset to compare to.
+Assigning a taxonomic classification to each OTU or ASV identified in a sample. This relies on a reference dataset to compare to.
 
 Papers:
 `Identifying accurate metagenome and amplicon software via a meta-analysis of sequence to taxonomy benchmarking studies <https://peerj.com/articles/6160/>`_
