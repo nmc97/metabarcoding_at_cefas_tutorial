@@ -47,8 +47,10 @@ Code for the project is available here: https://github.com/jamiemcm/Malawi_Tilap
 mamba create -n sra-tools
 conda activate sra-tools
 
-mkdir ~/metabarcoding_ws_001/data/16S
-cd ~/metabarcoding_ws_001/data/16S
+mkdir ~/metabarcoding_ws/data/16S
+mkdir ~/metabarcoding_ws/data/16S/fastq
+
+cd ~/metabarcoding_ws/data/16S
 
 # download list of sample names and accession
 wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt
@@ -67,8 +69,8 @@ time fasterq-dump --split-files $q -o $q/$p
 done < names_16S.txt
 
 # move files and zip
-mv ~/metabarcoding_ws_001/16S/*/*.fastq ~/metabarcoding_ws_001/16S/fastqc
-gzip ~/metabarcoding_ws_001/16S/fastqc/*.fastq
+mv ~/metabarcoding_ws/16S/*/*.fastq ~/metabarcoding_ws/16S/fastq
+gzip ~/metabarcoding_ws/16S/fastq/*.fastq
 ```
 
 Or - take it from my POD
