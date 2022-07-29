@@ -458,7 +458,7 @@ Make a phyloseq object and then apply decontam functions.
 
 ## 6.1 [MicrobiomeAnalyst](https://www.microbiomeanalyst.ca/)
 
-To submit the files in the Dadaist Microbiome analyst directory you will first need to edit some of them.
+To submit the files in the Dadaist MicrobiomeAnalyst directory you will first need to edit some of them.
 
 The table.txt file needs to have file extensions removed from the sample names (use find and replace).
 
@@ -467,8 +467,7 @@ The taxa file doesn't contain enough delimiters. open in excel and save as csv f
 Download metadata file:
 
 ```
-wget 
-
+wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/metadata.csv
 ```
 
 ## 6.2 Phyloseq
