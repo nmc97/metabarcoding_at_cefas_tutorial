@@ -12,11 +12,11 @@ For a script to apply to your own data see: https://github.com/nmc97/metabarcodi
 
 ### 1.1 Make a directory to run a the analysis
 ```
-mkdir metabarcoding_ws
-mkdir metabarcoding_ws/data # set directory to save data
-mkdir metabarcoding_ws/data/16S
-mkdir metabarcoding_ws/outputs # set directory to save outputs
-mkdir metabarcoding_ws/db # optionally put databases into a directory within workshop directory
+mkdir ~/metabarcoding_ws
+mkdir ~/metabarcoding_ws/data # set directory to save data
+mkdir ~/metabarcoding_ws/data/16S
+mkdir ~/metabarcoding_ws/outputs # set directory to save outputs
+mkdir ~/metabarcoding_ws/db # optionally put databases into a directory within workshop directory
 ```
 
 ### 1.2 [Download reference databases](https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/dada2.html#download-silva-datasets-curated-for-dada2)
@@ -38,26 +38,39 @@ mv silva_species_assignment_v138.1.fa.gz?download=1 silva_species_assignment_v13
 
 Jamie McMurtrie, Shayma Alathari, Dominique L. Chaput, David Bass, Camerson Ghambi, Joseph Nagoli, Jérôme Delamare-Deboutteville, Chadag Vishnumurthy Mohan, Joanne Cable, Ben Temperton, Charles R. Tyler, *Relationships between pond water and tilapia skin microbiomes in aquaculture ponds in Malawi*, Aquaculture, Volume 558, 2022, 738367, ISSN 0044-8486, https://doi.org/10.1016/j.aquaculture.2022.738367.
 
+NCBI project code: PRJEB46984
+
+Code for the project is available here: https://github.com/jamiemcm/Malawi_Tilapia_Microbiomes.
+
 ```bash
 # make and activate a conda env for sra-tools
 mamba create -n sra-tools
 conda activate sra-tools
 
-mkdir ~/metabarcoding_ws_001/16S
-cd ~/metabarcoding_ws_001/16S
+mkdir ~/metabarcoding_ws_001/data/16S
+cd ~/metabarcoding_ws_001/data/16S
 
 # download list of sample names and accession
 wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt
 
 # prefetch data - uses file names_16S.txt to find the data (accession: q) download them (prefetch) and then rename the files (name: p)
-while read p q; do echo $p ; time prefetch $q ; done < names_16S.txt
+while read p q; do
+echo $p
+time prefetch $q
+done < names_16S.txt
+
 # extract fastq files
-while read p q; do echo $p ; ls $q/$q.sra; time fasterq-dump --split-files $q -o $q/$p ; done < names_16S.txt
+while read p q; do
+echo $p
+ls $q/$q.sra
+time fasterq-dump --split-files $q -o $q/$p
+done < names_16S.txt
 
 # move files and zip
 mv ~/metabarcoding_ws_001/16S/*/*.fastq ~/metabarcoding_ws_001/16S/fastqc
 gzip ~/metabarcoding_ws_001/16S/fastqc/*.fastq
 ```
+
 Or - take it from my POD
 
 ``` bash
@@ -91,8 +104,7 @@ mamba install -c conda-forge pyyaml # optional: needed to run dadaist2-mqc-repor
 ### 1.5 Set up RStudio with packages for vizualisation/ statistics (optionally)
 
 ``` R
-
-
+[I may update this during the day]
 
 ```
 
