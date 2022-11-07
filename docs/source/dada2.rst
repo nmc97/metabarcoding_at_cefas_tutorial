@@ -47,7 +47,7 @@ Installation within R:
 Download Silva datasets. Curated for Dada2:
 -------------------------------------------
 
-Training taxonomy dataset for the tutorial. File location: https://zenodo.org/record/4587955/files/silva_nr99_v138.1_train_set.fa.gz?download=1
+Training taxonomy dataset for the tutorial - check that is the most up to date dataset. File location: https://zenodo.org/record/4587955/files/silva_nr99_v138.1_train_set.fa.gz?download=1
 
 .. code::
 
@@ -57,7 +57,7 @@ Training taxonomy dataset for the tutorial. File location: https://zenodo.org/re
 	mv silva_nr99_v138.1_train_set.fa.gz?download=1 silva_nr99_v138.1_train_set.fa.gz # renames the file to remove "?download=1"
 
 
-Species Dataset. File location: https://zenodo.org/record/4587955/files/silva_species_assignment_v138.1.fa.gz?download=1
+Species Dataset. - check that is the most up to date dataset. File location: https://zenodo.org/record/4587955/files/silva_species_assignment_v138.1.fa.gz?download=1
 
 
 .. code::
