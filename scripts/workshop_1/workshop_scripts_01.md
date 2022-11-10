@@ -393,8 +393,9 @@ write.table(out,paste(outpath,"/out_save_F1.tsv",sep=""),sep="\t",row.names=T)
 ```
 
 At this point we can look at the summary of the trimming step by looking at the varable `out`. To do this type `out` into the terminal.
+>Or, for ease, print "out" ordered by column two, which is the number of reads left: `out[order(out[,2], decreasing=T),]`
 
-- [ ] Question: Have many reads been lost? Are there any samples with too few reads to proceed with?
+- [ ] Questions: Have many reads been lost? Are there any samples with too few reads to proceed with?
 
 Next we can make more plots of the read files, this time after they have been trimmed.
 
@@ -411,12 +412,25 @@ dev.off()
 ```
 
 Sometimes files lose all reads at this step. If that happens you need to exclude them from the rest the analysis.
+
+Or, if there are samples with some reads, but you would like to exclude them from the rest of the analysis, you can remove them with the code below.
+
+More specifically, the variable `removed_samples` is made first, and is populated by a list of samples with zero reads left (`which(as.data.frame(out)[,2] ==0`). To add samples to this list you need to use `c(removed samples, "sample_file_1.fastq.gz")`
+e.g.:
+`removed_samples<- c(removed_samples, "P1a_1.fastq.gz", "P2a_1.fastq.gz", "P1e_1.fastq.gz", "P1c_1.fastq.gz")`
+
 ``` R
-#
 # if statement checks if samples need to be removed and following statements remove them
 removed_samples<-row.names(as.data.frame(out)[(which(as.data.frame(out)[,2] ==0)),])
-#removed_samples<-c(removed_samples,"ESPCTD16S47_1.fastq.gz","ESPCTD16S80_1.fastq.gz","ESPCTD16S42_1.fastq.gz","ESPCTD16S36_1.fastq.gz")
+
+# modify this line to remove samples manually.
+# here, sample Ts29 has fewer reads than the rest of the dataset so we will remove it
+removed_samples<-c(removed_samples,"Ts29_1.fastq.gz"))
+
+# clean up file names
 removed_samples.names <- sapply(strsplit(basename(removed_samples), "_"), `[`, 1) # check this works for your data
+
+# remove samples from filtFs, filtRs, sample.names
 if(length(removed_samples) != 0){
   filtFs<-filtFs[(!(names(filtFs) %in% removed_samples.names))] # remove from list of forward filtered read files
   filtRs<-filtRs[(!(names(filtRs) %in% removed_samples.names))] # remove from list of reverse filtered read files
@@ -426,14 +440,14 @@ if(length(removed_samples) != 0){
 
 ```
 
-Stop here and check the filtering step before moving forward!
-Repeat with new parameters if needed.
+Stop here and check the filtering and trimming step before moving forward!
+- [ ] Do you need to repeat with new parameters?
 
 So, if it seems we have lost too many reads, or not enough, or the quality scores are still too low, we need to read try again with new parameters.
 
 We can check the read quality using FastQC again to be sure:
 
-- [ ] ### 4.3.2 Run [Fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [Multiqc](https://www.bing.com/search?q=multiqc&cvid=41c889025cf2474eae8615972425b160&aqs=edge..69i57j0l8j69i11004.1847j0j4&FORM=ANAB01&PC=U531)
+- [ ] ### 4.3.2 Run [Fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [Multiqc](https://www.bing.com/search?q=multiqc&cvid=41c889025cf2474eae8615972425b160&aqs=edge..69i57j0l8j69i11004.1847j0j4&FORM=ANAB01&PC=U531) [optional]
 
 - [ ] #### Open a new command-line session:
 
@@ -476,6 +490,7 @@ If you are happy to proceed, go back to the R session and start to calculate err
 - [ ] ## 4.4 Error rates
 - [ ] #### Back in R:
 
+Dada2 relies on error models calculated for every dataset. the function `learnErrors()` will calculate these and store them in `errF` and `errR`
 ``` R
 # calculate error rates for forward and reverse reads
 errF <- learnErrors(filtFs, multithread=TRUE)
@@ -491,6 +506,9 @@ dev.off()
 ```
 
 ## 4.5 Dereplicate reads
+
+The function `derepFastq()` will group all the identical reads
+
 ``` R
 derep_forward <- derepFastq(filtFs, verbose=TRUE)
 # name the derep-class objects by the sample names
@@ -502,10 +520,13 @@ names(derep_reverse) <- sample.names
 ```
 
 ## 4.6 Sample Inference
+
+This is the main function of Dada2.
+
 ``` R
 # Forward - this clusters forward reads into ASV's. later you will merge forward and reverse reads
 dadaFs <- dada(derep_forward, err=errF, multithread=TRUE)
-# Reverse
+# Reverse - this clusters reverse reads into ASV's.
 dadaRs <- dada(derep_reverse, err=errR, multithread=TRUE)
 
 # merged paired read data
@@ -518,63 +539,106 @@ seqtab <- makeSequenceTable(mergers)
 dim(seqtab) # check size of table
 # Inspect distribution of sequence lengths
 table(nchar(getSequences(seqtab)))
-
 ```
-## 4.7 remove chimeras
+## 4.7 Remove chimeras
+
+We need to remove chimeras. A function in dada2 called `removeBimeraDenovo` will do this by removing reads that look like a hybrid of two others in the dataset. Chimeras made from more than two sequences merging are rare.
+
 ``` R
+# run removeBimeraDenovo
 seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=TRUE)
-dim(seqtab.nochim) # check size of data.frame
+
+# check size of data.frame
+dim(seqtab.nochim)
+
+# this line will print a messgae uisng the outputs:
 print(paste(round(sum(seqtab.nochim)/sum(seqtab),4),"% of ASV's remain fter chimera removal: remaining ASV's:",dim(seqtab.nochim[2]),sep="")) # check proportion of reads are left after chimeras removed
 
-# Save seqtab.nochim
+# Save seqtab.nochim as an RDS file
 saveRDS(seqtab.nochim, paste(outpath,"/seqtab_nochim.rds",sep=""))
 ```
 
-## 4.8 Crude removal of negative controls
+## 4.8 Removal of negative controls
+
+If you have included negative controls in your experiment, you can remove the ASV's found in those control samples from the rest of the dataset. This is assuming that these ASV's have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample.
+
+Here we will pretend that sample Ts16s is a negative control.
+
 ``` R
-negative_controls<-c("Ts29")
+# make a list of the negative control samples
+negative_controls<-c("T16s")
+
+# save a new version of the ASV table `seqtab.nochim`
 seqtab.nochim.c<-seqtab.nochim
+
+# this loop will loop through each negative control (f) in the list (negative controls) and remove all ASV's found in that sample (to_remove) from the rest of the samples
 for(f in negative_controls){
+	# print which negative control is being used in the loop righ now
   print(f)
-  to_remove<-dim(seqtab.nochim.c[,which(seqtab.nochim.c[row.names(seqtab.nochim.c)==f,]>0)])[2]
-  seqtab.nochim.c<-seqtab.nochim.c[,which(seqtab.nochim.c[row.names(seqtab.nochim.c)==f,]<=0)]
+	# make a list of rows to drop so we can count how many
+  to_remove<-dim(seqtab.nochim.c[,which(seqtab.nochim.c[which(row.names(seqtab.nochim.c)==f),]>0)])[2]
+	# keeps rows where negative control is zero
+  seqtab.nochim.c<-seqtab.nochim.c[,which(seqtab.nochim.c[which(row.names(seqtab.nochim.c)==f),]<=0)]
+	# print a message to say how many ASV's were dropped and kept
   print(paste(dim(seqtab.nochim.c)[2]," ASV's remain after removing", to_remove," ASV's present in negative controls:", f))
 }
+
+# save result
 write.table(seqtab.nochim.c, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
 
+# if we would like to keep this new ASV table, we can replace the old dataframe seqtab.nochim with the new one seqtab.nochim.c and proceed:
 # seqtab.nochim<-seqtab.nochim.c
 # rm(seqtab.nochim.c)
-
+# we won't do this here because we didn't use a true negative control
 ```
 
-## 4.9 track reads and ASV inference
-``` R
-# use this to determine which samples would be worth keeping in merged run
+## 4.9 Track data across each step
 
-# set getN function
+Let's build a table that shows how many reads/ASV's are left after each step.
+
+You will need to remove samples from "out", Ts29_1
+
+>For example to remove sample "sample_name1 and "sample_name2":
+`out <- out[which(row.names(out)!="sample_name1" & row.names(out)!="sample_name2"),]`
+
+``` R
+# set getN function - this function will count for us
 getN <- function(x) sum(getUniques(x))
+
 # If you removed samples above you need to remove them again here:
-# out<-out[which(row.names(out)!="sample_name1" & row.names(out)!="sample_name2" ),] ##change_me
+out <- out[which(row.names(out)!="Ts29_1" & row.names(out)!="sample_name2" ),]
 
 # Combine filtering, dada2, and chimera removal data into one dataframe
 # If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
 track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(mergers, getN), rowSums(seqtab.nochim), rowSums(seqtab.nochim.c))
-colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", "nonchim","neg_removed")
+
+# set some column names
+colnames(track) <- c("no_reads_input", "no_reads_after_filter", "no_ASV_denoisedF", "no_ASV_denoisedR", "no_ASV_merged", "no_ASV_nonchim","no_ASV_neg_cntrl_removed")
 rownames(track) <- sample.names
-head(track) # check output
+
+# check output
+head(track) # head shows the first 10 entries
 
 # write to file:
 write.table(track, paste(outpath,"/track_reads.tsv", sep=""), sep="\t")
 ```
 
-## 4.10 Taxonomy
-``` R
-# decide what reference dataset to use
-# examples:
+>We can view this table in order of reads remain after negative controls are removed as follows:
+`track[order(track[,7], decreasing=T),]`
 
+## 4.10 Taxonomy
+
+Next, we will assign taxa to each ASV we have detected. We will compare our ASV's to he reference database SILVA.
+
+Functions for assigning taxonomy are `taxa_with_bootstraps()` and `taxa()`. Here we use `taxa_with_bootstraps()`.
+
+``` R
 # dataset - SILVA:
-taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "~/metabarcoding_ws/db/silva_nr99_v138.1_train_set.fa.gz", outputBootstraps=TRUE, multithread=TRUE) ##change_me
+taxa_with_bootstraps <- assignTaxonomy(seqtab.nochim, "~/metabarcoding_ws/db/silva_nr99_v138.1_train_set.fa.gz", outputBootstraps=TRUE, multithread=TRUE)
+
+# we can save the taxa dataframe without the bootstraps:
 taxa_all <- taxa_with_bootstraps$tax
+
 # optionally add species:
 taxa_species <- addSpecies(taxa_with_bootstraps$tax, "~/metabarcoding_ws/db/silva_species_assignment_v138.1.fa.gz")
 
@@ -582,14 +646,28 @@ taxa_species <- addSpecies(taxa_with_bootstraps$tax, "~/metabarcoding_ws/db/silv
 write.table(taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.tsv",sep=""),sep="\t",row.names=T)
 write.table(taxa_all, file = paste(outpath,"/taxa.tsv",sep=""),sep="\t",row.names=T)
 write.table(taxa_species, file = paste(outpath,"/taxa_species.tsv",sep=""),sep="\t",row.names=T)
+
+write.csv(taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.csv",sep=""),row.names=T)
+write.csv(taxa_all, file = paste(outpath,"/taxa.csv",sep=""),row.names=T)
+write.csv(taxa_species, file = paste(outpath,"/taxa_species.csv",sep=""),row.names=T)
 ```
 
-Now you have completed the Dada2 aspect and have been left with output files:
-ASV file:
-Taxonomy files:
-Track reads file:
-Saved out file (can be discarded now):
-Error rate plot pdfs:
+Now you have completed the Dada2 aspect of the analysis!
+
+>You should now  have been left with output files in `/home/$USER/metabarcoding_ws/outputs/dada2/`
+>
+>**Most important:**
+ASV file: `asv_table.dada2.tsv`
+Taxonomy files: `taxa.tsv`, `taxa_with_bootstraps.tsv`, and `taxa_species.tsv`
+>
+>**Additional:**
+>Filtered reads directory: `filtered/`
+Read quality pdfs (pre filtering): `plot_read_quality_F.pdf`, `plot_read_quality_R.pdf`
+Read quality pdfs (post filtering): `plot_read_quality_filtered_F.pdf`, `plot_read_quality_filtered_R.pdf`
+R formatted ASV table pre contaminamt removal: `seqtab_nochim.rds`
+Track reads file: `track_reads.tsv`
+Saved out file (can be discarded now): `out_save_F1.tsv`
+Error rate plot pdfs: `plot_errors_F.pdf`, `plot_errors_R.pdf`
 
 ## 5. Alternatively run [dadaist2]()
 
@@ -643,20 +721,6 @@ dadaist2-phyloseqMake -i $out_dir
 # use phyloseq object to automatically produce figures
 dadaist2-taxaplot [options] -i phyloseq.rds -o $out_dir/plots
 ```
-
-# 7. Remove contaminants - Decontam
-
-Need a dataset with negative controls
-https://github.com/benjjneb/decontam
-https://bioconductor.org/packages/release/bioc/vignettes/decontam/inst/doc/decontam_intro.html
-```
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install("decontam")
-```
-
-Make a phyloseq object and then apply decontam functions.
 
 # 6. Visualisation and statistics:
 

@@ -24,16 +24,16 @@ P5b,Blantyre,pond metagenome,NA,NA,NA,P5,No
 P5c,Blantyre,pond metagenome,NA,NA,NA,P5,No
 P5d,Blantyre,pond metagenome,NA,NA,NA,P5,No
 P5e,Blantyre,pond metagenome,NA,NA,NA,P5,No
-P6a,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P6,No
-P6b,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P6,No
-P6c,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P6,No
-P6d,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P6,No
-P6e,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P6,No
-P7a,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P7,No
-P7b,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P7,No
-P7c,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P7,No
-P7d,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P7,No
-P7e,"Maldeco\, Mangochi",pond metagenome,NA,NA,NA,P7,No
+P6a,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
+P6b,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
+P6c,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
+P6d,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
+P6e,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
+P7a,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
+P7b,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
+P7c,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
+P7d,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
+P7e,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
 T10,Blantyre,fish metagenome,10.3,8129,Redbreast tilapia,NA,No
 T11,Blantyre,fish metagenome,13,8129,Redbreast tilapia,NA,No
 T12,Blantyre,fish metagenome,14.5,8129,Redbreast tilapia,NA,No
@@ -57,12 +57,12 @@ T24,Blantyre,fish metagenome,16.4,8129,Redbreast tilapia,NA,No
 T25,Blantyre,fish metagenome,14.1,8129,Redbreast tilapia,NA,No
 T3f,Blantyre,fish metagenome,11.2,8129,Redbreast tilapia,NA,No
 T4f,Blantyre,fish metagenome,11.2,8129,Redbreast tilapia,NA,No
-Ts23,"Maldeco\, Mangochi",fish metagenome,22.5,1448876,Tilapia,NA,No
-Ts24,"Maldeco\, Mangochi",fish metagenome,17,1448876,Tilapia,NA,No
-Ts25,"Maldeco\, Mangochi",fish metagenome,25,1448876,Tilapia,NA,No
-Ts26,"Maldeco\, Mangochi",fish metagenome,23.5,1448876,Tilapia,NA,No
-Ts27,"Maldeco\, Mangochi",fish metagenome,23,1448876,Tilapia,NA,No
-Ts29,"Maldeco\, Mangochi",fish metagenome,22,1448876,Tilapia,NA,Yes
-Ts30,"Maldeco\, Mangochi",fish metagenome,19.2,1448876,Tilapia,NA,No
-Ts31,"Maldeco\, Mangochi",fish metagenome,21,1448876,Tilapia,NA,No
-Ts32,"Maldeco\, Mangochi",fish metagenome,21.4,1448876,Tilapia,NA,No
+Ts23,Maldeco Mangochi,fish metagenome,22.5,1448876,Tilapia,NA,No
+Ts24,Maldeco Mangochi,fish metagenome,17,1448876,Tilapia,NA,No
+Ts25,Maldeco Mangochi,fish metagenome,25,1448876,Tilapia,NA,No
+Ts26,Maldeco Mangochi,fish metagenome,23.5,1448876,Tilapia,NA,No
+Ts27,Maldeco Mangochi,fish metagenome,23,1448876,Tilapia,NA,No
+Ts29,Maldeco Mangochi,fish metagenome,22,1448876,Tilapia,NA,Yes
+Ts30,Maldeco Mangochi,fish metagenome,19.2,1448876,Tilapia,NA,No
+Ts31,Maldeco Mangochi,fish metagenome,21,1448876,Tilapia,NA,No
+Ts32,Maldeco Mangochi,fish metagenome,21.4,1448876,Tilapia,NA,No
