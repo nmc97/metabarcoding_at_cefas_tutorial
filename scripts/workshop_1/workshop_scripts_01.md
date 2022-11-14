@@ -425,7 +425,7 @@ removed_samples<-row.names(as.data.frame(out)[(which(as.data.frame(out)[,2] ==0)
 
 # modify this line to remove samples manually.
 # here, sample Ts29 has fewer reads than the rest of the dataset so we will remove it
-removed_samples<-c(removed_samples,"Ts29_1.fastq.gz"))
+removed_samples<-c(removed_samples,"Ts29_1.fastq.gz")
 
 # clean up file names
 removed_samples.names <- sapply(strsplit(basename(removed_samples), "_"), `[`, 1) # check this works for your data
@@ -583,13 +583,25 @@ for(f in negative_controls){
   print(paste(dim(seqtab.nochim.c)[2]," ASV's remain after removing", to_remove," ASV's present in negative controls:", f))
 }
 
-# save result
-write.table(seqtab.nochim.c, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
-
 # if we would like to keep this new ASV table, we can replace the old dataframe seqtab.nochim with the new one seqtab.nochim.c and proceed:
 # seqtab.nochim<-seqtab.nochim.c
 # rm(seqtab.nochim.c)
 # we won't do this here because we didn't use a true negative control
+
+# save result
+write.table(seqtab.nochim, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
+
+# save csv for MicrobiomeAnalyst
+# transpose
+seqtab.nochim.c.df <- t(seqtab.nochim.c)
+# make a column for the samples names called "#NAMES"
+seqtab.nochim.c.df <- cbind(row.names(seqtab.nochim.c.df),seqtab.nochim.c.df)
+
+# set first column name
+colnames(seqtab.nochim.c.df)[1]<-"#NAMES"
+
+# write output
+write.csv(seqtab.nochim.c.df, file = paste(outpath,"/asv_table.dada2.ma.csv",sep=""),row.names=F)
 ```
 
 ## 4.9 Track data across each step
@@ -650,6 +662,12 @@ write.table(taxa_species, file = paste(outpath,"/taxa_species.tsv",sep=""),sep="
 write.csv(taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.csv",sep=""),row.names=T)
 write.csv(taxa_all, file = paste(outpath,"/taxa.csv",sep=""),row.names=T)
 write.csv(taxa_species, file = paste(outpath,"/taxa_species.csv",sep=""),row.names=T)
+
+
+# write for MicrobiomeAnalyst
+names(axa_all<-
+write.csv(taxa_all, file = paste(outpath,"/taxa.ma.csv",sep=""),row.names=T)
+
 ```
 
 Now you have completed the Dada2 aspect of the analysis!
