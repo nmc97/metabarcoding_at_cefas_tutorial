@@ -1,68 +1,68 @@
-#NAME,geographic_location,Organism,host_length,host_taxid,host_name,Pond site,Control
-P1a,Blantyre,pond metagenome,NA,NA,NA,P1,No
-P1b,Blantyre,pond metagenome,NA,NA,NA,P1,No
-P1c,Blantyre,pond metagenome,NA,NA,NA,P1,No
-P1d,Blantyre,pond metagenome,NA,NA,NA,P1,No
-P1e,Blantyre,pond metagenome,NA,NA,NA,P1,No
-P2a,Blantyre,pond metagenome,NA,NA,NA,P2,No
-P2b,Blantyre,pond metagenome,NA,NA,NA,P2,No
-P2c,Blantyre,pond metagenome,NA,NA,NA,P2,No
-P2d,Blantyre,pond metagenome,NA,NA,NA,P2,No
-P2e,Blantyre,pond metagenome,NA,NA,NA,P2,No
-P3a,Blantyre,pond metagenome,NA,NA,NA,P3,No
-P3b,Blantyre,pond metagenome,NA,NA,NA,P3,No
-P3c,Blantyre,pond metagenome,NA,NA,NA,P3,No
-P3d,Blantyre,pond metagenome,NA,NA,NA,P3,No
-P3e,Blantyre,pond metagenome,NA,NA,NA,P3,No
-P4a,Blantyre,pond metagenome,NA,NA,NA,P4,No
-P4b,Blantyre,pond metagenome,NA,NA,NA,P4,No
-P4c,Blantyre,pond metagenome,NA,NA,NA,P4,No
-P4d,Blantyre,pond metagenome,NA,NA,NA,P4,No
-P4e,Blantyre,pond metagenome,NA,NA,NA,P4,No
-P5a,Blantyre,pond metagenome,NA,NA,NA,P5,No
-P5b,Blantyre,pond metagenome,NA,NA,NA,P5,No
-P5c,Blantyre,pond metagenome,NA,NA,NA,P5,No
-P5d,Blantyre,pond metagenome,NA,NA,NA,P5,No
-P5e,Blantyre,pond metagenome,NA,NA,NA,P5,No
-P6a,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
-P6b,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
-P6c,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
-P6d,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
-P6e,Maldeco Mangochi,pond metagenome,NA,NA,NA,P6,No
-P7a,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
-P7b,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
-P7c,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
-P7d,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
-P7e,Maldeco Mangochi,pond metagenome,NA,NA,NA,P7,No
-T10,Blantyre,fish metagenome,10.3,8129,Redbreast tilapia,NA,No
-T11,Blantyre,fish metagenome,13,8129,Redbreast tilapia,NA,No
-T12,Blantyre,fish metagenome,14.5,8129,Redbreast tilapia,NA,No
-T13s,Blantyre,fish metagenome,15.1,8129,Redbreast tilapia,NA,No
-T14s,Blantyre,fish metagenome,15.6,8129,Redbreast tilapia,NA,No
-T15s,Blantyre,fish metagenome,16,8129,Redbreast tilapia,NA,No
-T16,Blantyre,fish metagenome,12.8,2591260,Banded tilapia,NA,No
-T16s,Blantyre,fish metagenome,15.1,8129,Redbreast tilapia,NA,No
-T17,Blantyre,fish metagenome,11.5,2591260,Banded tilapia,NA,No
-T17s,Blantyre,fish metagenome,15.5,8129,Redbreast tilapia,NA,No
-T18,Blantyre,fish metagenome,12.3,2591260,Banded tilapia,NA,No
-T18s,Blantyre,fish metagenome,13.5,8129,Redbreast tilapia,NA,No
-T19s,Blantyre,fish metagenome,13.8,8129,Redbreast tilapia,NA,No
-T20s,Blantyre,fish metagenome,13,8129,Redbreast tilapia,NA,No
-T21,Blantyre,fish metagenome,15.4,8129,Redbreast tilapia,NA,No
-T21s,Blantyre,fish metagenome,14,8129,Redbreast tilapia,NA,No
-T22,Blantyre,fish metagenome,19,8129,Redbreast tilapia,NA,No
-T22s,Blantyre,fish metagenome,14,8129,Redbreast tilapia,NA,No
-T23,Blantyre,fish metagenome,16.2,8129,Redbreast tilapia,NA,No
-T24,Blantyre,fish metagenome,16.4,8129,Redbreast tilapia,NA,No
-T25,Blantyre,fish metagenome,14.1,8129,Redbreast tilapia,NA,No
-T3f,Blantyre,fish metagenome,11.2,8129,Redbreast tilapia,NA,No
-T4f,Blantyre,fish metagenome,11.2,8129,Redbreast tilapia,NA,No
-Ts23,Maldeco Mangochi,fish metagenome,22.5,1448876,Tilapia,NA,No
-Ts24,Maldeco Mangochi,fish metagenome,17,1448876,Tilapia,NA,No
-Ts25,Maldeco Mangochi,fish metagenome,25,1448876,Tilapia,NA,No
-Ts26,Maldeco Mangochi,fish metagenome,23.5,1448876,Tilapia,NA,No
-Ts27,Maldeco Mangochi,fish metagenome,23,1448876,Tilapia,NA,No
-Ts29,Maldeco Mangochi,fish metagenome,22,1448876,Tilapia,NA,Yes
-Ts30,Maldeco Mangochi,fish metagenome,19.2,1448876,Tilapia,NA,No
-Ts31,Maldeco Mangochi,fish metagenome,21,1448876,Tilapia,NA,No
-Ts32,Maldeco Mangochi,fish metagenome,21.4,1448876,Tilapia,NA,No
+#NAME,geographic_location,Organism
+P1a,Blantyre,pond metagenome
+P1b,Blantyre,pond metagenome
+P1c,Blantyre,pond metagenome
+P1d,Blantyre,pond metagenome
+P1e,Blantyre,pond metagenome
+P2a,Blantyre,pond metagenome
+P2b,Blantyre,pond metagenome
+P2c,Blantyre,pond metagenome
+P2d,Blantyre,pond metagenome
+P2e,Blantyre,pond metagenome
+P3a,Blantyre,pond metagenome
+P3b,Blantyre,pond metagenome
+P3c,Blantyre,pond metagenome
+P3d,Blantyre,pond metagenome
+P3e,Blantyre,pond metagenome
+P4a,Blantyre,pond metagenome
+P4b,Blantyre,pond metagenome
+P4c,Blantyre,pond metagenome
+P4d,Blantyre,pond metagenome
+P4e,Blantyre,pond metagenome
+P5a,Blantyre,pond metagenome
+P5b,Blantyre,pond metagenome
+P5c,Blantyre,pond metagenome
+P5d,Blantyre,pond metagenome
+P5e,Blantyre,pond metagenome
+P6a,Maldeco Mangochi,pond metagenome
+P6b,Maldeco Mangochi,pond metagenome
+P6c,Maldeco Mangochi,pond metagenome
+P6d,Maldeco Mangochi,pond metagenome
+P6e,Maldeco Mangochi,pond metagenome
+P7a,Maldeco Mangochi,pond metagenome
+P7b,Maldeco Mangochi,pond metagenome
+P7c,Maldeco Mangochi,pond metagenome
+P7d,Maldeco Mangochi,pond metagenome
+P7e,Maldeco Mangochi,pond metagenome
+T10,Blantyre,fish metagenome
+T11,Blantyre,fish metagenome
+T12,Blantyre,fish metagenome
+T13s,Blantyre,fish metagenome
+T14s,Blantyre,fish metagenome
+T15s,Blantyre,fish metagenome
+T16,Blantyre,fish metagenome
+T16s,Blantyre,fish metagenome
+T17,Blantyre,fish metagenome
+T17s,Blantyre,fish metagenome
+T18,Blantyre,fish metagenome
+T18s,Blantyre,fish metagenome
+T19s,Blantyre,fish metagenome
+T20s,Blantyre,fish metagenome
+T21,Blantyre,fish metagenome
+T21s,Blantyre,fish metagenome
+T22,Blantyre,fish metagenome
+T22s,Blantyre,fish metagenome
+T23,Blantyre,fish metagenome
+T24,Blantyre,fish metagenome
+T25,Blantyre,fish metagenome
+T3f,Blantyre,fish metagenome
+T4f,Blantyre,fish metagenome
+Ts23,Maldeco Mangochi,fish metagenome
+Ts24,Maldeco Mangochi,fish metagenome
+Ts25,Maldeco Mangochi,fish metagenome
+Ts26,Maldeco Mangochi,fish metagenome
+Ts27,Maldeco Mangochi,fish metagenome
+Ts29,Maldeco Mangochi,fish metagenome
+Ts30,Maldeco Mangochi,fish metagenome
+Ts31,Maldeco Mangochi,fish metagenome
+Ts32,Maldeco Mangochi,fish metagenome

@@ -10,17 +10,19 @@ If you would like to try this on your own data you can use the script supplied h
 
 ## 1. Set up
 
-First lets set up a directory to do our work in. We will call is metabarcoding_ws and place it in our home directory (`~/` or `/home/$USER`).
+First, let's set up a directory to do our work in. We will call is metabarcoding_ws and place it in our home directory (`~/` or `/home/$USER`).
 
 Next we will download reference databases for classifying our barcodes. in this example we will be using the SILVA database.
 
 Then we will download our data and get started!
 
 **Some of the basic commands we will use:**
-`mkdir /path/to/directory`: This makes a directory
-`cd /path/to/directory`: This changes directory
-`mv /path/to/file /path/to/new_file_location`: This will move a file or folder from one place to another. You can use this to change the file name.
 
+`mkdir /path/to/directory`: This makes a directory
+
+`cd /path/to/directory`: This changes directory
+
+`mv /path/to/file /path/to/new_file_location`: This will move a file or folder from one place to another. You can use this to change the file name.
 
 ### 1.1 Make a directory to run a the analysis
 ``` bash
@@ -67,7 +69,7 @@ There are two ways to get the data added to your POD:
 
 ``` bash
 # this will take my fastq folder containing read files and place it in your 16S directory
-rsync -ravz /home/nc07/metabarcoding_ws/data/16S/fastq/ ~/metabarcoding_ws/data/16S/
+rsync -ravz /home/nc07/metabarcoding_ws/data/16S/fastq ~/metabarcoding_ws/data/16S/
 ```
 
 **Option 2: Download from SRA (long)**
@@ -107,7 +109,7 @@ gzip ~/metabarcoding_ws/16S/fastq/*.fastq
 
 ### 1.4 Set up conda environments
 
-Set up Fastqc env:
+**Set up Fastqc env:**
 ``` bash
 # create an environment called fastqc and install fastqc and multiqc
 mamba create -n fastqc fastqc MultiQC
@@ -127,7 +129,7 @@ However, it is good practice to keep individual environments for specific progra
 
 In the next environment we need to set up R using the package r-essentials. Thn we can install dada2, which runs in R.
 
-Set up dada2 env:
+**Set up dada2 env:**
 ``` bash
 mamba create -n dada2 r-essentials # setup a new environment and install r-essentials
 conda activate dada2 # activate the new environment
@@ -136,7 +138,7 @@ mamba  install bioconductor-dada2 # install dada2
 
 Lastly we will install dadasit2, which is a wrapper program for dada2. Meaning, it bundled up code for you to run dada2 using a single line of code in the command-line. This could be useful if you have data that you want to quickly analyse which isn't too complex, requiring more manual coding work.
 
-Set up dadaist2 env:
+**Set up dadaist2 env:**
 
 ``` bash
 mamba create -n dadaist2
@@ -158,7 +160,7 @@ Screen allows you to set up a session or a "screen" in which to do your work. Yo
 screen -S meta
 ```
 
-You can leave the screen by pressing `ctrl + a + d`
+You can leave the screen by pressing `ctrl + a then d`
 
 Restart the screen by typing `screen -r meta`
 
@@ -182,7 +184,7 @@ First thing we need to do is check the quality of the data. We will run fastqc w
 
 The first thing we will do is activate the conda envrionment we made earlier called "fastqc". This environment contains programs fastqc and MultiQC.
 
-Then we will set some paths. This means that we will set two variables `$inder` and `$outdir` which contain the paths on the files system. Variables in bash are denoted using a `$`. The first path `$inder` will contain the path to the input data for the experiment. We put this data in he directory (folder) called `~/metabarcoding_ws/data/16S/fastq`, so this will be set as our `$inder` variable.
+Then we will set some paths. This means that we will set two variables `$inder` and `$outdir` which contain the paths on the files system. Variables in bash are denoted using a `$`. The first path, `$inder`, will contain the path to the input data for the experiment. We put this data in he directory (folder) called `~/metabarcoding_ws/data/16S/fastq`, so this will be set as our, `$inder`, variable.
 
 If the output directory for fastqc doesn't exist it will not be happy, so we need to make it. To make a directory we use the command `mkdir`.
 
@@ -202,10 +204,8 @@ Okay, let's try it:
 
 #Make a directory to store fastqc files
 	mkdir $outdir/fastqc_out
-
 ```
 
-*Aside:*
 Lets check that that worked by listing all the files in our output directory.
 
 `ls $outdir`: ls is a command to list files. Here it will list all the files in `$outdir`.
@@ -249,11 +249,11 @@ If we would like to, we can find out the full path to this directory by using `e
 
 Once you find the `html` file, right click and select `open with`. Then select a browser.
 
-- [ ] Question: What do you notice about the reads?  
+Question: What do you notice about the reads?  
 
-- [ ] ## 4. Run [dada2 script](https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R) or [looped dada2 script](https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R)
+## 4. Run [dada2 script](https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R) or [looped dada2 script](https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R)
 
-- [ ] ## 4.1 Activate dada2 environment and start an R session
+## 4.1 Activate dada2 environment and start an R session
 
 Firstly, lets deactivate the fastqc environment now that we are done with it:
 
@@ -272,7 +272,7 @@ conda activate dada2
 R
 ```
 
-- [ ] ## 4.2 Set up R:
+## 4.2 Set up R:
 
 Frist thing to do in R is load the dada2 library.
 
@@ -329,13 +329,13 @@ fnRs <- sort(list.files(path, pattern="_2.fastq", full.names = TRUE)) # this wil
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 ```
 
-- [ ] ## 4.3 Filter and trim:
+## 4.3 Filter and trim:
 
 Now that we have set up all the file paths, we can have a second look at the quality of the reads. This time, using dada2.
 
 Then we can decide how we would like to trim and filter them.
 
-- [ ] ### 4.3.1 Dada2 filter and trim
+### 4.3.1 Dada2 filter and trim
 
 For completeness - we will check read quality in dada2. dada2 has a function `plotQualityProfile` which can be used to view the read quality of your samples.
 
@@ -375,13 +375,19 @@ names(filtRs) <- sample.names
 The `filterAndTrim` function
 
 > Parameters to think about are:
-`trimleft`
-`trunclen`
-`maxN`
-`maxEE`
-`truncQ`
+>
+>`trimleft`
+>
+>`trunclen`
+>
+>`maxN`
+>
+>`maxEE`
+>
+>`truncQ`
 
-```
+
+``` R
 # Action required: Change trunclen=c(xx,xx) to match what you want to truncate your forward and reverse reads to. Similarly edit trimLeft=c(xx,xx), maxEE=x and truncQ=x. ##change_me
 # https://rdrr.io/bioc/dada2/man/filterAndTrim.html
 out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=c(10,10), truncLen=c(200,160),
@@ -395,7 +401,7 @@ write.table(out,paste(outpath,"/out_save_F1.tsv",sep=""),sep="\t",row.names=T)
 At this point we can look at the summary of the trimming step by looking at the varable `out`. To do this type `out` into the terminal.
 >Or, for ease, print "out" ordered by column two, which is the number of reads left: `out[order(out[,2], decreasing=T),]`
 
-- [ ] Questions: Have many reads been lost? Are there any samples with too few reads to proceed with?
+Questions: Have many reads been lost? Are there any samples with too few reads to proceed with?
 
 Next we can make more plots of the read files, this time after they have been trimmed.
 
@@ -441,15 +447,15 @@ if(length(removed_samples) != 0){
 ```
 
 Stop here and check the filtering and trimming step before moving forward!
-- [ ] Do you need to repeat with new parameters?
+Do you need to repeat with new parameters?
 
 So, if it seems we have lost too many reads, or not enough, or the quality scores are still too low, we need to read try again with new parameters.
 
 We can check the read quality using FastQC again to be sure:
 
-- [ ] ### 4.3.2 Run [Fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [Multiqc](https://www.bing.com/search?q=multiqc&cvid=41c889025cf2474eae8615972425b160&aqs=edge..69i57j0l8j69i11004.1847j0j4&FORM=ANAB01&PC=U531) [optional]
+### 4.3.2 Run [Fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) and [Multiqc](https://www.bing.com/search?q=multiqc&cvid=41c889025cf2474eae8615972425b160&aqs=edge..69i57j0l8j69i11004.1847j0j4&FORM=ANAB01&PC=U531) [optional]
 
-- [ ] #### Open a new command-line session:
+#### Open a new command-line session:
 
 So that we don't interrupt the R session we have been working in, let's start a new session.
 
@@ -478,17 +484,13 @@ Or you can start a new session using Mobaxterm.
 # Run multiqc on fastqc output folder.
 #(It automatically detects fastqc outputs)
 # change `--title` if you wish
-
-	multiqc $outdir/filtered_fastqc_out/* -o $outdir/filtered_fastqc_out/multiqc_fastqc --title fastqc
-
-#Note: force interative if there are lots of files (it will tell you if it wrote flat files instead)
 	multiqc $outdir/filtered_fastqc_out/* -o $outdir/filtered_fastqc_out/multiqc_fastqc --interactive --title fastqc_filtered_interactive
 ```
 
 If you are happy to proceed, go back to the R session and start to calculate error rates:
 
-- [ ] ## 4.4 Error rates
-- [ ] #### Back in R:
+## 4.4 Error rates
+#### Back in R:
 
 Dada2 relies on error models calculated for every dataset. the function `learnErrors()` will calculate these and store them in `errF` and `errR`
 ``` R
@@ -551,8 +553,8 @@ seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE
 # check size of data.frame
 dim(seqtab.nochim)
 
-# this line will print a messgae uisng the outputs:
-print(paste(round(sum(seqtab.nochim)/sum(seqtab),4),"% of ASV's remain fter chimera removal: remaining ASV's:",dim(seqtab.nochim[2]),sep="")) # check proportion of reads are left after chimeras removed
+# this line will print a messagae using the outputs:
+print(paste(round(sum(seqtab.nochim)/sum(seqtab),4)*100,"% of ASV's remain after chimera removal: remaining ASV's:",dim(seqtab.nochim[2]),sep="")) # check proportion of reads are left after chimeras removed
 
 # Save seqtab.nochim as an RDS file
 saveRDS(seqtab.nochim, paste(outpath,"/seqtab_nochim.rds",sep=""))
@@ -586,6 +588,7 @@ for(f in negative_controls){
 # if we would like to keep this new ASV table, we can replace the old dataframe seqtab.nochim with the new one seqtab.nochim.c and proceed:
 # seqtab.nochim<-seqtab.nochim.c
 # rm(seqtab.nochim.c)
+
 # we won't do this here because we didn't use a true negative control
 
 # save result
@@ -593,15 +596,15 @@ write.table(seqtab.nochim, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),s
 
 # save csv for MicrobiomeAnalyst
 # transpose
-seqtab.nochim.c.df <- t(seqtab.nochim.c)
+seqtab.nochim.df <- t(seqtab.nochim)
 # make a column for the samples names called "#NAMES"
-seqtab.nochim.c.df <- cbind(row.names(seqtab.nochim.c.df),seqtab.nochim.c.df)
+seqtab.nochim.df <- cbind(row.names(seqtab.nochim.df),seqtab.nochim.df)
 
 # set first column name
-colnames(seqtab.nochim.c.df)[1]<-"#NAMES"
+colnames(seqtab.nochim.df)[1]<-"#NAMES"
 
 # write output
-write.csv(seqtab.nochim.c.df, file = paste(outpath,"/asv_table.dada2.ma.csv",sep=""),row.names=F)
+write.csv(seqtab.nochim.df, file = paste(outpath,"/asv_table.dada2.ma.csv",sep=""),row.names=F)
 ```
 
 ## 4.9 Track data across each step
@@ -654,19 +657,17 @@ taxa_all <- taxa_with_bootstraps$tax
 # optionally add species:
 taxa_species <- addSpecies(taxa_with_bootstraps$tax, "~/metabarcoding_ws/db/silva_species_assignment_v138.1.fa.gz")
 
-# write to files
-write.table(taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.tsv",sep=""),sep="\t",row.names=T)
-write.table(taxa_all, file = paste(outpath,"/taxa.tsv",sep=""),sep="\t",row.names=T)
-write.table(taxa_species, file = paste(outpath,"/taxa_species.tsv",sep=""),sep="\t",row.names=T)
-
+# write to file
 write.csv(taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.csv",sep=""),row.names=T)
 write.csv(taxa_all, file = paste(outpath,"/taxa.csv",sep=""),row.names=T)
 write.csv(taxa_species, file = paste(outpath,"/taxa_species.csv",sep=""),row.names=T)
 
-
 # write for MicrobiomeAnalyst
-names(axa_all<-
-write.csv(taxa_all, file = paste(outpath,"/taxa.ma.csv",sep=""),row.names=T)
+taxa_df <- cbind(row.names(taxa_all),taxa_all)
+colnames(taxa_df)[1]<-"#TAXONOMY"
+
+# write - important that "row.names=F" this time
+write.csv(taxa_df, file = paste(outpath,"/taxa.ma.csv",sep=""),row.names=F)
 
 ```
 
@@ -687,12 +688,10 @@ Track reads file: `track_reads.tsv`
 Saved out file (can be discarded now): `out_save_F1.tsv`
 Error rate plot pdfs: `plot_errors_F.pdf`, `plot_errors_R.pdf`
 
-## 5. Alternatively run [dadaist2]()
+## 5. Alternatively run [dadaist2](https://github.com/quadram-institute-bioscience/dadaist2)
 
 #### In the command-line:
-```
-msub -I -q S30 -l procs=8,walltime=1:00:00 # change depending on what you think you need.
-
+``` bash
 in_dir=~/metabarcoding_ws/data/16S/fastq
 out_dir=~/metabarcoding_ws/outputs/dadaist2
 database=~/metabarcoding_ws/db/silva_nr99_v138.1_train_set.fa.gz
@@ -730,14 +729,6 @@ dadaist2 \
 
 # export to get MetagenomeAnalyist compatable files
 dadaist2-exporter -i $out_dir
-# make a multiqc report
-dadaist2-mqc-report  -i $out_dir  -o $out_dir/multiqc
-# find alpha diversities
-dadaist2-normalize  -i $out_dir/feature-table.tsv -o $out_dir/normalise
-# make a phyloseq object to import to R
-dadaist2-phyloseqMake -i $out_dir
-# use phyloseq object to automatically produce figures
-dadaist2-taxaplot [options] -i phyloseq.rds -o $out_dir/plots
 ```
 
 # 6. Visualisation and statistics:
@@ -753,7 +744,7 @@ The taxa file doesn't contain enough delimiters. open in excel and save as csv f
 Download metadata file:
 
 ```
-wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/metadata.csv
+wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/metadata.tsv
 ```
 
 ## 6.2 Phyloseq
@@ -771,17 +762,3 @@ For this you need R. It would be best to set up r studio on your computer and ru
 You will need to create a Phyloseq object from the outputs of Dada2 or Dadaist2
 
 https://microbiome.github.io/tutorials/
-
-### 6.2.3 Installation
-
-```
-library(BiocManager)
-BiocManager::install("microbiome")
-```
-
-Or
-
-```
-library(devtools) # Load the devtools package
-install_github("microbiome/microbiome") # Install the package
-```
