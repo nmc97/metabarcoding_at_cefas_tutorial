@@ -139,7 +139,7 @@ Taxonomy
 Papers, chapters and commentary:
 --------------------------------
 
-Author = David Ryder
+Author = David Ryder & Nicola Coyle
 
 Testing Alpha Diversity
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -187,6 +187,12 @@ Fungi - ITS2
 
 nuclear ribosomal internal transcribed spacer (ITS)
 Note: "By reanalysing published data sets, we demonstrate that operational taxonomic units (OTUs) outperform amplified sequence variants (ASVs) in recovering fungal diversity, a finding that is particularly evident for long markers. Additionally, analysis of the full-length ITS region allows more accurate taxonomic placement of fungi and other eukaryotes compared to the ITS2 subregion."
+
+ANCOM
+^^^^^
+
+Analysis of composition of microbiomes: a novel method for studying microbial composition
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4450248/
 
 ---
 Author: Nicola Coyle
