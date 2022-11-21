@@ -53,6 +53,9 @@ cd metabarcoding_ws/db # set a directory to store the data
 wget https://zenodo.org/record/4587955/files/silva_species_assignment_v138.1.fa.gz?download=1 # grabs the file from the internet and downloads into the current directory
 mv silva_species_assignment_v138.1.fa.gz?download=1 silva_species_assignment_v138.1.fa.gz # renames the file to remove "?download=1"
 ```
+
+Check if this is the latest version of the dataset here: https://www.arb-silva.de/download/archive/
+
 ### 1.3 Download test data
 
 Here we will use a dataset produced in collaboration with Cefas:
@@ -75,17 +78,20 @@ rsync -ravz /home/nc07/metabarcoding_ws/data/16S/fastq ~/metabarcoding_ws/data/1
 **Option 2: Download from SRA (long)**
 Uses SRA-tools: https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump
 
+This code requires a list of sample names and accession numbers to run. I have compile one here: https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt
+
 ```bash
 # make and activate a conda env for sra-tools
 mamba create -n sra-tools
 conda activate sra-tools
 
+# Create directories to download files into
 mkdir ~/metabarcoding_ws/data/16S
 mkdir ~/metabarcoding_ws/data/16S/fastq
 
 cd ~/metabarcoding_ws/data/16S
 
-# download list of sample names and accession
+# download list of sample names and accession numbers
 wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt
 
 # prefetch data - uses file names_16S.txt to find the data (accession: q) download them (prefetch) and then rename the files (name: p)
@@ -101,11 +107,10 @@ ls $q/$q.sra
 time fasterq-dump --split-files $q -o $q/$p
 done < names_16S.txt
 
-# move files and zip
+# move files from individual folders into ~/metabarcoding_ws/16S/fastq and gzip them
 mv ~/metabarcoding_ws/16S/*/*.fastq ~/metabarcoding_ws/16S/fastq
 gzip ~/metabarcoding_ws/16S/fastq/*.fastq
 ```
-
 
 ### 1.4 Set up conda environments
 
@@ -218,7 +223,7 @@ Now lets run FastQC:
 ``` bash
 #Run fastqc:
 	fastqc $indir/*.fastq.gz -t 8 -o $outdir/fastqc_out
-# runs fastqc on all fastq.gz n current directory. -t threads to use
+#runs fastqc on all fastq.gz n current directory. -t threads to use
 
 #Run multiqc on fastqc output folder.
 #(It automatically detects fastqc outputs)
@@ -274,7 +279,7 @@ R
 
 ## 4.2 Set up R:
 
-Frist thing to do in R is load the dada2 library.
+First thing to do in R is load the dada2 library.
 
 Next we will do the same as above and set some variables (outpath, path). Note that in R we don't need to indicate something is a variable using `$` as in bash.
 
@@ -341,12 +346,13 @@ For completeness - we will check read quality in dada2. dada2 has a function `pl
 
 ```R
 # make a pdf of the read quality output plot_read_quality_F.pdf
-# 12 samples included
+# 12 samples included. The first 12 samples are included by using [1:12]
 pdf(file = paste(outpath,"/plot_read_quality_F.pdf",sep=""), 7, 7)
 plotQualityProfile(fnFs[1:12])
 dev.off()
 
-# make a pdf of the read quality output plot_read_quality_R.pdf# 12 samples included
+# make a pdf of the read quality output plot_read_quality_R.pdf
+# 12 samples included
 
 pdf(file = paste(outpath,"/plot_read_quality_R.pdf",sep=""), 7, 7)
 plotQualityProfile(fnRs[1:12])
@@ -375,15 +381,10 @@ names(filtRs) <- sample.names
 The `filterAndTrim` function
 
 > Parameters to think about are:
->
 >`trimleft`
->
 >`trunclen`
->
 >`maxN`
->
 >`maxEE`
->
 >`truncQ`
 
 
@@ -395,7 +396,7 @@ out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, trimLeft=c(10,10), truncLen=c(2
               compress=TRUE, multithread=TRUE) # On Windows set multithread=TRUE
 head(out) # check how many reads have been lost in filtering step
 # save out file in case environment shuts down
-write.table(out,paste(outpath,"/out_save_F1.tsv",sep=""),sep="\t",row.names=T)
+write.table(out,paste(outpath,"/out_save.tsv",sep=""),sep="\t",row.names=T)
 ```
 
 At this point we can look at the summary of the trimming step by looking at the varable `out`. To do this type `out` into the terminal.
@@ -459,7 +460,7 @@ We can check the read quality using FastQC again to be sure:
 
 So that we don't interrupt the R session we have been working in, let's start a new session.
 
-You can either exit your screen using `ctrl + a + d`, and start a new one `screen -S fastqc`.
+You can either exit your screen using `ctrl + a then d`, and start a new one `screen -S fastqc`.
 
 Or you can start a new session using Mobaxterm.
 
@@ -521,9 +522,9 @@ derep_reverse <- derepFastq(filtRs, verbose=TRUE)
 names(derep_reverse) <- sample.names
 ```
 
-## 4.6 Sample Inference
+## 4.6 Sample Inference/ Denoise reads
 
-This is the main function of Dada2.
+This utilises the main function of Dada2 `dada()`
 
 ``` R
 # Forward - this clusters forward reads into ASV's. later you will merge forward and reverse reads
@@ -553,16 +554,15 @@ seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE
 # check size of data.frame
 dim(seqtab.nochim)
 
-# this line will print a messagae using the outputs:
-print(paste(round(sum(seqtab.nochim)/sum(seqtab),4)*100,"% of ASV's remain after chimera removal: remaining ASV's:",dim(seqtab.nochim[2]),sep="")) # check proportion of reads are left after chimeras removed
-
-# Save seqtab.nochim as an RDS file
-saveRDS(seqtab.nochim, paste(outpath,"/seqtab_nochim.rds",sep=""))
+# this line will print a message using the outputs:
+print(paste(round(sum(seqtab.nochim)/sum(seqtab),4)*100,"% of ASV's remain after chimera removal. Remaining ASV's:",dim(seqtab.nochim[2]),sep=""))
 ```
 
 ## 4.8 Removal of negative controls
 
 If you have included negative controls in your experiment, you can remove the ASV's found in those control samples from the rest of the dataset. This is assuming that these ASV's have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample.
+
+You will need to make a list of negative control samples e.g: `negative_controls<-c("T16s", "T20s","T21s")`
 
 Here we will pretend that sample Ts16s is a negative control.
 
@@ -594,6 +594,9 @@ for(f in negative_controls){
 # save result
 write.table(seqtab.nochim, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
 
+# Save seqtab.nochim as an RDS file
+saveRDS(seqtab.nochim, paste(outpath,"/seqtab_nochim.rds",sep=""))
+
 # save csv for MicrobiomeAnalyst
 # transpose
 seqtab.nochim.df <- t(seqtab.nochim)
@@ -611,17 +614,9 @@ write.csv(seqtab.nochim.df, file = paste(outpath,"/asv_table.dada2.ma.csv",sep="
 
 Let's build a table that shows how many reads/ASV's are left after each step.
 
-You will need to remove samples from "out", Ts29_1
-
->For example to remove sample "sample_name1 and "sample_name2":
-`out <- out[which(row.names(out)!="sample_name1" & row.names(out)!="sample_name2"),]`
-
 ``` R
 # set getN function - this function will count for us
 getN <- function(x) sum(getUniques(x))
-
-# If you removed samples above you need to remove them again here:
-out <- out[which(row.names(out)!="Ts29_1" & row.names(out)!="sample_name2" ),]
 
 # Combine filtering, dada2, and chimera removal data into one dataframe
 # If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
@@ -668,27 +663,39 @@ colnames(taxa_df)[1]<-"#TAXONOMY"
 
 # write - important that "row.names=F" this time
 write.csv(taxa_df, file = paste(outpath,"/taxa.ma.csv",sep=""),row.names=F)
-
 ```
 
-Now you have completed the Dada2 aspect of the analysis!
+**Now you have completed the Dada2 aspect of the analysis!**
 
 >You should now  have been left with output files in `/home/$USER/metabarcoding_ws/outputs/dada2/`
 >
 >**Most important:**
-ASV file: `asv_table.dada2.tsv`
-Taxonomy files: `taxa.tsv`, `taxa_with_bootstraps.tsv`, and `taxa_species.tsv`
+>
+>ASV file: `asv_table.dada2.tsv`
+>
+>Taxonomy files: `taxa.csv`, `taxa_with_bootstraps.csv`, and `taxa_species.csv`
+>
+>MicrobiomeAnalyst format files :  `asv_table_dada2.ma.csv`, `taxa.ma.csv`
 >
 >**Additional:**
+>
 >Filtered reads directory: `filtered/`
-Read quality pdfs (pre filtering): `plot_read_quality_F.pdf`, `plot_read_quality_R.pdf`
-Read quality pdfs (post filtering): `plot_read_quality_filtered_F.pdf`, `plot_read_quality_filtered_R.pdf`
-R formatted ASV table pre contaminamt removal: `seqtab_nochim.rds`
-Track reads file: `track_reads.tsv`
-Saved out file (can be discarded now): `out_save_F1.tsv`
-Error rate plot pdfs: `plot_errors_F.pdf`, `plot_errors_R.pdf`
+>
+>Read quality pdfs (pre filtering): `plot_read_quality_F.pdf`, `plot_read_quality_R.pdf`
+>
+>Read quality pdfs (post filtering): `plot_read_quality_filtered_F.pdf`, `plot_read_quality_filtered_R.pdf`
+>
+>R formatted ASV table: `seqtab_nochim.rds`
+>
+>Track reads file: `track_reads.tsv`
+>
+>Saved out file (can be discarded now): `out_save.tsv`
+>
+>Error rate plot pdfs: `plot_errors_F.pdf`, `plot_errors_R.pdf`
 
 ## 5. Alternatively run [dadaist2](https://github.com/quadram-institute-bioscience/dadaist2)
+
+This is a command line wrapper for dada2.
 
 #### In the command-line:
 ``` bash
@@ -735,25 +742,30 @@ dadaist2-exporter -i $out_dir
 
 ## 6.1 [MicrobiomeAnalyst](https://www.microbiomeanalyst.ca/)
 
-To submit the files in the Dadaist MicrobiomeAnalyst directory you will first need to edit some of them.
+First download the metadata file:
+
+```
+wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/metadata.csv
+```
+
+Then use the files we produced for MicrobiomeAnalyst:  `asv_table_dada2.ma.csv`, `taxa.ma.csv`
+
+Input these data here:
+https://www.microbiomeanalyst.ca/MicrobiomeAnalyst/upload/OtuUploadView.xhtml
+
+**Dadaist2**
+
+To submit the files in the Dadaist2 MicrobiomeAnalyst directory you may first need to edit some of them.
 
 The table.txt file needs to have file extensions removed from the sample names (use find and replace).
 
 The taxa file doesn't contain enough delimiters. open in excel and save as csv file.
 
-Download metadata file:
-
-```
-wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/metadata.tsv
-```
-
 ## 6.2 Phyloseq
 
-For this you need R. It would be best to set up r studio on your computer and run this there.
+For this you need R. It would be best to set up R studio on your computer and run this there.
 
 You will need to create a Phyloseq object from the outputs of Dada2 or Dadaist2
-
-For example: Dadaist two code for plots: https://quadram-institute-bioscience.github.io/dadaist2/notes/plot.html
 
 ## 6.3 Microbiome R package
 
