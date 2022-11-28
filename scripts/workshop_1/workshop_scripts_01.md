@@ -363,6 +363,15 @@ dev.off()
 `guides(<scale> = FALSE)` is deprecated. Please use `guides(<scale> = "none")` instead.
 Ignore this.
 
+>See the [dada2 manual](https://www.bioconductor.org/packages/release/bioc/manuals/dada2/man/dada2.pdf) for descriptions of each function. 
+
+>For example, the manual explains:
+>The distribution of quality scores at each position is shown as a grey-scale heat map, with dark
+>colors corresponding to higher frequency. The plotted lines show positional summary statistics:
+>green is the mean, orange is the median, and the dashed orange lines are the 25th and 75th quantiles.
+>If the sequences vary in length, a red line will be plotted showing the percentage of reads that extend
+>to at least that position
+
 Now we will filter and trim. First we will make lists of the outputs files we will produce: `filtFs` and `filtRs`.
 
 ```R
@@ -432,9 +441,11 @@ removed_samples<-row.names(as.data.frame(out)[(which(as.data.frame(out)[,2] ==0)
 
 # modify this line to remove samples manually.
 # here, sample Ts29 has fewer reads than the rest of the dataset so we will remove it
+# note that in the table "out" full file names with extensions are required e.g:"Ts29_1.fastq.gz"
 removed_samples<-c(removed_samples,"Ts29_1.fastq.gz")
 
 # clean up file names
+# change this if your file name is not structured as SAMPLENAME_fileextension. If there are "_" in your samplename you will need to change this.
 removed_samples.names <- sapply(strsplit(basename(removed_samples), "_"), `[`, 1) # check this works for your data
 
 # remove samples from filtFs, filtRs, sample.names
@@ -558,13 +569,15 @@ dim(seqtab.nochim)
 print(paste(round(sum(seqtab.nochim)/sum(seqtab),4)*100,"% of ASV's remain after chimera removal. Remaining ASV's:",dim(seqtab.nochim[2]),sep=""))
 ```
 
-## 4.8 Removal of negative controls
+## 4.8 Removal of negative controls (Optional)
 
-If you have included negative controls in your experiment, you can remove the ASV's found in those control samples from the rest of the dataset. This is assuming that these ASV's have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample.
+If your negative control doesn't contain reads, or you have not included a negative control in your study, skip this step. 
 
-You will need to make a list of negative control samples e.g: `negative_controls<-c("T16s", "T20s","T21s")`
+If you have included negative controls in your experiment, and they have enough reads remaining at this stage that ASV's have been found in those samples, you can remove those ASV's from the rest of the dataset. This is assuming that these ASV's have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample.
 
-Here we will pretend that sample Ts16s is a negative control.
+You will need to make a list of negative control samples e.g: `negative_controls<-c("T16s", "T20s","T21s")`. You will only need the sample names for this stage, not the file name as before when we removed samples.
+
+Here we will pretend that sample `Ts16s` is a negative control.
 
 ``` R
 # make a list of the negative control samples
@@ -586,10 +599,22 @@ for(f in negative_controls){
 }
 
 # if we would like to keep this new ASV table, we can replace the old dataframe seqtab.nochim with the new one seqtab.nochim.c and proceed:
-# seqtab.nochim<-seqtab.nochim.c
-# rm(seqtab.nochim.c)
+seqtab.nochim<-seqtab.nochim.c
+rm(seqtab.nochim.c)
 
 # we won't do this here because we didn't use a true negative control
+
+```
+
+Now that we have removed chimeras and optionally removed negative controls we can save our final ASV table which is saved as `seqtab.nochim`.
+
+``` R
+
+#sample.names <- 
+
+sapply(strsplit(seqtab.nochim, "_"), `[`, 1)
+
+names(seqtab.nochim)
 
 # save result
 write.table(seqtab.nochim, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
@@ -603,7 +628,7 @@ seqtab.nochim.df <- t(seqtab.nochim)
 # make a column for the samples names called "#NAMES"
 seqtab.nochim.df <- cbind(row.names(seqtab.nochim.df),seqtab.nochim.df)
 
-# set first column name
+# set first column name as "#NAMES" for MicrobiomeAnalyst
 colnames(seqtab.nochim.df)[1]<-"#NAMES"
 
 # write output
@@ -667,7 +692,7 @@ write.csv(taxa_df, file = paste(outpath,"/taxa.ma.csv",sep=""),row.names=F)
 
 **Now you have completed the Dada2 aspect of the analysis!**
 
->You should now  have been left with output files in `/home/$USER/metabarcoding_ws/outputs/dada2/`
+>You should now  have been left with output files in your `outpath`: `/home/$USER/metabarcoding_ws/outputs/dada2/`
 >
 >**Most important:**
 >

@@ -185,7 +185,9 @@ Fungi - ITS2
 
 `Best practices in metabarcoding of fungi: From experimental design to results <https://onlinelibrary.wiley.com/doi/10.1111/mec.16460#.YmMZICqe5zw.twitter>_`
 
-nuclear ribosomal internal transcribed spacer (ITS)
+`Database: Unite <https://unite.ut.ee/>`_
+
+Nuclear ribosomal internal transcribed spacer (ITS)
 Note: "By reanalysing published data sets, we demonstrate that operational taxonomic units (OTUs) outperform amplified sequence variants (ASVs) in recovering fungal diversity, a finding that is particularly evident for long markers. Additionally, analysis of the full-length ITS region allows more accurate taxonomic placement of fungi and other eukaryotes compared to the ITS2 subregion."
 
 ANCOM
