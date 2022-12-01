@@ -6,7 +6,10 @@ What is metabarcoding?
 
 Getting started:
 
+https://www.youtube.com/watch?v=aIUOnY9iLAk
 
+Lecture from Methothd Ecol Evol:
+https://www.youtube.com/watch?v=HeHVneOdO00
 
 Recommended reading:
 --------------------
@@ -230,10 +233,12 @@ Useful databases
 
 - SILVA - 16S / 18S
 - PR2 - `18S database <https://pr2-database.org/>`_
+- `UNITE <https://unite.ut.ee/>`_ - eukaryotic nuclear ribosomal ITS region
 
 Cox-1 gene databases:
 - Custom database: `DUFA <github.com/uit-metabarcoding/DUFA>`_ : `Paper <https://academic.oup.com/icesjms/article/78/9/3342/6360557#323435484>`_
 
+https://unite.ut.ee/
 - `Automated high throughput animal CO1 metabarcoding classification <https://www.nature.com/articles/s41598-018-22505-4>`_
 
 Diversity Statistics

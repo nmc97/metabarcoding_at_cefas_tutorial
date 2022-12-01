@@ -10,6 +10,10 @@ Dada2 - Background & Installation
 
 Dada2 is a widely used software for identifying ASV's in metabarcoding studies.
 
+Manual:
+
+https://www.bioconductor.org/packages/release/bioc/manuals/dada2/man/dada2.pdf
+
 Papers:
 
 `DADA2: High resolution sample inference from Illumina amplicon data, Challahan et al. 2016, Nature Methods <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/>`_
