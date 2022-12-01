@@ -1893,11 +1893,13 @@ hue-6-2: #c18401
 				.joplin-checklist li:not(.checked)::before {
 					content:"\f0c8";
 				}
-.mermaid { background-color: white; width: 640px; }</style><div id="rendered-md"><p><em>29th July 2022<br/>
+.mermaid { background-color: white; width: 640px; }</style><div id="rendered-md"><h1 id="metabarcoding-workshop">Metabarcoding workshop</h1>
+<p><em>29th July 2022<br/>
 Weymouth</em></p>
 <p><strong>Author:</strong> Nicola Coyle<br/>
-Based in part on the Dada2 tutorial: <a data-from-md="" title="https://benjjneb.github.io/dada2/tutorial.html" href="https://benjjneb.github.io/dada2/tutorial.html">https://benjjneb.github.io/dada2/tutorial.html</a><br/>
-Further resources can be found here: <a data-from-md="" title="https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html" href="https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html">https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html</a></p>
+Based in part on the Dada2 tutorial: <a data-from-md="" title="https://benjjneb.github.io/dada2/tutorial.html" href="https://benjjneb.github.io/dada2/tutorial.html">https://benjjneb.github.io/dada2/tutorial.html</a></p>
+<p>To learn more about Dada2 please see the <a data-from-md="" title="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/">paper</a> and <a data-from-md="" title="https://www.bioconductor.org/packages/devel/bioc/manuals/dada2/man/dada2.pdf" href="https://www.bioconductor.org/packages/devel/bioc/manuals/dada2/man/dada2.pdf">manual</a></p>
+<p>Further resources can be found here: <a data-from-md="" title="https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html" href="https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html">https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html</a></p>
 <p>If you would like to try this on your own data you can use the script supplied here: <a data-from-md="" title="https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R" href="https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R">https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R</a></p>
 <h2 id="1-set-up">1. Set up</h2>
 <p>First, let&apos;s set up a directory to do our work in. We will call is metabarcoding_ws and place it in our home directory (<code class="inline-code">~/</code> or <code class="inline-code">/home/$USER</code>).</p>
@@ -1960,7 +1962,7 @@ mv silva_species_assignment_v138.<span class="hljs-number">1</span>.fa.gz?downlo
 rsync -ravz /home/nc07/metabarcoding_ws/data/16S/fastq ~/metabarcoding_ws/data/16S/</pre><pre class="hljs"><code><span class="hljs-comment"># this will take my fastq folder containing read files and place it in your 16S directory</span>
 rsync -ravz /home/nc07/metabarcoding_ws/data/16S/fastq ~/metabarcoding_ws/data/16S/</code></pre></div>
 <p><strong>Option 2: Download from SRA (long)</strong><br/>
-Uses SRA-tools: <a data-from-md="" title="https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump" href="https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump">https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump</a></p>
+Uses <a data-from-md="" title="https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump" href="https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump">SRA-tools</a></p>
 <p>This code requires a list of sample names and accession numbers to run. I have compile one here: <a data-from-md="" title="https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt" href="https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt">https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt</a></p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
@@ -2036,7 +2038,7 @@ mamba create -n fastqc fastqc MultiQC</code></pre></div>
 &quot;MultiQC&quot;: installs the program MultiQC</p>
 <p>You can list as many programs as you want after naming the environment and Mamba will attempt to install them.</p>
 <p>However, it is good practice to keep individual environments for specific programs. This is because when you add a new program to environment, it may require different dependencies than programs already in the environment. Thus, the dependencies could clash and cause one or many programs so stop working. Here we will keep the number of programs in each environment low, and try to group them by task. Fastqc and MultiQC are frequently used together and work well in and envrionment.</p>
-<p>In the next environment we need to set up R using the package r-essentials. Thn we can install dada2, which runs in R.</p>
+<p>In the next environment we set up R using the package r-essentials. Then we can install dada2, which runs in R:</p>
 <p><strong>Set up dada2 env:</strong></p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
@@ -2045,7 +2047,7 @@ conda activate dada2 # activate the new environment
 mamba  install bioconductor-dada2 # install dada2</pre><pre class="hljs"><code>mamba create -n dada2 r-essentials <span class="hljs-comment"># setup a new environment and install r-essentials</span>
 conda activate dada2 <span class="hljs-comment"># activate the new environment</span>
 mamba  install bioconductor-dada2 <span class="hljs-comment"># install dada2</span></code></pre></div>
-<p>Lastly we will install dadasit2, which is a wrapper program for dada2. Meaning, it bundled up code for you to run dada2 using a single line of code in the command-line. This could be useful if you have data that you want to quickly analyse which isn&apos;t too complex, requiring more manual coding work.</p>
+<p>Lastly we will install dadasit2, which is a wrapper program for dada2. This means that they bundled up code for running dada2 into a scripts so that you can run dada2 using a single line of code in the command-line. This could be useful if you have data that you want to quickly analyse which isn&apos;t too complex.</p>
 <p><strong>Set up dadaist2 env:</strong></p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
@@ -2067,7 +2069,7 @@ mamba install -c conda-forge pyyaml <span class="hljs-comment"># optional: neede
 ```">screen -S meta</pre><pre class="hljs"><code>screen -S meta</code></pre></div>
 <p>You can leave the screen by pressing <code class="inline-code">ctrl + a then d</code></p>
 <p>Restart the screen by typing <code class="inline-code">screen -r meta</code></p>
-<h3 id="22-start-an-interactive-session-for-the-day">2.2 Start an interactive session for the day:</h3>
+<h3 id="22-start-an-interactive-session-for-the-day-using-pod-at-cefas">2.2 Start an interactive session for the day (using POD at Cefas):</h3>
 <p>Where we are all working now, there isn&apos;t much computing power available. In POD we will need to each ask for more by starting an interactive session.</p>
 <p>Here, you can change the S30 to B30 if there is no more space left on S30.</p>
 <p>See <a data-from-md="" title="https://cefas.sharepoint.com/sites/PODHighPerformanceComputingUsers/SitePages/Running%20Jobs%20on%20MT2.aspx" href="https://cefas.sharepoint.com/sites/PODHighPerformanceComputingUsers/SitePages/Running%20Jobs%20on%20MT2.aspx">here</a> for more information.</p>
@@ -2078,51 +2080,52 @@ mamba install -c conda-forge pyyaml <span class="hljs-comment"># optional: neede
 <p>First thing we need to do is check the quality of the data. We will run fastqc which will assess all the fastq files filled with reads. It will tell us how many reads we have and what they look like in regards to length and quality.</p>
 <h2 id="31-run-fastqc-and-multiqc">3.1 Run <a data-from-md="" title="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/" href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">Fastqc</a> and <a data-from-md="" title="https://www.bing.com/search?q=multiqc&amp;cvid=41c889025cf2474eae8615972425b160&amp;aqs=edge..69i57j0l8j69i11004.1847j0j4&amp;FORM=ANAB01&amp;PC=U531" href="https://www.bing.com/search?q=multiqc&amp;cvid=41c889025cf2474eae8615972425b160&amp;aqs=edge..69i57j0l8j69i11004.1847j0j4&amp;FORM=ANAB01&amp;PC=U531">Multiqc</a></h2>
 <p>The first thing we will do is activate the conda envrionment we made earlier called &quot;fastqc&quot;. This environment contains programs fastqc and MultiQC.</p>
-<p>Then we will set some paths. This means that we will set two variables <code class="inline-code">$inder</code> and <code class="inline-code">$outdir</code> which contain the paths on the files system. Variables in bash are denoted using a <code class="inline-code">$</code>. The first path, <code class="inline-code">$inder</code>, will contain the path to the input data for the experiment. We put this data in he directory (folder) called <code class="inline-code">~/metabarcoding_ws/data/16S/fastq</code>, so this will be set as our, <code class="inline-code">$inder</code>, variable.</p>
+<p>Then we will set some paths. This means that we will set two variables <code class="inline-code">$indir</code> and <code class="inline-code">$outdir</code> which contain the paths on the files system. Variables in bash are denoted using a <code class="inline-code">$</code>. The first path, <code class="inline-code">$indir</code>, will contain the path to the input data for the experiment. We put this data in he directory (folder) called <code class="inline-code">~/metabarcoding_ws/data/16S/fastq</code>, so this will be set as our, <code class="inline-code">$indir</code>, variable.</p>
 <p>If the output directory for fastqc doesn&apos;t exist it will not be happy, so we need to make it. To make a directory we use the command <code class="inline-code">mkdir</code>.</p>
 <p>After we make this directory we run fastqc.</p>
 <p>Lastly we will run MultiQC, which collates all the outputs from fastqc and puts them into one report.</p>
 <p>Okay, let&apos;s try it:</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
-```">#Activate conda environment:
+```"># Activate conda environment:
     conda activate fastqc
 
-#Set paths
+# Set paths
     indir=~/metabarcoding_ws/data/16S/fastq # this is where our input data lives
     outdir=~/metabarcoding_ws/outputs # this is where all our outputs will go
 
-#Make a directory to store fastqc files
-    mkdir $outdir/fastqc_out</pre><pre class="hljs"><code><span class="hljs-comment">#Activate conda environment:</span>
+# Make a directory to store fastqc files
+    mkdir $outdir/fastqc_out</pre><pre class="hljs"><code><span class="hljs-comment"># Activate conda environment:</span>
     conda activate fastqc
 
-<span class="hljs-comment">#Set paths</span>
+<span class="hljs-comment"># Set paths</span>
     indir=~/metabarcoding_ws/data/16S/fastq <span class="hljs-comment"># this is where our input data lives</span>
     outdir=~/metabarcoding_ws/outputs <span class="hljs-comment"># this is where all our outputs will go</span>
 
-<span class="hljs-comment">#Make a directory to store fastqc files</span>
+<span class="hljs-comment"># Make a directory to store fastqc files</span>
     mkdir <span class="hljs-variable">$outdir</span>/fastqc_out</code></pre></div>
-<p>Lets check that that worked by listing all the files in our output directory.</p>
-<p><code class="inline-code">ls $outdir</code>: ls is a command to list files. Here it will list all the files in <code class="inline-code">$outdir</code>.</p>
+<p>Lets check that that worked by listing all the files in our output directory:</p>
+<p><code class="inline-code">ls $outdir</code></p>
+<p><code class="inline-code">ls</code> is a command to list files. Here it will list all the files in <code class="inline-code">$outdir</code>.</p>
 <p>If it gives <code class="inline-code">fastqc_ws</code> as an output on the terminal, then we successfully created that directory.</p>
 <p>Now lets run FastQC:</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
-```">#Run fastqc:
+```"># Run fastqc:
     fastqc $indir/*.fastq.gz -t 8 -o $outdir/fastqc_out
-#runs fastqc on all fastq.gz n current directory. -t threads to use
+# runs fastqc on all fastq.gz n current directory. -t threads to use
 
-#Run multiqc on fastqc output folder.
-#(It automatically detects fastqc outputs)
-#change `--title` if you wish
+# Run multiqc on fastqc output folder $outdir/fastqc_out/ usng wild card * to catch all the fies in the directory
+# (It automatically detects fastqc outputs)
+# change `--title` if you wish
 
-    multiqc $outdir/fastqc_out/* -o $outdir/fastqc_out/multiqc_fastqc --title fastqc</pre><pre class="hljs"><code><span class="hljs-comment">#Run fastqc:</span>
+    multiqc $outdir/fastqc_out/* -o $outdir/fastqc_out/multiqc_fastqc --title fastqc</pre><pre class="hljs"><code><span class="hljs-comment"># Run fastqc:</span>
     fastqc <span class="hljs-variable">$indir</span>/*.fastq.gz -t 8 -o <span class="hljs-variable">$outdir</span>/fastqc_out
-<span class="hljs-comment">#runs fastqc on all fastq.gz n current directory. -t threads to use</span>
+<span class="hljs-comment"># runs fastqc on all fastq.gz n current directory. -t threads to use</span>
 
-<span class="hljs-comment">#Run multiqc on fastqc output folder.</span>
-<span class="hljs-comment">#(It automatically detects fastqc outputs)</span>
-<span class="hljs-comment">#change `--title` if you wish</span>
+<span class="hljs-comment"># Run multiqc on fastqc output folder $outdir/fastqc_out/ usng wild card * to catch all the fies in the directory</span>
+<span class="hljs-comment"># (It automatically detects fastqc outputs)</span>
+<span class="hljs-comment"># change `--title` if you wish</span>
 
     multiqc <span class="hljs-variable">$outdir</span>/fastqc_out/* -o <span class="hljs-variable">$outdir</span>/fastqc_out/multiqc_fastqc --title fastqc</code></pre></div>
 <p>This gives a message at the end:</p>
@@ -2164,8 +2167,7 @@ conda activate dada2
 <span class="hljs-comment"># start R session</span>
 R</code></pre></div>
 <h2 id="42-set-up-r">4.2 Set up R:</h2>
-<p>First thing to do in R is load the dada2 library.</p>
-<p>Next we will do the same as above and set some variables (outpath, path). Note that in R we don&apos;t need to indicate something is a variable using <code class="inline-code">$</code> as in bash.</p>
+<p>First thing to do in R is load the dada2 library <code class="inline-code">library(dada2)</code>. You will need to do this any time that you restart the R session. If you leave the session and return, loading the R session again, it will not reload the libraries for you.</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="R" data-joplin-source-open="```R
 " data-joplin-source-close="
 ```">#=========================#
@@ -2174,8 +2176,17 @@ R</code></pre></div>
 #=========================#
 
 library(dada2)
+</pre><pre class="hljs"><code><span class="hljs-comment">#=========================#</span>
+<span class="hljs-comment"># load libraries</span>
+<span class="hljs-comment"># we only need dada2</span>
+<span class="hljs-comment">#=========================#</span>
 
-#=========================#
+library<span class="hljs-punctuation">(</span>dada2<span class="hljs-punctuation">)</span>
+</code></pre></div>
+<p>Next we will do the same as above and set some variables (outpath, path). Note that in R we don&apos;t need to indicate something is a variable using <code class="inline-code">$</code> as in bash.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="R" data-joplin-source-open="```R
+" data-joplin-source-close="
+```">#=========================#
 # setup file paths
 #=========================#
 
@@ -2196,13 +2207,6 @@ if (file.exists(outpath)) {
 # check input files exist in read file directory
 # list.files will list all the files in path
 list.files(path)</pre><pre class="hljs"><code><span class="hljs-comment">#=========================#</span>
-<span class="hljs-comment"># load libraries</span>
-<span class="hljs-comment"># we only need dada2</span>
-<span class="hljs-comment">#=========================#</span>
-
-library<span class="hljs-punctuation">(</span>dada2<span class="hljs-punctuation">)</span>
-
-<span class="hljs-comment">#=========================#</span>
 <span class="hljs-comment"># setup file paths</span>
 <span class="hljs-comment">#=========================#</span>
 
@@ -2223,10 +2227,12 @@ path <span class="hljs-operator">&lt;-</span> <span class="hljs-string">&quot;~/
 <span class="hljs-comment"># check input files exist in read file directory</span>
 <span class="hljs-comment"># list.files will list all the files in path</span>
 list.files<span class="hljs-punctuation">(</span>path<span class="hljs-punctuation">)</span></code></pre></div>
-<p>dada2 uses lists of file names, so we need to produce them. We will produce a list of forward read files <code class="inline-code">fnFs</code> and reverse reads <code class="inline-code">fnrs</code>.</p>
+<p>dada2 uses lists of file names, so we need to produce them. We will produce a list of forward read files <code class="inline-code">fnFs</code> and reverse reads <code class="inline-code">fnRs</code>.</p>
 <blockquote>
 <p><em>Note:</em> if your files end in something different to <code class="inline-code">_1.fastq.gz</code> or <code class="inline-code">_2.fastq.gz</code> you will need to change the code to match your data.<br/>
 In particular: <code class="inline-code">pattern=&quot;_1.fastq&quot;</code> and <code class="inline-code">pattern=&quot;_2.fastq&quot;</code></p>
+<p>For example if you&apos;re files have an extension <code class="inline-code">_R1_001.fastq.gz</code> and <code class="inline-code">R2_001.fastq.gz</code>, you could use the pattern=<code class="inline-code">_R1_001.fastq</code> and pattern=<code class="inline-code">_R2_001.fastq</code>.<br/>
+You can use any pattern that allows the function to find every forward read file and each reverse read file correctly</p>
 </blockquote>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="R" data-joplin-source-open="```R
 " data-joplin-source-close="
@@ -2253,6 +2259,17 @@ fnRs <span class="hljs-operator">&lt;-</span> sort<span class="hljs-punctuation"
 
 <span class="hljs-comment"># Extract and keep a list of sample names, assuming filenames have format: SAMPLENAME_XXX.fastq</span>
 sample.names <span class="hljs-operator">&lt;-</span> sapply<span class="hljs-punctuation">(</span>strsplit<span class="hljs-punctuation">(</span>basename<span class="hljs-punctuation">(</span>fnFs<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;_&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> `[`<span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span></code></pre></div>
+<p>This last line may need your attention when it comes to your own data.</p>
+<p>Firstly, make sure that you know what sample names you would like to apply to your data and that they appear in your file names.</p>
+<p>This line will extract the string that comes before the first underscore. If you would like it to extract everything before the second underscore you can change the number <code class="inline-code">1</code> to a <code class="inline-code">2</code>.</p>
+<p>For example:</p>
+<p><code class="inline-code">Sample_name_1.fastq.gz</code></p>
+<p><code class="inline-code">sample.names &lt;- sapply(strsplit(basename(fnFs), &quot;_&quot;), </code>[<code class="inline-code">, 2)</code></p>
+<p>However, if you have samples that have underscores in the sample names, this line will not work properly. In this case it will only use the word before the first underscore &quot;<em>&quot;.<br/>
+For example, if your samples have &ldquo;</em>&rdquo; within the name, try to find a different point at which to split the filename up.</p>
+<p>For example:</p>
+<p><code class="inline-code">SAMPLE_NAME_16S_R1.fastq.gz</code></p>
+<p><code class="inline-code">sample.names &lt;- sapply(strsplit(basename(fnFs), &quot;_16S&quot;), </code>[<code class="inline-code">, 1)</code></p>
 <h2 id="43-filter-and-trim">4.3 Filter and trim:</h2>
 <p>Now that we have set up all the file paths, we can have a second look at the quality of the reads. This time, using dada2.</p>
 <p>Then we can decide how we would like to trim and filter them.</p>
@@ -2287,6 +2304,17 @@ dev.off<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</
 <p>Note: you will see the following error message:<br/>
 <code class="inline-code">guides(&lt;scale&gt; = FALSE)</code> is deprecated. Please use <code class="inline-code">guides(&lt;scale&gt; = &quot;none&quot;)</code> instead.<br/>
 Ignore this.</p>
+</blockquote>
+<blockquote>
+<p>See the <a data-from-md="" title="https://www.bioconductor.org/packages/release/bioc/manuals/dada2/man/dada2.pdf" href="https://www.bioconductor.org/packages/release/bioc/manuals/dada2/man/dada2.pdf">dada2 manual</a> for descriptions of each function.</p>
+</blockquote>
+<blockquote>
+<p>For example, the manual explains:<br/>
+The distribution of quality scores at each position is shown as a grey-scale heat map, with dark<br/>
+colors corresponding to higher frequency. The plotted lines show positional summary statistics:<br/>
+green is the mean, orange is the median, and the dashed orange lines are the 25th and 75th quantiles.<br/>
+If the sequences vary in length, a red line will be plotted showing the percentage of reads that extend<br/>
+to at least that position</p>
 </blockquote>
 <p>Now we will filter and trim. First we will make lists of the outputs files we will produce: <code class="inline-code">filtFs</code> and <code class="inline-code">filtRs</code>.</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="R" data-joplin-source-open="```R
@@ -2373,34 +2401,38 @@ removed_samples&lt;-row.names(as.data.frame(out)[(which(as.data.frame(out)[,2] =
 
 # modify this line to remove samples manually.
 # here, sample Ts29 has fewer reads than the rest of the dataset so we will remove it
+# note that in the table &quot;out&quot; full file names with extensions are required e.g:&quot;Ts29_1.fastq.gz&quot;
 removed_samples&lt;-c(removed_samples,&quot;Ts29_1.fastq.gz&quot;)
 
 # clean up file names
+# change this if your file name is not structured as SAMPLENAME_fileextension. If there are &quot;_&quot; in your samplename you will need to change this.
 removed_samples.names &lt;- sapply(strsplit(basename(removed_samples), &quot;_&quot;), `[`, 1) # check this works for your data
 
 # remove samples from filtFs, filtRs, sample.names
 if(length(removed_samples) != 0){
   filtFs&lt;-filtFs[(!(names(filtFs) %in% removed_samples.names))] # remove from list of forward filtered read files
   filtRs&lt;-filtRs[(!(names(filtRs) %in% removed_samples.names))] # remove from list of reverse filtered read files
-  sample.names&lt;-sample.names[!(sample.names) %in% removed_samples.names]
-  out&lt;-out[which(!(row.names(out)%in% removed_samples)),]
+  sample.names&lt;-sample.names[!(sample.names) %in% removed_samples.names] # removes from sample names list
+  out&lt;-out[which(!(row.names(out)%in% removed_samples)),] # removes from out
 }
 </pre><pre class="hljs"><code><span class="hljs-comment"># if statement checks if samples need to be removed and following statements remove them</span>
 removed_samples<span class="hljs-operator">&lt;-</span>row.names<span class="hljs-punctuation">(</span>as.data.frame<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-punctuation">(</span>which<span class="hljs-punctuation">(</span>as.data.frame<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">==</span><span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span>
 
 <span class="hljs-comment"># modify this line to remove samples manually.</span>
 <span class="hljs-comment"># here, sample Ts29 has fewer reads than the rest of the dataset so we will remove it</span>
+<span class="hljs-comment"># note that in the table &quot;out&quot; full file names with extensions are required e.g:&quot;Ts29_1.fastq.gz&quot;</span>
 removed_samples<span class="hljs-operator">&lt;-</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>removed_samples<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;Ts29_1.fastq.gz&quot;</span><span class="hljs-punctuation">)</span>
 
 <span class="hljs-comment"># clean up file names</span>
+<span class="hljs-comment"># change this if your file name is not structured as SAMPLENAME_fileextension. If there are &quot;_&quot; in your samplename you will need to change this.</span>
 removed_samples.names <span class="hljs-operator">&lt;-</span> sapply<span class="hljs-punctuation">(</span>strsplit<span class="hljs-punctuation">(</span>basename<span class="hljs-punctuation">(</span>removed_samples<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;_&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> `[`<span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># check this works for your data</span>
 
 <span class="hljs-comment"># remove samples from filtFs, filtRs, sample.names</span>
 <span class="hljs-keyword">if</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">length</span><span class="hljs-punctuation">(</span>removed_samples<span class="hljs-punctuation">)</span> <span class="hljs-operator">!=</span> <span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">{</span>
   filtFs<span class="hljs-operator">&lt;-</span>filtFs<span class="hljs-punctuation">[</span><span class="hljs-punctuation">(</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>filtFs<span class="hljs-punctuation">)</span> <span class="hljs-operator">%in%</span> removed_samples.names<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span> <span class="hljs-comment"># remove from list of forward filtered read files</span>
   filtRs<span class="hljs-operator">&lt;-</span>filtRs<span class="hljs-punctuation">[</span><span class="hljs-punctuation">(</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>filtRs<span class="hljs-punctuation">)</span> <span class="hljs-operator">%in%</span> removed_samples.names<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span> <span class="hljs-comment"># remove from list of reverse filtered read files</span>
-  sample.names<span class="hljs-operator">&lt;-</span>sample.names<span class="hljs-punctuation">[</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span>sample.names<span class="hljs-punctuation">)</span> <span class="hljs-operator">%in%</span> removed_samples.names<span class="hljs-punctuation">]</span>
-  out<span class="hljs-operator">&lt;-</span>out<span class="hljs-punctuation">[</span>which<span class="hljs-punctuation">(</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span>row.names<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">)</span><span class="hljs-operator">%in%</span> removed_samples<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span>
+  sample.names<span class="hljs-operator">&lt;-</span>sample.names<span class="hljs-punctuation">[</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span>sample.names<span class="hljs-punctuation">)</span> <span class="hljs-operator">%in%</span> removed_samples.names<span class="hljs-punctuation">]</span> <span class="hljs-comment"># removes from sample names list</span>
+  out<span class="hljs-operator">&lt;-</span>out<span class="hljs-punctuation">[</span>which<span class="hljs-punctuation">(</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span>row.names<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">)</span><span class="hljs-operator">%in%</span> removed_samples<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span> <span class="hljs-comment"># removes from out</span>
 <span class="hljs-punctuation">}</span>
 </code></pre></div>
 <p>Stop here and check the filtering and trimming step before moving forward!<br/>
@@ -2410,8 +2442,9 @@ Do you need to repeat with new parameters?</p>
 <h3 id="432-run-fastqc-and-multiqc-optional">4.3.2 Run <a data-from-md="" title="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/" href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">Fastqc</a> and <a data-from-md="" title="https://www.bing.com/search?q=multiqc&amp;cvid=41c889025cf2474eae8615972425b160&amp;aqs=edge..69i57j0l8j69i11004.1847j0j4&amp;FORM=ANAB01&amp;PC=U531" href="https://www.bing.com/search?q=multiqc&amp;cvid=41c889025cf2474eae8615972425b160&amp;aqs=edge..69i57j0l8j69i11004.1847j0j4&amp;FORM=ANAB01&amp;PC=U531">Multiqc</a> [optional]</h3>
 <h4 id="open-a-new-command-line-session">Open a new command-line session:</h4>
 <p>So that we don&apos;t interrupt the R session we have been working in, let&apos;s start a new session.</p>
-<p>You can either exit your screen using <code class="inline-code">ctrl + a + d</code>, and start a new one <code class="inline-code">screen -S fastqc</code>.</p>
-<p>Or you can start a new session using Mobaxterm.</p>
+<p>Option 1 - You can exit your screen using <code class="inline-code">ctrl + a then d</code>, and start a new one <code class="inline-code">screen -S fastqc</code>.<br/>
+Then to return you can use <code class="inline-code">ctrl + a then d</code>, and re-enter the <code class="inline-code">meta</code> screen using <code class="inline-code">screen -r meta</code></p>
+<p>Or Option 2 - You can start a new session using Mobaxterm and work there</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
 ```"># start another interactive session in a different session
@@ -2457,7 +2490,7 @@ Do you need to repeat with new parameters?</p>
     multiqc <span class="hljs-variable">$outdir</span>/filtered_fastqc_out/* -o <span class="hljs-variable">$outdir</span>/filtered_fastqc_out/multiqc_fastqc --interactive --title fastqc_filtered_interactive</code></pre></div>
 <p>If you are happy to proceed, go back to the R session and start to calculate error rates:</p>
 <h2 id="44-error-rates">4.4 Error rates</h2>
-<h4 id="back-in-r">Back in R:</h4>
+<h3 id="back-in-r">Back in R:</h3>
 <p>Dada2 relies on error models calculated for every dataset. the function <code class="inline-code">learnErrors()</code> will calculate these and store them in <code class="inline-code">errF</code> and <code class="inline-code">errR</code></p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="R" data-joplin-source-open="```R
 " data-joplin-source-close="
@@ -2501,6 +2534,10 @@ derep_reverse <span class="hljs-operator">&lt;-</span> derepFastq<span class="hl
 <span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>derep_reverse<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> sample.names</code></pre></div>
 <h2 id="46-sample-inference-denoise-reads">4.6 Sample Inference/ Denoise reads</h2>
 <p>This utilises the main function of Dada2 <code class="inline-code">dada()</code></p>
+<p>Here, dada2 will use error models calculated for forward and reverse reads separaetly to determine which ASV&apos;s are likely to be real biological sequences or if they have occured due to errors. This is done separately since assessing overlapped regions between paired reads is less accurate than analysing each read in the pair directly.</p>
+<p>After denoising, ASV&apos;s are then merged by aligning paired reads.</p>
+<p>Then, an ASV table is created <code class="inline-code">seqtab</code> using function <code class="inline-code">makeSequenceTable</code>.</p>
+<p>We can check that the merged reads are the length we expected using <code class="inline-code">getSequences()</code>.</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="R" data-joplin-source-open="```R
 " data-joplin-source-close="
 ```"># Forward - this clusters forward reads into ASV&apos;s. later you will merge forward and reverse reads
@@ -2516,6 +2553,7 @@ head(mergers[[1]])
 # amplicon sequence variant table (ASV)
 seqtab &lt;- makeSequenceTable(mergers)
 dim(seqtab) # check size of table
+
 # Inspect distribution of sequence lengths
 table(nchar(getSequences(seqtab)))</pre><pre class="hljs"><code><span class="hljs-comment"># Forward - this clusters forward reads into ASV&apos;s. later you will merge forward and reverse reads</span>
 dadaFs <span class="hljs-operator">&lt;-</span> dada<span class="hljs-punctuation">(</span>derep_forward<span class="hljs-punctuation">,</span> err<span class="hljs-operator">=</span>errF<span class="hljs-punctuation">,</span> multithread<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
@@ -2530,6 +2568,7 @@ head<span class="hljs-punctuation">(</span>mergers<span class="hljs-punctuation"
 <span class="hljs-comment"># amplicon sequence variant table (ASV)</span>
 seqtab <span class="hljs-operator">&lt;-</span> makeSequenceTable<span class="hljs-punctuation">(</span>mergers<span class="hljs-punctuation">)</span>
 <span class="hljs-built_in">dim</span><span class="hljs-punctuation">(</span>seqtab<span class="hljs-punctuation">)</span> <span class="hljs-comment"># check size of table</span>
+
 <span class="hljs-comment"># Inspect distribution of sequence lengths</span>
 table<span class="hljs-punctuation">(</span>nchar<span class="hljs-punctuation">(</span>getSequences<span class="hljs-punctuation">(</span>seqtab<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span></code></pre></div>
 <h2 id="47-remove-chimeras">4.7 Remove chimeras</h2>
@@ -2551,10 +2590,11 @@ seqtab.nochim <span class="hljs-operator">&lt;-</span> removeBimeraDenovo<span c
 
 <span class="hljs-comment"># this line will print a message using the outputs:</span>
 print<span class="hljs-punctuation">(</span>paste<span class="hljs-punctuation">(</span><span class="hljs-built_in">round</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">)</span><span class="hljs-operator">/</span><span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span>seqtab<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-number">4</span><span class="hljs-punctuation">)</span><span class="hljs-operator">*</span><span class="hljs-number">100</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;% of ASV&apos;s remain after chimera removal. Remaining ASV&apos;s:&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-built_in">dim</span><span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">[</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span></code></pre></div>
-<h2 id="48-removal-of-negative-controls">4.8 Removal of negative controls</h2>
-<p>If you have included negative controls in your experiment, you can remove the ASV&apos;s found in those control samples from the rest of the dataset. This is assuming that these ASV&apos;s have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample.</p>
-<p>You will need to make a list of negative control samples e.g: <code class="inline-code">negative_controls&lt;-c(&quot;T16s&quot;, &quot;T20s&quot;,&quot;T21s&quot;)</code></p>
-<p>Here we will pretend that sample Ts16s is a negative control.</p>
+<h2 id="48-removal-of-negative-controls-optional">4.8 Removal of negative controls (Optional)</h2>
+<p>If your negative control doesn&apos;t contain reads, or you have not included a negative control in your study, skip this step.</p>
+<p>If you have included negative controls in your experiment, and they have enough reads remaining at this stage that ASV&apos;s have been found in those samples, you can remove those ASV&apos;s from the rest of the dataset. This is assuming that these ASV&apos;s have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample.</p>
+<p>You will need to make a list of negative control samples e.g: <code class="inline-code">negative_controls&lt;-c(&quot;T16s&quot;, &quot;T20s&quot;,&quot;T21s&quot;)</code>. You will only need the sample names for this stage, not the file name as before when we removed samples.</p>
+<p>Here we will pretend that sample <code class="inline-code">Ts16s</code> is a negative control.</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="R" data-joplin-source-open="```R
 " data-joplin-source-close="
 ```"># make a list of the negative control samples
@@ -2576,28 +2616,11 @@ for(f in negative_controls){
 }
 
 # if we would like to keep this new ASV table, we can replace the old dataframe seqtab.nochim with the new one seqtab.nochim.c and proceed:
-# seqtab.nochim&lt;-seqtab.nochim.c
-# rm(seqtab.nochim.c)
+seqtab.nochim&lt;-seqtab.nochim.c
+rm(seqtab.nochim.c)
 
 # we won&apos;t do this here because we didn&apos;t use a true negative control
-
-# save result
-write.table(seqtab.nochim, file = paste(outpath,&quot;/asv_table.dada2.tsv&quot;,sep=&quot;&quot;),sep=&quot;\t&quot;,row.names=T)
-
-# Save seqtab.nochim as an RDS file
-saveRDS(seqtab.nochim, paste(outpath,&quot;/seqtab_nochim.rds&quot;,sep=&quot;&quot;))
-
-# save csv for MicrobiomeAnalyst
-# transpose
-seqtab.nochim.df &lt;- t(seqtab.nochim)
-# make a column for the samples names called &quot;#NAMES&quot;
-seqtab.nochim.df &lt;- cbind(row.names(seqtab.nochim.df),seqtab.nochim.df)
-
-# set first column name
-colnames(seqtab.nochim.df)[1]&lt;-&quot;#NAMES&quot;
-
-# write output
-write.csv(seqtab.nochim.df, file = paste(outpath,&quot;/asv_table.dada2.ma.csv&quot;,sep=&quot;&quot;),row.names=F)</pre><pre class="hljs"><code><span class="hljs-comment"># make a list of the negative control samples</span>
+</pre><pre class="hljs"><code><span class="hljs-comment"># make a list of the negative control samples</span>
 negative_controls<span class="hljs-operator">&lt;-</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;T16s&quot;</span><span class="hljs-punctuation">)</span>
 
 <span class="hljs-comment"># save a new version of the ASV table `seqtab.nochim`</span>
@@ -2616,15 +2639,46 @@ seqtab.nochim.c<span class="hljs-operator">&lt;-</span>seqtab.nochim
 <span class="hljs-punctuation">}</span>
 
 <span class="hljs-comment"># if we would like to keep this new ASV table, we can replace the old dataframe seqtab.nochim with the new one seqtab.nochim.c and proceed:</span>
-<span class="hljs-comment"># seqtab.nochim&lt;-seqtab.nochim.c</span>
-<span class="hljs-comment"># rm(seqtab.nochim.c)</span>
+seqtab.nochim<span class="hljs-operator">&lt;-</span>seqtab.nochim.c
+rm<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">)</span>
 
 <span class="hljs-comment"># we won&apos;t do this here because we didn&apos;t use a true negative control</span>
+</code></pre></div>
+<p>Now that we have removed chimeras and optionally removed negative controls we can save our final ASV table which is saved as <code class="inline-code">seqtab.nochim</code>.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="R" data-joplin-source-open="```R
+" data-joplin-source-close="
+```">#sample.names &lt;- 
+
+sapply(strsplit(seqtab.nochim, &quot;_&quot;), `[`, 1)
+
+names(seqtab.nochim)
+
+# save result
+write.table(seqtab.nochim, file = paste(outpath,&quot;/asv_table.dada2.tsv&quot;,sep=&quot;&quot;),sep=&quot;\t&quot;,row.names=T)
+
+# Save seqtab.nochim as an RDS file - this will make reading the table back into R much easier
+saveRDS(seqtab.nochim, paste(outpath,&quot;/seqtab_nochim.rds&quot;,sep=&quot;&quot;))
+
+# save csv for MicrobiomeAnalyst
+# transpose
+seqtab.nochim.df &lt;- t(seqtab.nochim)
+# make a column for the samples names called &quot;#NAMES&quot;
+seqtab.nochim.df &lt;- cbind(row.names(seqtab.nochim.df),seqtab.nochim.df)
+
+# set first column name as &quot;#NAMES&quot; for MicrobiomeAnalyst
+colnames(seqtab.nochim.df)[1]&lt;-&quot;#NAMES&quot;
+
+# write output
+write.csv(seqtab.nochim.df, file = paste(outpath,&quot;/asv_table.dada2.ma.csv&quot;,sep=&quot;&quot;),row.names=F)</pre><pre class="hljs"><code><span class="hljs-comment">#sample.names &lt;- </span>
+
+sapply<span class="hljs-punctuation">(</span>strsplit<span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;_&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> `[`<span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">)</span>
 
 <span class="hljs-comment"># save result</span>
 write.table<span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/asv_table.dada2.tsv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;\t&quot;</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span>
 
-<span class="hljs-comment"># Save seqtab.nochim as an RDS file</span>
+<span class="hljs-comment"># Save seqtab.nochim as an RDS file - this will make reading the table back into R much easier</span>
 saveRDS<span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/seqtab_nochim.rds&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
 
 <span class="hljs-comment"># save csv for MicrobiomeAnalyst</span>
@@ -2633,7 +2687,7 @@ seqtab.nochim.df <span class="hljs-operator">&lt;-</span> t<span class="hljs-pun
 <span class="hljs-comment"># make a column for the samples names called &quot;#NAMES&quot;</span>
 seqtab.nochim.df <span class="hljs-operator">&lt;-</span> cbind<span class="hljs-punctuation">(</span>row.names<span class="hljs-punctuation">(</span>seqtab.nochim.df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>seqtab.nochim.df<span class="hljs-punctuation">)</span>
 
-<span class="hljs-comment"># set first column name</span>
+<span class="hljs-comment"># set first column name as &quot;#NAMES&quot; for MicrobiomeAnalyst</span>
 colnames<span class="hljs-punctuation">(</span>seqtab.nochim.df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-operator">&lt;-</span><span class="hljs-string">&quot;#NAMES&quot;</span>
 
 <span class="hljs-comment"># write output</span>
@@ -2676,6 +2730,9 @@ write.table<span class="hljs-punctuation">(</span>track<span class="hljs-punctua
 <blockquote>
 <p>We can view this table in order of reads remain after negative controls are removed as follows:<br/>
 <code class="inline-code">track[order(track[,7], decreasing=T),]</code></p>
+</blockquote>
+<blockquote>
+<p>Question: How many ASV&apos;s survived the denoising and merging processes?</p>
 </blockquote>
 <h2 id="410-taxonomy">4.10 Taxonomy</h2>
 <p>Next, we will assign taxa to each ASV we have detected. We will compare our ASV&apos;s to he reference database SILVA.</p>
@@ -2723,7 +2780,7 @@ colnames<span class="hljs-punctuation">(</span>taxa_df<span class="hljs-punctuat
 write.csv<span class="hljs-punctuation">(</span>taxa_df<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/taxa.ma.csv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span></code></pre></div>
 <p><strong>Now you have completed the Dada2 aspect of the analysis!</strong></p>
 <blockquote>
-<p>You should now  have been left with output files in <code class="inline-code">/home/$USER/metabarcoding_ws/outputs/dada2/</code></p>
+<p>You should now  have been left with output files in your <code class="inline-code">outpath</code>: <code class="inline-code">/home/$USER/metabarcoding_ws/outputs/dada2/</code></p>
 <p><strong>Most important:</strong></p>
 <p>ASV file: <code class="inline-code">asv_table.dada2.tsv</code></p>
 <p>Taxonomy files: <code class="inline-code">taxa.csv</code>, <code class="inline-code">taxa_with_bootstraps.csv</code>, and <code class="inline-code">taxa_species.csv</code></p>
@@ -2737,7 +2794,7 @@ write.csv<span class="hljs-punctuation">(</span>taxa_df<span class="hljs-punctua
 <p>Saved out file (can be discarded now): <code class="inline-code">out_save.tsv</code></p>
 <p>Error rate plot pdfs: <code class="inline-code">plot_errors_F.pdf</code>, <code class="inline-code">plot_errors_R.pdf</code></p>
 </blockquote>
-<h2 id="5-alternatively-run-dadaist2">5. Alternatively run <a data-from-md="" title="https://github.com/quadram-institute-bioscience/dadaist2" href="https://github.com/quadram-institute-bioscience/dadaist2">dadaist2</a></h2>
+<h2 id="5-alternatively-run-dadaist2-optional">5. Alternatively run <a data-from-md="" title="https://github.com/quadram-institute-bioscience/dadaist2" href="https://github.com/quadram-institute-bioscience/dadaist2">dadaist2</a> (Optional)</h2>
 <p>This is a command line wrapper for dada2.</p>
 <h4 id="in-the-command-line">In the command-line:</h4>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
@@ -2817,6 +2874,7 @@ dadaist2 \
 dadaist2-exporter -i <span class="hljs-variable">$out_dir</span></code></pre></div>
 <h1 id="6-visualisation-and-statistics">6. Visualisation and statistics:</h1>
 <h2 id="61-microbiomeanalyst">6.1 <a data-from-md="" title="https://www.microbiomeanalyst.ca/" href="https://www.microbiomeanalyst.ca/">MicrobiomeAnalyst</a></h2>
+<p>MicrobiomeAnalyst is a useful tool for exploring your data (although it can be tricky to use if your data isn&apos;t in the correct format).</p>
 <p>First download the metadata file:</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
 " data-joplin-source-close="
@@ -2827,7 +2885,7 @@ dadaist2-exporter -i <span class="hljs-variable">$out_dir</span></code></pre></d
 <p><strong>Dadaist2</strong></p>
 <p>To submit the files in the Dadaist2 MicrobiomeAnalyst directory you may first need to edit some of them.</p>
 <p>The table.txt file needs to have file extensions removed from the sample names (use find and replace).</p>
-<p>The taxa file doesn&apos;t contain enough delimiters. open in excel and save as csv file.</p>
+<p>The taxa file doesn&apos;t contain enough delimiters. Open in excel and save as csv file.</p>
 <h2 id="62-phyloseq">6.2 Phyloseq</h2>
 <p>For this you need R. It would be best to set up R studio on your computer and run this there.</p>
 <p>You will need to create a Phyloseq object from the outputs of Dada2 or Dadaist2</p>

@@ -4,6 +4,9 @@ Weymouth*
 
 **Author:** Nicola Coyle
 Based in part on the Dada2 tutorial: https://benjjneb.github.io/dada2/tutorial.html
+
+To learn more about Dada2 please see the [paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/) and [manual](https://www.bioconductor.org/packages/devel/bioc/manuals/dada2/man/dada2.pdf)
+
 Further resources can be found here: https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html
 
 If you would like to try this on your own data you can use the script supplied here: https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R
@@ -76,7 +79,7 @@ rsync -ravz /home/nc07/metabarcoding_ws/data/16S/fastq ~/metabarcoding_ws/data/1
 ```
 
 **Option 2: Download from SRA (long)**
-Uses SRA-tools: https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump
+Uses [SRA-tools](https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump)
 
 This code requires a list of sample names and accession numbers to run. I have compile one here: https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt
 
@@ -132,7 +135,7 @@ You can list as many programs as you want after naming the environment and Mamba
 
 However, it is good practice to keep individual environments for specific programs. This is because when you add a new program to environment, it may require different dependencies than programs already in the environment. Thus, the dependencies could clash and cause one or many programs so stop working. Here we will keep the number of programs in each environment low, and try to group them by task. Fastqc and MultiQC are frequently used together and work well in and envrionment.
 
-In the next environment we need to set up R using the package r-essentials. Thn we can install dada2, which runs in R.
+In the next environment we set up R using the package r-essentials. Then we can install dada2, which runs in R:
 
 **Set up dada2 env:**
 ``` bash
@@ -141,7 +144,7 @@ conda activate dada2 # activate the new environment
 mamba  install bioconductor-dada2 # install dada2
 ```
 
-Lastly we will install dadasit2, which is a wrapper program for dada2. Meaning, it bundled up code for you to run dada2 using a single line of code in the command-line. This could be useful if you have data that you want to quickly analyse which isn't too complex, requiring more manual coding work.
+Lastly we will install dadasit2, which is a wrapper program for dada2. This means that they bundled up code for running dada2 into a scripts so that you can run dada2 using a single line of code in the command-line. This could be useful if you have data that you want to quickly analyse which isn't too complex.
 
 **Set up dadaist2 env:**
 
@@ -169,7 +172,7 @@ You can leave the screen by pressing `ctrl + a then d`
 
 Restart the screen by typing `screen -r meta`
 
-### 2.2 Start an interactive session for the day:
+### 2.2 Start an interactive session for the day (using POD at Cefas):
 
 Where we are all working now, there isn't much computing power available. In POD we will need to each ask for more by starting an interactive session.
 
@@ -189,7 +192,7 @@ First thing we need to do is check the quality of the data. We will run fastqc w
 
 The first thing we will do is activate the conda envrionment we made earlier called "fastqc". This environment contains programs fastqc and MultiQC.
 
-Then we will set some paths. This means that we will set two variables `$inder` and `$outdir` which contain the paths on the files system. Variables in bash are denoted using a `$`. The first path, `$inder`, will contain the path to the input data for the experiment. We put this data in he directory (folder) called `~/metabarcoding_ws/data/16S/fastq`, so this will be set as our, `$inder`, variable.
+Then we will set some paths. This means that we will set two variables `$indir` and `$outdir` which contain the paths on the files system. Variables in bash are denoted using a `$`. The first path, `$indir`, will contain the path to the input data for the experiment. We put this data in he directory (folder) called `~/metabarcoding_ws/data/16S/fastq`, so this will be set as our, `$indir`, variable.
 
 If the output directory for fastqc doesn't exist it will not be happy, so we need to make it. To make a directory we use the command `mkdir`.
 
@@ -200,34 +203,35 @@ Lastly we will run MultiQC, which collates all the outputs from fastqc and puts 
 Okay, let's try it:
 
 ```bash
-#Activate conda environment:
+# Activate conda environment:
 	conda activate fastqc
 
-#Set paths
+# Set paths
 	indir=~/metabarcoding_ws/data/16S/fastq # this is where our input data lives
 	outdir=~/metabarcoding_ws/outputs # this is where all our outputs will go
 
-#Make a directory to store fastqc files
+# Make a directory to store fastqc files
 	mkdir $outdir/fastqc_out
 ```
 
-Lets check that that worked by listing all the files in our output directory.
+Lets check that that worked by listing all the files in our output directory:
 
-`ls $outdir`: ls is a command to list files. Here it will list all the files in `$outdir`.
+`ls $outdir`
+
+`ls` is a command to list files. Here it will list all the files in `$outdir`.
 
 If it gives `fastqc_ws` as an output on the terminal, then we successfully created that directory.
-
 
 Now lets run FastQC:
 
 ``` bash
-#Run fastqc:
+# Run fastqc:
 	fastqc $indir/*.fastq.gz -t 8 -o $outdir/fastqc_out
-#runs fastqc on all fastq.gz n current directory. -t threads to use
+# runs fastqc on all fastq.gz n current directory. -t threads to use
 
-#Run multiqc on fastqc output folder.
-#(It automatically detects fastqc outputs)
-#change `--title` if you wish
+# Run multiqc on fastqc output folder $outdir/fastqc_out/ usng wild card * to catch all the fies in the directory
+# (It automatically detects fastqc outputs)
+# change `--title` if you wish
 
 	multiqc $outdir/fastqc_out/* -o $outdir/fastqc_out/multiqc_fastqc --title fastqc
 ```
@@ -279,9 +283,9 @@ R
 
 ## 4.2 Set up R:
 
-First thing to do in R is load the dada2 library `library(dada2)`. You will need to do this any time that you restart the R session. If you leave the session and return, loading the r session again, it will not reload the libraries for you.
+First thing to do in R is load the dada2 library `library(dada2)`. You will need to do this any time that you restart the R session. If you leave the session and return, loading the R session again, it will not reload the libraries for you.
 
-Next we will do the same as above and set some variables (outpath, path). Note that in R we don't need to indicate something is a variable using `$` as in bash.
+
 
 ```R
 #=========================#
@@ -291,6 +295,11 @@ Next we will do the same as above and set some variables (outpath, path). Note t
 
 library(dada2)
 
+```
+
+Next we will do the same as above and set some variables (outpath, path). Note that in R we don't need to indicate something is a variable using `$` as in bash.
+
+``` R
 #=========================#
 # setup file paths
 #=========================#
@@ -314,10 +323,13 @@ if (file.exists(outpath)) {
 list.files(path)
 ```
 
-dada2 uses lists of file names, so we need to produce them. We will produce a list of forward read files `fnFs` and reverse reads `fnrs`.
+dada2 uses lists of file names, so we need to produce them. We will produce a list of forward read files `fnFs` and reverse reads `fnRs`.
 
 > *Note:* if your files end in something different to `_1.fastq.gz` or `_2.fastq.gz` you will need to change the code to match your data.
 > In particular: `pattern="_1.fastq"` and `pattern="_2.fastq"`
+>
+> For example if you're files have an extension `_R1_001.fastq.gz` and `R2_001.fastq.gz`, you could use the pattern=`_R1_001.fastq` and pattern=`_R2_001.fastq`.
+> You can use any pattern that allows the function to find every forward read file and each reverse read file correctly 
 
 ``` R
 # assuming Forward and reverse fastq filenames have format: SAMPLENAME_1.fastq and SAMPLENAME_R2_001.fastq
@@ -334,11 +346,26 @@ fnRs <- sort(list.files(path, pattern="_2.fastq", full.names = TRUE)) # this wil
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 ```
 
-This last line may need your attention when it comes to your own data. If you have samples that have underscores in your sample names, this line will not work properly.
-For example, if your samples have “_” within the name, try to find a different point at which to split the filename up. For example:
-`		 SAMPLE_NAME_16S_R1.fastq.gz:
-	sample.names <- sapply(strsplit(basename(fnFs), "_16S"), `[`, 1)`
+This last line may need your attention when it comes to your own data.
 
+Firstly, make sure that you know what sample names you would like to apply to your data and that they appear in your file names. 
+
+This line will extract the string that comes before the first underscore. If you would like it to extract everything before the second underscore you can change the number `1` to a `2`. 
+
+For example:
+
+`Sample_name_1.fastq.gz`
+
+`sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 2)`
+
+However, if you have samples that have underscores in the sample names, this line will not work properly. In this case it will only use the word before the first underscore "_".
+For example, if your samples have “_” within the name, try to find a different point at which to split the filename up. 
+
+For example:
+
+`SAMPLE_NAME_16S_R1.fastq.gz`
+
+`sample.names <- sapply(strsplit(basename(fnFs), "_16S"), `[`, 1)`
 
 ## 4.3 Filter and trim:
 
@@ -458,8 +485,8 @@ removed_samples.names <- sapply(strsplit(basename(removed_samples), "_"), `[`, 1
 if(length(removed_samples) != 0){
   filtFs<-filtFs[(!(names(filtFs) %in% removed_samples.names))] # remove from list of forward filtered read files
   filtRs<-filtRs[(!(names(filtRs) %in% removed_samples.names))] # remove from list of reverse filtered read files
-  sample.names<-sample.names[!(sample.names) %in% removed_samples.names]
-  out<-out[which(!(row.names(out)%in% removed_samples)),]
+  sample.names<-sample.names[!(sample.names) %in% removed_samples.names] # removes from sample names list
+  out<-out[which(!(row.names(out)%in% removed_samples)),] # removes from out
 }
 
 ```
@@ -477,9 +504,10 @@ We can check the read quality using FastQC again to be sure:
 
 So that we don't interrupt the R session we have been working in, let's start a new session.
 
-You can either exit your screen using `ctrl + a then d`, and start a new one `screen -S fastqc`.
+Option 1 - You can exit your screen using `ctrl + a then d`, and start a new one `screen -S fastqc`.
+Then to return you can use `ctrl + a then d`, and re-enter the `meta` screen using `screen -r meta`
 
-Or you can start a new session using Mobaxterm.
+Or Option 2 - You can start a new session using Mobaxterm and work there
 
 ```bash
 # start another interactive session in a different session
@@ -508,9 +536,10 @@ Or you can start a new session using Mobaxterm.
 If you are happy to proceed, go back to the R session and start to calculate error rates:
 
 ## 4.4 Error rates
-#### Back in R:
+### Back in R:
 
 Dada2 relies on error models calculated for every dataset. the function `learnErrors()` will calculate these and store them in `errF` and `errR`
+
 ``` R
 # calculate error rates for forward and reverse reads
 errF <- learnErrors(filtFs, multithread=TRUE)
@@ -543,6 +572,14 @@ names(derep_reverse) <- sample.names
 
 This utilises the main function of Dada2 `dada()`
 
+Here, dada2 will use error models calculated for forward and reverse reads separaetly to determine which ASV's are likely to be real biological sequences or if they have occured due to errors. This is done separately since assessing overlapped regions between paired reads is less accurate than analysing each read in the pair directly. 
+
+After denoising, ASV's are then merged by aligning paired reads. 
+
+Then, an ASV table is created `seqtab` using function `makeSequenceTable`. 
+
+We can check that the merged reads are the length we expected using `getSequences()`.
+
 ``` R
 # Forward - this clusters forward reads into ASV's. later you will merge forward and reverse reads
 dadaFs <- dada(derep_forward, err=errF, multithread=TRUE)
@@ -557,6 +594,7 @@ head(mergers[[1]])
 # amplicon sequence variant table (ASV)
 seqtab <- makeSequenceTable(mergers)
 dim(seqtab) # check size of table
+
 # Inspect distribution of sequence lengths
 table(nchar(getSequences(seqtab)))
 ```
@@ -615,7 +653,6 @@ rm(seqtab.nochim.c)
 Now that we have removed chimeras and optionally removed negative controls we can save our final ASV table which is saved as `seqtab.nochim`.
 
 ``` R
-
 #sample.names <- 
 
 sapply(strsplit(seqtab.nochim, "_"), `[`, 1)
@@ -625,7 +662,7 @@ names(seqtab.nochim)
 # save result
 write.table(seqtab.nochim, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
 
-# Save seqtab.nochim as an RDS file
+# Save seqtab.nochim as an RDS file - this will make reading the table back into R much easier
 saveRDS(seqtab.nochim, paste(outpath,"/seqtab_nochim.rds",sep=""))
 
 # save csv for MicrobiomeAnalyst
@@ -666,6 +703,8 @@ write.table(track, paste(outpath,"/track_reads.tsv", sep=""), sep="\t")
 
 >We can view this table in order of reads remain after negative controls are removed as follows:
 `track[order(track[,7], decreasing=T),]`
+
+> Question: How many ASV's survived the denoising and merging processes?
 
 ## 4.10 Taxonomy
 
@@ -773,6 +812,8 @@ dadaist2-exporter -i $out_dir
 
 ## 6.1 [MicrobiomeAnalyst](https://www.microbiomeanalyst.ca/)
 
+MicrobiomeAnalyst is a useful tool for exploring your data (although it can be tricky to use if your data isn't in the correct format).
+
 First download the metadata file:
 
 ```
@@ -790,7 +831,7 @@ To submit the files in the Dadaist2 MicrobiomeAnalyst directory you may first ne
 
 The table.txt file needs to have file extensions removed from the sample names (use find and replace).
 
-The taxa file doesn't contain enough delimiters. open in excel and save as csv file.
+The taxa file doesn't contain enough delimiters. Open in excel and save as csv file.
 
 ## 6.2 Phyloseq
 
