@@ -279,7 +279,7 @@ R
 
 ## 4.2 Set up R:
 
-First thing to do in R is load the dada2 library.
+First thing to do in R is load the dada2 library `library(dada2)`. You will need to do this any time that you restart the R session. If you leave the session and return, loading the r session again, it will not reload the libraries for you.
 
 Next we will do the same as above and set some variables (outpath, path). Note that in R we don't need to indicate something is a variable using `$` as in bash.
 
@@ -333,6 +333,12 @@ fnRs <- sort(list.files(path, pattern="_2.fastq", full.names = TRUE)) # this wil
 # Extract and keep a list of sample names, assuming filenames have format: SAMPLENAME_XXX.fastq
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
 ```
+
+This last line may need your attention when it comes to your own data. If you have samples that have underscores in your sample names, this line will not work properly.
+For example, if your samples have “_” within the name, try to find a different point at which to split the filename up. For example:
+`		 SAMPLE_NAME_16S_R1.fastq.gz:
+	sample.names <- sapply(strsplit(basename(fnFs), "_16S"), `[`, 1)`
+
 
 ## 4.3 Filter and trim:
 
@@ -718,7 +724,7 @@ write.csv(taxa_df, file = paste(outpath,"/taxa.ma.csv",sep=""),row.names=F)
 >
 >Error rate plot pdfs: `plot_errors_F.pdf`, `plot_errors_R.pdf`
 
-## 5. Alternatively run [dadaist2](https://github.com/quadram-institute-bioscience/dadaist2)
+## 5. Alternatively run [dadaist2](https://github.com/quadram-institute-bioscience/dadaist2) (Optional)
 
 This is a command line wrapper for dada2.
 
