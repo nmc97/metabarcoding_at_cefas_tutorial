@@ -241,6 +241,13 @@ Cox-1 gene databases:
 https://unite.ut.ee/
 - `Automated high throughput animal CO1 metabarcoding classification <https://www.nature.com/articles/s41598-018-22505-4>`_
 
+NEW: [EukRibo](https://www.biorxiv.org/content/10.1101/2022.11.03.515105v1)
+
+> "EukRibo is a manually curated, public reference database of small-subunit ribosomal RNA gene (18S rDNA) sequences of eukaryotes, specifically aimed at taxonomic annotation of high-throughput metabarcoding datasets. Unlike other reference databases of ribosomal genes, it is not meant to exhaustively capture all publicly available 18S rDNA sequences from the INSDC repositories, but to represent a subset of highly trustable sequences covering the whole known diversity of eukaryotes."
+
+Download here: `https://zenodo.org/record/6896896#.Y4oogBTP2Uk`
+
+
 Diversity Statistics
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -248,6 +255,8 @@ Don't do this on POD
 
 Phyloseq is good but is limited due to the developer
 `FAQ <https://www.bioconductor.org/packages/release/bioc/vignettes/phyloseq/inst/doc/phyloseq-FAQ.html#should-i-normalize-my-data-before-alpha-diversity-analysis>`_
+
+The [Microbiome R package](fa) is good but the developers have now moved on to the [Miaverse](sf), which could be a good alternative.
 
 Output files/ abundance file - try to have them in `.biom` format - relatively universal
 
