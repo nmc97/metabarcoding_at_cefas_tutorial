@@ -653,11 +653,6 @@ rm(seqtab.nochim.c)
 Now that we have removed chimeras and optionally removed negative controls we can save our final ASV table which is saved as `seqtab.nochim`.
 
 ``` R
-#sample.names <- 
-
-sapply(strsplit(seqtab.nochim, "_"), `[`, 1)
-
-names(seqtab.nochim)
 
 # save result
 write.table(seqtab.nochim, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
