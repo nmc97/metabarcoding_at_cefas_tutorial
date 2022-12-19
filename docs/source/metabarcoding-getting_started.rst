@@ -8,7 +8,7 @@ Getting started:
 
 https://www.youtube.com/watch?v=aIUOnY9iLAk
 
-Lecture from Methothd Ecol Evol:
+Lecture from Methothd Ecol Evol (21 hr ):
 https://www.youtube.com/watch?v=HeHVneOdO00
 
 Recommended reading:

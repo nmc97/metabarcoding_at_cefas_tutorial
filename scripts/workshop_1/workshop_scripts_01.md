@@ -613,11 +613,11 @@ dim(seqtab.nochim)
 print(paste(round(sum(seqtab.nochim)/sum(seqtab),4)*100,"% of ASV's remain after chimera removal. Remaining ASV's:",dim(seqtab.nochim[2]),sep=""))
 ```
 
-## 4.8 Removal of negative controls (Optional)
+## 4.8 Removal of negative controls
 
-If your negative control doesn't contain reads, or you have not included a negative control in your study, skip this step. 
+If your negative control doesn't contain reads, or you have not included a negative control in your study set `negative_controls` as an emty list `= c()` and run the code anayway to produce tables `seqtab.nochim` and `seqtab.nochim.c`. This is so that when we come to track what happened to the reads at each step, we don't need to change the code depending on wether we removed negative controls or not.
 
-If you have included negative controls in your experiment, and they have enough reads remaining at this stage that ASV's have been found in those samples, you can remove those ASV's from the rest of the dataset. This is assuming that these ASV's have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample.
+If you have included negative controls in your experiment, and they have enough reads remaining at this stage such that ASV's have been found in those samples, you can remove those ASV's from the rest of the dataset. Thiscode ahs been written to assume that these ASV's have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample. Please see `Decontam` for information on an alternative option.
 
 You will need to make a list of negative control samples e.g: `negative_controls<-c("T16s", "T20s","T21s")`. You will only need the sample names for this stage, not the file name as before when we removed samples.
 
@@ -627,7 +627,7 @@ Here we will pretend that sample `Ts16s` is a negative control.
 # make a list of the negative control samples
 negative_controls<-c("T16s")
 
-# save a new version of the ASV table `seqtab.nochim`
+# save a new version of the ASV table `seqtab.nochim` to `seqtab.nochim.c`. "c" for control
 seqtab.nochim.c<-seqtab.nochim
 
 # this loop will loop through each negative control (f) in the list (negative controls) and remove all ASV's found in that sample (to_remove) from the rest of the samples
@@ -642,27 +642,24 @@ for(f in negative_controls){
   print(paste(dim(seqtab.nochim.c)[2]," ASV's remain after removing", to_remove," ASV's present in negative controls:", f))
 }
 
-# if we would like to keep this new ASV table, we can replace the old dataframe seqtab.nochim with the new one seqtab.nochim.c and proceed:
-seqtab.nochim<-seqtab.nochim.c
-rm(seqtab.nochim.c)
 
 # we won't do this here because we didn't use a true negative control
 
 ```
 
-Now that we have removed chimeras and optionally removed negative controls we can save our final ASV table which is saved as `seqtab.nochim`.
+Now that we have removed chimeras and optionally removed negative controls we can save our final ASV table which is saved as `seqtab.nochim.c`.
 
 ``` R
 
 # save result
-write.table(seqtab.nochim, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
+write.table(seqtab.nochim.c, file = paste(outpath,"/asv_table.dada2.tsv",sep=""),sep="\t",row.names=T)
 
 # Save seqtab.nochim as an RDS file - this will make reading the table back into R much easier
-saveRDS(seqtab.nochim, paste(outpath,"/seqtab_nochim.rds",sep=""))
+saveRDS(seqtab.nochim.c, paste(outpath,"/seqtab_nochim.rds",sep=""))
 
 # save csv for MicrobiomeAnalyst
 # transpose
-seqtab.nochim.df <- t(seqtab.nochim)
+seqtab.nochim.df <- t(seqtab.nochim.c)
 # make a column for the samples names called "#NAMES"
 seqtab.nochim.df <- cbind(row.names(seqtab.nochim.df),seqtab.nochim.df)
 

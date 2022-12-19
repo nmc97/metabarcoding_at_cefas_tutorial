@@ -94,6 +94,12 @@ To start using Dada2 on POD, start an interactive session. Navigate to a working
 
 Once in R you can follow the script `run_dada2.R <https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R>`_.
 
+Please note that you will need to modify the script to match your data. In addition, these materials do not cover all of the possible ways that these tools can be used or all possible issues you may encounter.
+
+For example, if you have primers in your reads, or you need to re-orient your reads you will need to consider how to approach these issues.
+Eaxmple:
+https://benjjneb.github.io/dada2/ITS_workflow.html
+
 Dada2 Tutorial
 ^^^^^^^^^^^^^^
 
