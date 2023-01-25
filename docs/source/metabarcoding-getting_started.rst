@@ -106,41 +106,64 @@ See https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/m
 
 6. Check for chimeras
 
-- these are sequences which are artificial
+- These are sequences which are artificial and need to be removed
 
 7. Classify Taxa
 
 - Choose a database based on the organisms and target sequences you are working with
 
-8. Abundance statistics - alpha and beta Metrics
+8. Abundance statistics - e.g. alpha and beta Metrics
 
 9. Differential abundance Analysis
+
+10. Vizualisation
 
 Quality Control: Read quality
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forward and reverse reads in MiSeq - can struggle on metabarcoding runs - low sequence diversity
-does better on forward than reverse reads - lower quality
-Decide if you should use reverse reads at all
+Checking the quality of your reads is the first thing that you will need to do and you may spend a lot of time getting your reads in a good state for further analysis.
 
-Overlapping reads - do they overlap enough? If not how do I include them
+Note that reverse reads in MiSeq can struggle on metabarcoding runs becasue of low sequence diversity. The forward reads tend to do better reverse reads having lower quality, particlaurly towards the end of the reads - lower quality.
 
-[insert]
+There may be occasions wghere you need to decide if you should use reverse reads at all.
 
-Programs to use: Fastqc, Trimmomatic, ??? what is standard in metabarcoding?
+For example: You may need to trim your reads to increase their overall quality. In that case, where the reads are expected to overlapping, the amount of trimming you do will effect your ability to combine foreard and reverse reads. If you cannot trim your reverse reads enough to improve quality, without making them too short to overlap, you may need to continue the analyis without using the reverse reads.
+
+Programs to use: Fastqc, MultiQC, Cutadapt, Trimmomatic, Dada2 etc...
 
 .. note::
 
   *Questions to consider:*
 
   What type of reads do I have?
+
   Will the forward and reverse reads (if paired) overlap?
+  
   What clustering method will I be using (some account for error in reads somewhat so trimming may be less necessary)
+  
   How many reads do I have?
   What do the read quality checks tell me about the data quality?
+  
   After trimming/ filtering how many reads are there per sample.
+  
   Are there samples that need to be excluded from the rest of the analyses?
+..
 
+.. note::
+  Interesting issue from the community:
+
+  Amplicon reads were generated using a kit that did not autimatically sequence reads in the same orientation for every read.
+  Clustering amplicons relies on them to be in the same orientation. 
+ 
+  Thus, reads need to be re-oriented to the same orientation programatically before continuing. 
+ 
+  An alternative, if this is too difficult, would be to find and only use reads that appear in the expected orientation, and filter out the rest. 
+  See https://benjjneb.github.io/dada2/ITS_workflow.html for an example of this. Here, reads were selected where the primer is going in the expected direction for the paired read. This relies on primers remaining in the reads.
+
+  If you encounter a similar issue, and find a way to solve it, please consider sharing your solution here for others to learn from.
+
+  Still designing your experiment? Consider if you may encounter this issue, or if you can avoid it in the library prep stage.
+..
 
 Clustering
 ^^^^^^^^^^
@@ -209,17 +232,28 @@ Papers of interest:
 
 'Minimum entropy decomposition: Unsupervised oligotyping for sensitive partitioning of high-throughput marker gene sequences <https://www.nature.com/articles/ismej2014195>`_
 
+.. note:
+** When to merge paired reads **
+
+When you have paired reads, at some point in the analysis you may want to merge them to get as sequence representing the full amplicon.
+
+Some tools require this merging step before clustering, while others, such as Dada2, prefer you do this step after clustering.
+
+When you merge reads however, sometimes you may loose a lot of reads that don't overlap well, esspecially after extensive filtering. See [here](
+https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-021-04410-2) for information on using these lost reads by concatonating instead of merging before attempting to assign taxonomy. This could be very helpful in cases where you are unable to merge your reads well.
+
+
 Identifying Chimeras
 ^^^^^^^^^^^^^^^^^^^^
 Chimeric sequences are erroneous sequences that could be determined to be novel if they are not removed from the data.
+This process is built into Dada2.
 
-[notes
-1.  What proportion of the reads align to the reference?
+.. note ::
+1.  Consider what proportion of the reads align to the reference
 2.  Chimera could be 2 species you haven't seen before
 3.  Check OTU's individually
 4.  Check against reference
-5.  More abundant OTU's more likely to be real
-6.  OTU's for every library and them split]
+5.  More abundant OTU's are more likely to be real
 
 Taxonomic assignment:
 ^^^^^^^^^^^^^^^^^^^^^

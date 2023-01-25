@@ -204,7 +204,7 @@ mamba install -c conda-forge pyyaml <span class="hljs-comment"># optional: neede
 <p>First thing we need to do is check the quality of the data. We will run fastqc which will assess all the fastq files filled with reads. It will tell us how many reads we have and what they look like in regards to length and quality.</p>
 <h2 id="31-run-fastqc-and-multiqc">3.1 Run <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">Fastqc</a> and <a href="https://www.bing.com/search?q=multiqc&amp;cvid=41c889025cf2474eae8615972425b160&amp;aqs=edge..69i57j0l8j69i11004.1847j0j4&amp;FORM=ANAB01&amp;PC=U531">Multiqc</a></h2>
 <p>The first thing we will do is activate the conda envrionment we made earlier called &quot;fastqc&quot;. This environment contains programs fastqc and MultiQC.</p>
-<p>Then we will set some paths. This means that we will set two variables <code>$inder</code> and <code>$outdir</code> which contain the paths on the files system. Variables in bash are denoted using a <code>$</code>. The first path, <code>$inder</code>, will contain the path to the input data for the experiment. We put this data in he directory (folder) called <code>~/metabarcoding_ws/data/16S/fastq</code>, so this will be set as our, <code>$inder</code>, variable.</p>
+<p>Then we will set some paths. This means that we will set two variables <code>$indir</code> and <code>$outdir</code> which contain the paths on the files system. Variables in bash are denoted using a <code>$</code>. The first path, <code>$indir</code>, will contain the path to the input data for the experiment. We put this data in he directory (folder) called <code>~/metabarcoding_ws/data/16S/fastq</code>, so this will be set as our, <code>$indir</code>, variable.</p>
 <p>If the output directory for fastqc doesn't exist it will not be happy, so we need to make it. To make a directory we use the command <code>mkdir</code>.</p>
 <p>After we make this directory we run fastqc.</p>
 <p>Lastly we will run MultiQC, which collates all the outputs from fastqc and puts them into one report.</p>
@@ -438,8 +438,9 @@ Do you need to repeat with new parameters?</p>
 <h3 id="432-run-fastqc-and-multiqc-optional">4.3.2 Run <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">Fastqc</a> and <a href="https://www.bing.com/search?q=multiqc&amp;cvid=41c889025cf2474eae8615972425b160&amp;aqs=edge..69i57j0l8j69i11004.1847j0j4&amp;FORM=ANAB01&amp;PC=U531">Multiqc</a> [optional]</h3>
 <h4 id="open-a-new-command-line-session">Open a new command-line session:</h4>
 <p>So that we don't interrupt the R session we have been working in, let's start a new session.</p>
-<p>You can either exit your screen using <code>ctrl + a then d</code>, and start a new one <code>screen -S fastqc</code>.</p>
-<p>Or you can start a new session using Mobaxterm.</p>
+<p>Option 1 - You can exit your screen using <code>ctrl + a then d</code>, and start a new one <code>screen -S fastqc</code>.
+Then to return you can use <code>ctrl + a then d</code>, and re-enter the <code>meta</code> screen using <code>screen -r meta</code></p>
+<p>Or Option 2 - You can start a new session using Mobaxterm and work there</p>
 <pre><code class="language-bash"><span class="hljs-comment"># start another interactive session in a different session</span>
 	msub -I -q S30 -l procs=8,walltime=0:30:00
 
@@ -522,15 +523,15 @@ seqtab.nochim <span class="hljs-operator">&lt;-</span> removeBimeraDenovo<span c
 <span class="hljs-comment"># this line will print a message using the outputs:</span>
 print<span class="hljs-punctuation">(</span>paste<span class="hljs-punctuation">(</span><span class="hljs-built_in">round</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">)</span><span class="hljs-operator">/</span><span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span>seqtab<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-number">4</span><span class="hljs-punctuation">)</span><span class="hljs-operator">*</span><span class="hljs-number">100</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;% of ASV&#x27;s remain after chimera removal. Remaining ASV&#x27;s:&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-built_in">dim</span><span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">[</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
 </code></pre>
-<h2 id="48-removal-of-negative-controls-optional">4.8 Removal of negative controls (Optional)</h2>
-<p>If your negative control doesn't contain reads, or you have not included a negative control in your study, skip this step.</p>
-<p>If you have included negative controls in your experiment, and they have enough reads remaining at this stage that ASV's have been found in those samples, you can remove those ASV's from the rest of the dataset. This is assuming that these ASV's have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample.</p>
+<h2 id="48-removal-of-negative-controls">4.8 Removal of negative controls</h2>
+<p>If your negative control doesn't contain reads, or you have not included a negative control in your study set <code>negative_controls</code> as an emty list <code>= c()</code> and run the code anayway to produce tables <code>seqtab.nochim</code> and <code>seqtab.nochim.c</code>. This is so that when we come to track what happened to the reads at each step, we don't need to change the code depending on wether we removed negative controls or not.</p>
+<p>If you have included negative controls in your experiment, and they have enough reads remaining at this stage such that ASV's have been found in those samples, you can remove those ASV's from the rest of the dataset. Thiscode ahs been written to assume that these ASV's have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample. Please see <code>Decontam</code> for information on an alternative option.</p>
 <p>You will need to make a list of negative control samples e.g: <code>negative_controls&lt;-c(&quot;T16s&quot;, &quot;T20s&quot;,&quot;T21s&quot;)</code>. You will only need the sample names for this stage, not the file name as before when we removed samples.</p>
 <p>Here we will pretend that sample <code>Ts16s</code> is a negative control.</p>
 <pre><code class="language-R"><span class="hljs-comment"># make a list of the negative control samples</span>
 negative_controls<span class="hljs-operator">&lt;-</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;T16s&quot;</span><span class="hljs-punctuation">)</span>
 
-<span class="hljs-comment"># save a new version of the ASV table `seqtab.nochim`</span>
+<span class="hljs-comment"># save a new version of the ASV table `seqtab.nochim` to `seqtab.nochim.c`. &quot;c&quot; for control</span>
 seqtab.nochim.c<span class="hljs-operator">&lt;-</span>seqtab.nochim
 
 <span class="hljs-comment"># this loop will loop through each negative control (f) in the list (negative controls) and remove all ASV&#x27;s found in that sample (to_remove) from the rest of the samples</span>
@@ -545,29 +546,21 @@ seqtab.nochim.c<span class="hljs-operator">&lt;-</span>seqtab.nochim
   print<span class="hljs-punctuation">(</span>paste<span class="hljs-punctuation">(</span><span class="hljs-built_in">dim</span><span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot; ASV&#x27;s remain after removing&quot;</span><span class="hljs-punctuation">,</span> to_remove<span class="hljs-punctuation">,</span><span class="hljs-string">&quot; ASV&#x27;s present in negative controls:&quot;</span><span class="hljs-punctuation">,</span> f<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
 <span class="hljs-punctuation">}</span>
 
-<span class="hljs-comment"># if we would like to keep this new ASV table, we can replace the old dataframe seqtab.nochim with the new one seqtab.nochim.c and proceed:</span>
-seqtab.nochim<span class="hljs-operator">&lt;-</span>seqtab.nochim.c
-rm<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">)</span>
 
 <span class="hljs-comment"># we won&#x27;t do this here because we didn&#x27;t use a true negative control</span>
 
 </code></pre>
-<p>Now that we have removed chimeras and optionally removed negative controls we can save our final ASV table which is saved as <code>seqtab.nochim</code>.</p>
-<pre><code class="language-R"><span class="hljs-comment">#sample.names &lt;- </span>
-
-sapply<span class="hljs-punctuation">(</span>strsplit<span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;_&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> `[`<span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span>
-
-<span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">)</span>
-
+<p>Now that we have removed chimeras and optionally removed negative controls we can save our final ASV table which is saved as <code>seqtab.nochim.c</code>.</p>
+<pre><code class="language-R">
 <span class="hljs-comment"># save result</span>
-write.table<span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/asv_table.dada2.tsv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;\t&quot;</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span>
+write.table<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/asv_table.dada2.tsv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;\t&quot;</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span>
 
 <span class="hljs-comment"># Save seqtab.nochim as an RDS file - this will make reading the table back into R much easier</span>
-saveRDS<span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/seqtab_nochim.rds&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+saveRDS<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/seqtab_nochim.rds&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
 
 <span class="hljs-comment"># save csv for MicrobiomeAnalyst</span>
 <span class="hljs-comment"># transpose</span>
-seqtab.nochim.df <span class="hljs-operator">&lt;-</span> t<span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">)</span>
+seqtab.nochim.df <span class="hljs-operator">&lt;-</span> t<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">)</span>
 <span class="hljs-comment"># make a column for the samples names called &quot;#NAMES&quot;</span>
 seqtab.nochim.df <span class="hljs-operator">&lt;-</span> cbind<span class="hljs-punctuation">(</span>row.names<span class="hljs-punctuation">(</span>seqtab.nochim.df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>seqtab.nochim.df<span class="hljs-punctuation">)</span>
 
