@@ -127,18 +127,24 @@ Overlapping reads - do they overlap enough? If not how do I include them
 
 [insert]
 
-Programs to use: Fastqc, Trimmomatic, ??? what is standard in metabarcoding?
+Programs to use: Fastqc, Trimmomatic, DADA2, Fastp
 
 .. note::
 
   *Questions to consider:*
 
   What type of reads do I have?
+
   Will the forward and reverse reads (if paired) overlap?
+
   What clustering method will I be using (some account for error in reads somewhat so trimming may be less necessary)
+
   How many reads do I have?
+
   What do the read quality checks tell me about the data quality?
+
   After trimming/ filtering how many reads are there per sample.
+
   Are there samples that need to be excluded from the rest of the analyses?
 
 
@@ -253,10 +259,10 @@ Diversity Statistics
 
 Don't do this on POD
 
-Phyloseq is good but is limited due to the developer
+Phyloseq is good but is limited 
 `FAQ <https://www.bioconductor.org/packages/release/bioc/vignettes/phyloseq/inst/doc/phyloseq-FAQ.html#should-i-normalize-my-data-before-alpha-diversity-analysis>`_
 
-The [Microbiome R package](fa) is good but the developers have now moved on to the [Miaverse](sf), which could be a good alternative.
+The [Microbiome R package](https://bioconductor.org/packages/devel/bioc/vignettes/microbiome/inst/doc/vignette.html#:~:text=The%20microbiome%20R%20package%20facilitates%20exploration%20and%20analysis,example%20data%20sets%20from%20published%20microbiome%20profiling%20studies.) is good but the developers have now moved on to the [Miaverse](https://microbiome.github.io/), which could be a good alternative.
 
 Output files/ abundance file - try to have them in `.biom` format - relatively universal
 
