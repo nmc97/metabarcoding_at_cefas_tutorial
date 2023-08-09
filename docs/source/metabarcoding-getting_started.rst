@@ -233,14 +233,14 @@ Papers of interest:
 'Minimum entropy decomposition: Unsupervised oligotyping for sensitive partitioning of high-throughput marker gene sequences <https://www.nature.com/articles/ismej2014195>`_
 
 .. note:
-** When to merge paired reads **
+  ** When to merge paired reads **
 
-When you have paired reads, at some point in the analysis you may want to merge them to get as sequence representing the full amplicon.
+  When you have paired reads, at some point in the analysis you may want to merge them to get as sequence representing the full amplicon.
 
-Some tools require this merging step before clustering, while others, such as Dada2, prefer you do this step after clustering.
+  Some tools require this merging step before clustering, while others, such as Dada2, prefer you do this step after clustering.
 
-When you merge reads however, sometimes you may loose a lot of reads that don't overlap well, esspecially after extensive filtering. See [here](
-https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-021-04410-2) for information on using these lost reads by concatonating instead of merging before attempting to assign taxonomy. This could be very helpful in cases where you are unable to merge your reads well.
+  When you merge reads however, sometimes you may loose a lot of reads that don't overlap well, esspecially after extensive filtering. See [here](
+  https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-021-04410-2) for information on using these lost reads by concatonating instead of merging before attempting to assign taxonomy. This could be very helpful in cases where you are unable to merge your reads well.
 
 
 Identifying Chimeras
@@ -249,11 +249,12 @@ Chimeric sequences are erroneous sequences that could be determined to be novel 
 This process is built into Dada2.
 
 .. note ::
-1.  Consider what proportion of the reads align to the reference
-2.  Chimera could be 2 species you haven't seen before
-3.  Check OTU's individually
-4.  Check against reference
-5.  More abundant OTU's are more likely to be real
+  1.  Consider what proportion of the reads align to the reference
+  2.  Chimera could be 2 species you haven't seen before
+  3.  Check OTU's individually
+  4.  Check against reference
+  5.  More abundant OTU's are more likely to be real
+
 
 Taxonomic assignment:
 ^^^^^^^^^^^^^^^^^^^^^
