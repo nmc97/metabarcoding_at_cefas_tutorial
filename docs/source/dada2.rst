@@ -8,7 +8,7 @@ Dada2
 Dada2 - Background & Installation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Dada2 is a widely used software for identifying ASV's in metabarcoding studies.
+Dada2 is a widely used software for identifying ASV's in metabarcoding studies. Please read about this program before using it on your data. Consider if it is appropriate for your study and ensure that it is in the correct format to be used with Dada2.
 
 Manual:
 
@@ -107,6 +107,8 @@ To familiarise yourself with Dada2 see the Dada2 tutorial `here <https://benjjne
 
 The tutorial data is available here:
 https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
+
+Cconsider - what did the data need to look like before Dada2 was used? What assumptions have they made about the data that they have been given? How can you design your sequencing experiement to align with this? Do you need to alter your data? Do you need to consider another approach?
 
 .. code::
 
