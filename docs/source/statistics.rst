@@ -14,7 +14,7 @@ To rarefy or to not rarefy
 
 Rarefying data is a method of normalising datasets so that they can be directly compared without biases.
 The main bias being avoided in metabarcoding is read depth -
-where some samples have many more sequences than others the diversity they will uncover will surely bee different purely because of these extra reads.
+where some samples have many more sequences than others the diversity they will uncover will surely be different purely because of these extra reads.
 
 The procedure followed is normally
 
