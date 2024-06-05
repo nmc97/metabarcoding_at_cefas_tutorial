@@ -394,6 +394,41 @@ write.table(taxa_all, file = paste(outpath,"/taxa.tsv",sep=""),sep="\t",row.name
 write.table(taxa_species, file = paste(outpath,"/taxa_species.tsv",sep=""),sep="\t",row.names=T)
 ```
 
+# 4.11 Phyloseq object
+
+``` R
+
+# 
+table_otu.seqtab_nochim_filt <- tibble::rownames_to_column((table_otu.seqtab_nochim), "Sample")
+table_otu.seqtab_nochim_filt_melt <- melt(table_otu.seqtab_nochim_filt)
+names(table_otu.seqtab_nochim_filt_melt) <- c("Sample","ASV","abundance")
+
+row.names(taxa.print) <- taxa.print$ASV
+taxa.print2 <- taxa.print %>% select(Kingdom, Phylum, Class, Order, Family, Genus, Species,Common.name)
+
+asvs_discard<-fixed_taxa %>% mutate(discard=ifelse(is.na(Too.long)==T,"discard",ifelse(Too.short!="discard","discard","keep"))) %>% filter(discard=="discard") %>% select(ASV)
+
+fixed_taxa1 <- fixed_taxa %>% mutate(discard=ifelse(is.na(Too.long)==F,"discard",ifelse(Too.short=="discard","discard","keep")))
+
+row.names(fixed_taxa1) <- fixed_taxa1$ASV
+fixed_taxa2 <- fixed_taxa1 %>% select(Kingdom, Phylum, Class, Order, Family, Genus, Species,Common.name,discard)
+
+ps <- phyloseq(otu_table((table_otu.seqtab_nochim), taxa_are_rows=FALSE), tax_table(as.matrix(fixed_taxa2)))
+
+phy_obj0 <- subset_taxa(ps, discard != "discard")
+tax_table(phy_obj0) <- tax_table(phy_obj0)[,1:8]
+
+saveRDS(phy_obj0, paste(outpath,"phyloseq_object_12S.rds"))
+
+saveRDS(phy_obj0, paste(outpath,"phyloseq_object_12S.rds"))
+
+
+
+
+```
+
+
+
 Now you have completed the Dada2 aspect and have been left with output files:
 ASV file:
 Taxonomy files:

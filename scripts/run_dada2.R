@@ -181,3 +181,89 @@ taxa_species <- addSpecies(taxa_with_bootstraps$tax, "/path/to/ref/dataset/silva
 write.table(taxa_with_bootstraps, file = paste(outpath,"/taxa_with_bootstraps.tsv",sep=""),sep="\t",row.names=T)
 write.table(taxa_all, file = paste(outpath,"/taxa.tsv",sep=""),sep="\t",row.names=T)
 write.table(taxa_species, file = paste(outpath,"/taxa_species.tsv",sep=""),sep="\t",row.names=T)
+
+
+#=========================#
+# Make phyloseq object
+#=========================#
+
+library(phyloseq)
+
+# read your metadata file
+metadata <- read.csv("~/metabarcoding_ws/data/metadata.tsv", sep="\t")
+
+# save otu table in a phyloseq otu table format
+phylo_otu_table <- otu_table(seqtab.nochim.c, taxa_are_rows=F)
+
+# save tax table in a phyloseq tax table format
+phylo_tax_table <- tax_table(taxa_all)
+
+# save metadata table in a phyloseq metadata table format
+phylo_meta_table <- sample_data(metadata)
+
+# choose the column of the metadata file that matches the sample names in the otu file and rename the sample_names of the phyloseq object by that column
+sample_names(phylo_meta_table) <- sample_data(phylo_meta_table)$X.NAME
+
+# make phyloseq object without the metadata
+phyloseq_object_no_meta <- phyloseq(phylo_otu_table,  phylo_tax_table)
+
+# make phyloseq object with the metadata
+phyloseq_object <- phyloseq(phylo_otu_table,  phylo_tax_table, phylo_meta_table)
+
+# Save phyloseq_object_no_meta as an RDS file
+saveRDS(phyloseq_object_no_meta, paste(outpath,"/phyloseq_object_no_meta.rds",sep=""))
+
+# Save phyloseq_object as an RDS file
+saveRDS(phyloseq_object, paste(outpath,"/phyloseq_object.rds",sep=""))
+
+
+
+#=========================#
+# run microviz - somehwere with a browser/ viz 
+#=========================#
+
+
+#==== Install if needed 
+if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+BiocManager::install(c("phyloseq", "microbiome", "ComplexHeatmap"), update = FALSE)
+
+install.packages(
+  "microViz",
+  repos = c(davidbarnett = "https://david-barnett.r-universe.dev", getOption("repos"))
+)
+
+#==== MicroViz
+# load library
+library(microViz)
+
+# read the phyloseq object wherever it is stored
+phyloseq_object <- readRDS("../Data/phyloseq_object.rds")
+
+# run microviz - this will open in your browser
+ord_explore(phyloseq_object)
+
+# you may encounter errors around the names of taxa. Press stop button to shut down microviz. 
+# Then run tax_fix() and then rerun ord_explore
+tax_fix(phyloseq_object) 
+
+# run microviz
+ord_explore(phyloseq_object)
+
+# if still errors run tax_fix_interactive() to help you figure out what arguments to give to tax_fix
+tax_fix_interactive(phyloseq_object)
+
+# I needed to set the min length as 3 and unknowns as NA
+# I copied and edited the code from the panel in the tax_fix_interactive browser popup
+phyloseq_object_fix <- phyloseq_object %>%
+  tax_fix(
+    min_length = 3,
+    unknowns = c(NA),
+    sep = " ", anon_unique = TRUE,
+    suffix_rank = "classified"
+  )
+tax_fix_interactive(phyloseq_object_fix)
+
+# run microviz
+ord_explore(phyloseq_object_fix)
+
+# enjoy exploring your data!

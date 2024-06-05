@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Metabarcoding workshop</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="metabarcoding-workshop">Metabarcoding workshop</h1>
+<p><em>29th July 2022
+Weymouth</em></p>
+<p><strong>Author:</strong> Nicola Coyle
+Based in part on the Dada2 tutorial: <a href="https://benjjneb.github.io/dada2/tutorial.html">https://benjjneb.github.io/dada2/tutorial.html</a></p>
+<p>To learn more about Dada2 please see the <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4927377/">paper</a> and <a href="https://www.bioconductor.org/packages/devel/bioc/manuals/dada2/man/dada2.pdf">manual</a></p>
+<p>Further resources can be found here: <a href="https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html">https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/index.html</a></p>
+<p>If you would like to try this on your own data you can use the script supplied here: <a href="https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R">https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R</a></p>
+<h2 id="1-set-up">1. Set up</h2>
+<p>First, let's set up a directory to do our work in. We will call is metabarcoding_ws and place it in our home directory (<code>~/</code> or <code>/home/$USER</code>).</p>
+<p>Next we will download reference databases for classifying our barcodes. in this example we will be using the SILVA database.</p>
+<p>Then we will download our data and get started!</p>
+<p><strong>Some of the basic commands we will use:</strong></p>
+<p><code>mkdir /path/to/directory</code>: This makes a directory</p>
+<p><code>cd /path/to/directory</code>: This changes directory</p>
+<p><code>mv /path/to/file /path/to/new_file_location</code>: This will move a file or folder from one place to another. You can use this to change the file name.</p>
+<h3 id="11-make-a-directory-to-run-a-the-analysis">1.1 Make a directory to run a the analysis</h3>
+<pre><code class="language-bash"><span class="hljs-built_in">mkdir</span> ~/metabarcoding_ws <span class="hljs-comment"># makes a directory metabarcoding_ws in the home directory `~/`</span>
+<span class="hljs-built_in">mkdir</span> ~/metabarcoding_ws/data <span class="hljs-comment"># make a directory to save data</span>
+<span class="hljs-built_in">mkdir</span> ~/metabarcoding_ws/data/16S <span class="hljs-comment"># specify a data directory for 16S data</span>
+<span class="hljs-built_in">mkdir</span> ~/metabarcoding_ws/outputs <span class="hljs-comment"># set directory to save outputs</span>
+<span class="hljs-built_in">mkdir</span> ~/metabarcoding_ws/db <span class="hljs-comment"># optionally put databases into a directory within workshop directory</span>
+</code></pre>
+<h3 id="12-download-reference-databases">1.2 <a href="https://metabarcoding-at-cefas-tutorial.readthedocs.io/en/latest/dada2.html#download-silva-datasets-curated-for-dada2">Download reference databases</a></h3>
+<p>Download Silva dataset for the tutorial (~ 1 mins 30 seconds, 131 Mb):</p>
+<pre><code># move to the directory where we will store the databases using `cd` (change directory)
+cd metabarcoding_ws/db
+
+# wget grabs the file from the internet and downloads into the current directory
+wget https://zenodo.org/record/4587955/files/silva_nr99_v138.1_train_set.fa.gz?download=1
+
+# rename the file to remove &quot;?download=1&quot;. Uses command `mv`
+mv silva_nr99_v138.1_train_set.fa.gz?download=1 silva_nr99_v138.1_train_set.fa.gz
+</code></pre>
+<p>Download Silva <em>species</em> dataset for the tutorial (~ 30 seconds, 76 M):</p>
+<pre><code>cd metabarcoding_ws/db # set a directory to store the data
+wget https://zenodo.org/record/4587955/files/silva_species_assignment_v138.1.fa.gz?download=1 # grabs the file from the internet and downloads into the current directory
+mv silva_species_assignment_v138.1.fa.gz?download=1 silva_species_assignment_v138.1.fa.gz # renames the file to remove &quot;?download=1&quot;
+</code></pre>
+<p>Check if this is the latest version of the dataset here: <a href="https://www.arb-silva.de/download/archive/">https://www.arb-silva.de/download/archive/</a></p>
+<h3 id="13-download-test-data">1.3 Download test data</h3>
+<p>Here we will use a dataset produced in collaboration with Cefas:</p>
+<p>Jamie McMurtrie, Shayma Alathari, Dominique L. Chaput, David Bass, Camerson Ghambi, Joseph Nagoli, Jérôme Delamare-Deboutteville, Chadag Vishnumurthy Mohan, Joanne Cable, Ben Temperton, Charles R. Tyler, <em>Relationships between pond water and tilapia skin microbiomes in aquaculture ponds in Malawi</em>, Aquaculture, Volume 558, 2022, 738367, ISSN 0044-8486, <a href="https://doi.org/10.1016/j.aquaculture.2022.738367">https://doi.org/10.1016/j.aquaculture.2022.738367</a>.</p>
+<p>NCBI project code: PRJEB46984</p>
+<p>Code for the project is available here: <a href="https://github.com/jamiemcm/Malawi_Tilapia_Microbiomes">https://github.com/jamiemcm/Malawi_Tilapia_Microbiomes</a>.</p>
+<p>There are two ways to get the data added to your POD:</p>
+<p><strong>Option 1: Take it from my POD (recommended)</strong></p>
+<pre><code class="language-bash"><span class="hljs-comment"># this will take my fastq folder containing read files and place it in your 16S directory</span>
+rsync -ravz /home/nc07/metabarcoding_ws/data/16S/fastq ~/metabarcoding_ws/data/16S/
+</code></pre>
+<p><strong>Option 2: Download from SRA (long)</strong>
+Uses <a href="https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump">SRA-tools</a></p>
+<p>This code requires a list of sample names and accession numbers to run. I have compile one here: <a href="https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt">https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt</a></p>
+<pre><code class="language-bash"><span class="hljs-comment"># make and activate a conda env for sra-tools</span>
+mamba create -n sra-tools
+conda activate sra-tools
+
+<span class="hljs-comment"># Create directories to download files into</span>
+<span class="hljs-built_in">mkdir</span> ~/metabarcoding_ws/data/16S
+<span class="hljs-built_in">mkdir</span> ~/metabarcoding_ws/data/16S/fastq
+
+<span class="hljs-built_in">cd</span> ~/metabarcoding_ws/data/16S
+
+<span class="hljs-comment"># download list of sample names and accession numbers</span>
+wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/names_16S.txt
+
+<span class="hljs-comment"># prefetch data - uses file names_16S.txt to find the data (accession: q) download them (prefetch) and then rename the files (name: p)</span>
+<span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> p q; <span class="hljs-keyword">do</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$p</span>
+time prefetch <span class="hljs-variable">$q</span>
+<span class="hljs-keyword">done</span> &lt; names_16S.txt
+
+<span class="hljs-comment"># extract fastq files</span>
+<span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> p q; <span class="hljs-keyword">do</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-variable">$p</span>
+<span class="hljs-built_in">ls</span> <span class="hljs-variable">$q</span>/<span class="hljs-variable">$q</span>.sra
+time fasterq-dump --split-files <span class="hljs-variable">$q</span> -o <span class="hljs-variable">$q</span>/<span class="hljs-variable">$p</span>
+<span class="hljs-keyword">done</span> &lt; names_16S.txt
+
+<span class="hljs-comment"># move files from individual folders into ~/metabarcoding_ws/16S/fastq and gzip them</span>
+<span class="hljs-built_in">mv</span> ~/metabarcoding_ws/16S/*/*.fastq ~/metabarcoding_ws/16S/fastq
+gzip ~/metabarcoding_ws/16S/fastq/*.fastq
+</code></pre>
+<h3 id="14-set-up-conda-environments">1.4 Set up conda environments</h3>
+<p><strong>Set up Fastqc env:</strong></p>
+<pre><code class="language-bash"><span class="hljs-comment"># create an environment called fastqc and install fastqc and multiqc</span>
+mamba create -n fastqc fastqc MultiQC
+</code></pre>
+<p>If this is your first time creating a conda environment, or it has been a while, here's a breakdown of what just happened:</p>
+<p>&quot;mamba&quot;: calls the program mamba
+&quot;create&quot;: tells mamba you want to create a new environment
+&quot;-n fastqc&quot;: names the new environment fastqc
+&quot;fastqc&quot;: installs the program named fastqc
+&quot;MultiQC&quot;: installs the program MultiQC</p>
+<p>You can list as many programs as you want after naming the environment and Mamba will attempt to install them.</p>
+<p>However, it is good practice to keep individual environments for specific programs. This is because when you add a new program to environment, it may require different dependencies than programs already in the environment. Thus, the dependencies could clash and cause one or many programs so stop working. Here we will keep the number of programs in each environment low, and try to group them by task. Fastqc and MultiQC are frequently used together and work well in and envrionment.</p>
+<p>In the next environment we set up R using the package r-essentials. Then we can install dada2, which runs in R:</p>
+<p><strong>Set up dada2 env:</strong></p>
+<pre><code class="language-bash">mamba create -n dada2 r-essentials <span class="hljs-comment"># setup a new environment and install r-essentials</span>
+conda activate dada2 <span class="hljs-comment"># activate the new environment</span>
+mamba  install bioconductor-dada2 <span class="hljs-comment"># install dada2</span>
+</code></pre>
+<p>Lastly we will install dadasit2, which is a wrapper program for dada2. This means that they bundled up code for running dada2 into a scripts so that you can run dada2 using a single line of code in the command-line. This could be useful if you have data that you want to quickly analyse which isn't too complex.</p>
+<p><strong>Set up dadaist2 env:</strong></p>
+<pre><code class="language-bash">mamba create -n dadaist2
+conda activate dadaist2
+mamba install -c conda-forge -c bioconda dadaist2
+mamba install bioconductor-dada2=1.20
+mamba install -c conda-forge pyyaml <span class="hljs-comment"># optional: needed to run dadaist2-mqc-report</span>
+</code></pre>
+<h2 id="2-getting-our-pod-session-set-up">2. Getting our POD session set up</h2>
+<h3 id="21-start-a-screen-session">2.1 Start a screen session</h3>
+<p>When you are logged in to POD, and your connection drops, you will loose all the progress you had made in that terminal.</p>
+<p>Screen allows you to set up a session or a &quot;screen&quot; in which to do your work. You can shut the screen down and it will continue to run in the background. We will set one up for this session:</p>
+<pre><code class="language-bash">screen -S meta
+</code></pre>
+<p>You can leave the screen by pressing <code>ctrl + a then d</code></p>
+<p>Restart the screen by typing <code>screen -r meta</code></p>
+<h3 id="22-start-an-interactive-session-for-the-day-using-pod-at-cefas">2.2 Start an interactive session for the day (using POD at Cefas):</h3>
+<p>Where we are all working now, there isn't much computing power available. In POD we will need to each ask for more by starting an interactive session.</p>
+<p>Here, you can change the S30 to B30 if there is no more space left on S30.</p>
+<p>See <a href="https://cefas.sharepoint.com/sites/PODHighPerformanceComputingUsers/SitePages/Running%20Jobs%20on%20MT2.aspx">here</a> for more information.</p>
+<pre><code class="language-bash">msub -I -q S30 -l procs=8,walltime=7:00:00 <span class="hljs-comment"># change depending on what you think you need.</span>
+</code></pre>
+<h2 id="3-quality-control">3. Quality control</h2>
+<p>First thing we need to do is check the quality of the data. We will run fastqc which will assess all the fastq files filled with reads. It will tell us how many reads we have and what they look like in regards to length and quality.</p>
+<h2 id="31-run-fastqc-and-multiqc">3.1 Run <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">Fastqc</a> and <a href="https://www.bing.com/search?q=multiqc&amp;cvid=41c889025cf2474eae8615972425b160&amp;aqs=edge..69i57j0l8j69i11004.1847j0j4&amp;FORM=ANAB01&amp;PC=U531">Multiqc</a></h2>
+<p>The first thing we will do is activate the conda envrionment we made earlier called &quot;fastqc&quot;. This environment contains programs fastqc and MultiQC.</p>
+<p>Then we will set some paths. This means that we will set two variables <code>$indir</code> and <code>$outdir</code> which contain the paths on the files system. Variables in bash are denoted using a <code>$</code>. The first path, <code>$indir</code>, will contain the path to the input data for the experiment. We put this data in he directory (folder) called <code>~/metabarcoding_ws/data/16S/fastq</code>, so this will be set as our, <code>$indir</code>, variable.</p>
+<p>If the output directory for fastqc doesn't exist it will not be happy, so we need to make it. To make a directory we use the command <code>mkdir</code>.</p>
+<p>After we make this directory we run fastqc.</p>
+<p>Lastly we will run MultiQC, which collates all the outputs from fastqc and puts them into one report.</p>
+<p>Okay, let's try it:</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Activate conda environment:</span>
+	conda activate fastqc
+
+<span class="hljs-comment"># Set paths</span>
+	indir=~/metabarcoding_ws/data/16S/fastq <span class="hljs-comment"># this is where our input data lives</span>
+	outdir=~/metabarcoding_ws/outputs <span class="hljs-comment"># this is where all our outputs will go</span>
+
+<span class="hljs-comment"># Make a directory to store fastqc files</span>
+	<span class="hljs-built_in">mkdir</span> <span class="hljs-variable">$outdir</span>/fastqc_out
+</code></pre>
+<p>Lets check that that worked by listing all the files in our output directory:</p>
+<p><code>ls $outdir</code></p>
+<p><code>ls</code> is a command to list files. Here it will list all the files in <code>$outdir</code>.</p>
+<p>If it gives <code>fastqc_ws</code> as an output on the terminal, then we successfully created that directory.</p>
+<p>Now lets run FastQC:</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Run fastqc:</span>
+	fastqc <span class="hljs-variable">$indir</span>/*.fastq.gz -t 8 -o <span class="hljs-variable">$outdir</span>/fastqc_out
+<span class="hljs-comment"># runs fastqc on all fastq.gz n current directory. -t threads to use</span>
+
+<span class="hljs-comment"># Run multiqc on fastqc output folder $outdir/fastqc_out/ usng wild card * to catch all the fies in the directory</span>
+<span class="hljs-comment"># (It automatically detects fastqc outputs)</span>
+<span class="hljs-comment"># change `--title` if you wish</span>
+
+	multiqc <span class="hljs-variable">$outdir</span>/fastqc_out/* -o <span class="hljs-variable">$outdir</span>/fastqc_out/multiqc_fastqc --title fastqc
+</code></pre>
+<p>This gives a message at the end:</p>
+<pre><code class="language-bash">|           multiqc | 8 flat-image plots used <span class="hljs-keyword">in</span> the report due to large sample numbers
+|           multiqc | To force interactive plots, use the <span class="hljs-string">&#x27;--interactive&#x27;</span> flag. See the documentation.
+</code></pre>
+<p>So lets add the <code>--interactive</code> flag to the command, and change the output name:</p>
+<pre><code class="language-bash"><span class="hljs-comment"># force interative if there are lots of files (it will tell you if it wrote flat files instead)</span>
+	multiqc <span class="hljs-variable">$outdir</span>/fastqc_out/* -o <span class="hljs-variable">$outdir</span>/fastqc_out/multiqc_fastqc --interactive --title fastqc_interactive
+</code></pre>
+<p>Now we will check the quality of the data and decide how we would like to trim and filter them in the next step.</p>
+<p>You can do this in MobaXterm by navigating to the MultiQC output directory and selecting the <code>.html</code> in the file.</p>
+<p>If we would like to, we can find out the full path to this directory by using <code>echo</code>:</p>
+<p><code>echo $outdir/fastqc_out/multiqc_fastqc</code>: this will print the output of <code>$outdir/fastqc_out/multiqc_fastqc</code> to the command line with the variable <code>$outdir</code> filled in.</p>
+<p>Once you find the <code>html</code> file, right click and select <code>open with</code>. Then select a browser.</p>
+<p>Question: What do you notice about the reads?</p>
+<h2 id="4-run-dada2-script-or-looped-dada2-script">4. Run <a href="https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R">dada2 script</a> or <a href="https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/run_dada2.R">looped dada2 script</a></h2>
+<h2 id="41-activate-dada2-environment-and-start-an-r-session">4.1 Activate dada2 environment and start an R session</h2>
+<p>Firstly, lets deactivate the fastqc environment now that we are done with it:</p>
+<pre><code class="language-bash"><span class="hljs-comment"># deactivate fastqc conda environment</span>
+conda deactivate fastqc
+</code></pre>
+<p>Next we will activate out dada2 environment, and start an R session. We do this in the terminal by typing R.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># activate dada2 conda environment</span>
+conda activate dada2
+
+<span class="hljs-comment"># start R session</span>
+R
+</code></pre>
+<h2 id="42-set-up-r">4.2 Set up R:</h2>
+<p>First thing to do in R is load the dada2 library <code>library(dada2)</code>. You will need to do this any time that you restart the R session. If you leave the session and return, loading the R session again, it will not reload the libraries for you.</p>
+<pre><code class="language-R"><span class="hljs-comment">#=========================#</span>
+<span class="hljs-comment"># load libraries</span>
+<span class="hljs-comment"># we only need dada2</span>
+<span class="hljs-comment">#=========================#</span>
+
+library<span class="hljs-punctuation">(</span>dada2<span class="hljs-punctuation">)</span>
+
+</code></pre>
+<p>Next we will do the same as above and set some variables (outpath, path). Note that in R we don't need to indicate something is a variable using <code>$</code> as in bash.</p>
+<pre><code class="language-R"><span class="hljs-comment">#=========================#</span>
+<span class="hljs-comment"># setup file paths</span>
+<span class="hljs-comment">#=========================#</span>
+
+<span class="hljs-comment"># set path to output directory outpath</span>
+outpath <span class="hljs-operator">&lt;-</span> <span class="hljs-string">&quot;~/metabarcoding_ws/outputs/dada2/&quot;</span>
+<span class="hljs-comment"># set path to data directory</span>
+path <span class="hljs-operator">&lt;-</span> <span class="hljs-string">&quot;~/metabarcoding_ws/data/16S/fastq&quot;</span>
+
+<span class="hljs-comment"># check if the output folder exists.</span>
+<span class="hljs-comment"># Use this if statement to make an output folder if doesn&#x27;t exist:</span>
+<span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span>file.exists<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-punctuation">{</span>
+ cat<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;The folder already exists&quot;</span><span class="hljs-punctuation">)</span>
+<span class="hljs-punctuation">}</span> <span class="hljs-keyword">else</span> <span class="hljs-punctuation">{</span>
+ dir.create<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">)</span>
+ cat<span class="hljs-punctuation">(</span>paste<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;making a directory:&quot;</span><span class="hljs-punctuation">,</span> outpath<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;\n&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+<span class="hljs-punctuation">}</span>
+
+<span class="hljs-comment"># check input files exist in read file directory</span>
+<span class="hljs-comment"># list.files will list all the files in path</span>
+list.files<span class="hljs-punctuation">(</span>path<span class="hljs-punctuation">)</span>
+</code></pre>
+<p>dada2 uses lists of file names, so we need to produce them. We will produce a list of forward read files <code>fnFs</code> and reverse reads <code>fnRs</code>.</p>
+<blockquote>
+<p><em>Note:</em> if your files end in something different to <code>_1.fastq.gz</code> or <code>_2.fastq.gz</code> you will need to change the code to match your data.
+In particular: <code>pattern=&quot;_1.fastq&quot;</code> and <code>pattern=&quot;_2.fastq&quot;</code></p>
+<p>For example if you're files have an extension <code>_R1_001.fastq.gz</code> and <code>R2_001.fastq.gz</code>, you could use the pattern=<code>_R1_001.fastq</code> and pattern=<code>_R2_001.fastq</code>.
+You can use any pattern that allows the function to find every forward read file and each reverse read file correctly</p>
+</blockquote>
+<pre><code class="language-R"><span class="hljs-comment"># assuming Forward and reverse fastq filenames have format: SAMPLENAME_1.fastq and SAMPLENAME_R2_001.fastq</span>
+
+<span class="hljs-comment"># list forward read files</span>
+
+fnFs <span class="hljs-operator">&lt;-</span> sort<span class="hljs-punctuation">(</span>list.files<span class="hljs-punctuation">(</span>path<span class="hljs-punctuation">,</span> pattern<span class="hljs-operator">=</span><span class="hljs-string">&quot;_1.fastq&quot;</span><span class="hljs-punctuation">,</span> full.names <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># this will find all files otaining &quot;_1.fastq&quot;</span>
+
+<span class="hljs-comment"># list reverse read files</span>
+
+fnRs <span class="hljs-operator">&lt;-</span> sort<span class="hljs-punctuation">(</span>list.files<span class="hljs-punctuation">(</span>path<span class="hljs-punctuation">,</span> pattern<span class="hljs-operator">=</span><span class="hljs-string">&quot;_2.fastq&quot;</span><span class="hljs-punctuation">,</span> full.names <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># this will find all files otaining &quot;_2.fastq&quot;</span>
+
+<span class="hljs-comment"># Extract and keep a list of sample names, assuming filenames have format: SAMPLENAME_XXX.fastq</span>
+sample.names <span class="hljs-operator">&lt;-</span> sapply<span class="hljs-punctuation">(</span>strsplit<span class="hljs-punctuation">(</span>basename<span class="hljs-punctuation">(</span>fnFs<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;_&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> `[`<span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<p>This last line may need your attention when it comes to your own data.</p>
+<p>Firstly, make sure that you know what sample names you would like to apply to your data and that they appear in your file names.</p>
+<p>This line will extract the string that comes before the first underscore. If you would like it to extract everything before the second underscore you can change the number <code>1</code> to a <code>2</code>.</p>
+<p>For example:</p>
+<p><code>Sample_name_1.fastq.gz</code></p>
+<p><code>sample.names &lt;- sapply(strsplit(basename(fnFs), &quot;_&quot;), </code>[<code>, 2)</code></p>
+<p>However, if you have samples that have underscores in the sample names, this line will not work properly. In this case it will only use the word before the first underscore &quot;<em>&quot;.
+For example, if your samples have “</em>” within the name, try to find a different point at which to split the filename up.</p>
+<p>For example:</p>
+<p><code>SAMPLE_NAME_16S_R1.fastq.gz</code></p>
+<p><code>sample.names &lt;- sapply(strsplit(basename(fnFs), &quot;_16S&quot;), </code>[<code>, 1)</code></p>
+<h2 id="43-filter-and-trim">4.3 Filter and trim:</h2>
+<p>Now that we have set up all the file paths, we can have a second look at the quality of the reads. This time, using dada2.</p>
+<p>Then we can decide how we would like to trim and filter them.</p>
+<h3 id="431-dada2-filter-and-trim">4.3.1 Dada2 filter and trim</h3>
+<p>For completeness - we will check read quality in dada2. dada2 has a function <code>plotQualityProfile</code> which can be used to view the read quality of your samples.</p>
+<pre><code class="language-R"><span class="hljs-comment"># make a pdf of the read quality output plot_read_quality_F.pdf</span>
+<span class="hljs-comment"># 12 samples included. The first 12 samples are included by using [1:12]</span>
+pdf<span class="hljs-punctuation">(</span>file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/plot_read_quality_F.pdf&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">)</span>
+plotQualityProfile<span class="hljs-punctuation">(</span>fnFs<span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">12</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span>
+dev.off<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># make a pdf of the read quality output plot_read_quality_R.pdf</span>
+<span class="hljs-comment"># 12 samples included</span>
+
+pdf<span class="hljs-punctuation">(</span>file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/plot_read_quality_R.pdf&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">)</span>
+plotQualityProfile<span class="hljs-punctuation">(</span>fnRs<span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">12</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span>
+dev.off<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<blockquote>
+<p>Note: you will see the following error message:
+<code>guides(&lt;scale&gt; = FALSE)</code> is deprecated. Please use <code>guides(&lt;scale&gt; = &quot;none&quot;)</code> instead.
+Ignore this.</p>
+</blockquote>
+<blockquote>
+<p>See the <a href="https://www.bioconductor.org/packages/release/bioc/manuals/dada2/man/dada2.pdf">dada2 manual</a> for descriptions of each function.</p>
+</blockquote>
+<blockquote>
+<p>For example, the manual explains:
+The distribution of quality scores at each position is shown as a grey-scale heat map, with dark
+colors corresponding to higher frequency. The plotted lines show positional summary statistics:
+green is the mean, orange is the median, and the dashed orange lines are the 25th and 75th quantiles.
+If the sequences vary in length, a red line will be plotted showing the percentage of reads that extend
+to at least that position</p>
+</blockquote>
+<p>Now we will filter and trim. First we will make lists of the outputs files we will produce: <code>filtFs</code> and <code>filtRs</code>.</p>
+<pre><code class="language-R"><span class="hljs-comment"># list filtered files in subdirectory: called filtered</span>
+
+<span class="hljs-comment"># make a list of filtered output files for forward reads:</span>
+filtFs <span class="hljs-operator">&lt;-</span> file.path<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;filtered&quot;</span><span class="hljs-punctuation">,</span> paste0<span class="hljs-punctuation">(</span>sample.names<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;_F_filt.fastq.gz&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># forward reads</span>
+<span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>filtFs<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> sample.names
+
+<span class="hljs-comment"># make a list of filtered output files for reverse reads:</span>
+filtRs <span class="hljs-operator">&lt;-</span> file.path<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;filtered&quot;</span><span class="hljs-punctuation">,</span> paste0<span class="hljs-punctuation">(</span>sample.names<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;_R_filt.fastq.gz&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># reverse reads</span>
+<span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>filtRs<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> sample.names
+
+</code></pre>
+<p>The <code>filterAndTrim</code> function</p>
+<blockquote>
+<p>Parameters to think about are:
+<code>trimleft</code>
+<code>trunclen</code>
+<code>maxN</code>
+<code>maxEE</code>
+<code>truncQ</code></p>
+</blockquote>
+<pre><code class="language-R"><span class="hljs-comment"># Action required: Change trunclen=c(xx,xx) to match what you want to truncate your forward and reverse reads to. Similarly edit trimLeft=c(xx,xx), maxEE=x and truncQ=x. ##change_me</span>
+<span class="hljs-comment"># https://rdrr.io/bioc/dada2/man/filterAndTrim.html</span>
+out <span class="hljs-operator">&lt;-</span> filterAndTrim<span class="hljs-punctuation">(</span>fnFs<span class="hljs-punctuation">,</span> filtFs<span class="hljs-punctuation">,</span> fnRs<span class="hljs-punctuation">,</span> filtRs<span class="hljs-punctuation">,</span> trimLeft<span class="hljs-operator">=</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">10</span><span class="hljs-punctuation">,</span><span class="hljs-number">10</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> truncLen<span class="hljs-operator">=</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">200</span><span class="hljs-punctuation">,</span><span class="hljs-number">160</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>
+              maxN<span class="hljs-operator">=</span><span class="hljs-number">0</span><span class="hljs-punctuation">,</span> maxEE<span class="hljs-operator">=</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">2</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> truncQ<span class="hljs-operator">=</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-number">2</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> rm.phix<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span>
+              compress<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> multithread<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># On Windows set multithread=TRUE</span>
+head<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">)</span> <span class="hljs-comment"># check how many reads have been lost in filtering step</span>
+<span class="hljs-comment"># save out file in case environment shuts down</span>
+write.table<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">,</span>paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/out_save.tsv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;\t&quot;</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<p>At this point we can look at the summary of the trimming step by looking at the varable <code>out</code>. To do this type <code>out</code> into the terminal.</p>
+<blockquote>
+<p>Or, for ease, print &quot;out&quot; ordered by column two, which is the number of reads left: <code>out[order(out[,2], decreasing=T),]</code></p>
+</blockquote>
+<p>Questions: Have many reads been lost? Are there any samples with too few reads to proceed with?</p>
+<p>Next we can make more plots of the read files, this time after they have been trimmed.</p>
+<pre><code class="language-R"><span class="hljs-comment"># make a pdf of the read quality output plot_read_quality_F.pdf</span>
+pdf<span class="hljs-punctuation">(</span>file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/plot_read_quality_filtered_F.pdf&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">)</span>
+plotQualityProfile<span class="hljs-punctuation">(</span>filtFs<span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">12</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span>
+dev.off<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># make a pdf of the read quality output plot_read_quality_R.pdf</span>
+pdf<span class="hljs-punctuation">(</span>file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/plot_read_quality_filtered_R.pdf&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">)</span>
+plotQualityProfile<span class="hljs-punctuation">(</span>filtRs<span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-operator">:</span><span class="hljs-number">12</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span>
+dev.off<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<p>Sometimes files lose all reads at this step. If that happens you need to exclude them from the rest the analysis.</p>
+<p>Or, if there are samples with some reads, but you would like to exclude them from the rest of the analysis, you can remove them with the code below.</p>
+<p>More specifically, the variable <code>removed_samples</code> is made first, and is populated by a list of samples with zero reads left (<code>which(as.data.frame(out)[,2] ==0</code>). To add samples to this list you need to use <code>c(removed samples, &quot;sample_file_1.fastq.gz&quot;)</code>
+e.g.:
+<code>removed_samples&lt;- c(removed_samples, &quot;P1a_1.fastq.gz&quot;, &quot;P2a_1.fastq.gz&quot;, &quot;P1e_1.fastq.gz&quot;, &quot;P1c_1.fastq.gz&quot;)</code></p>
+<pre><code class="language-R"><span class="hljs-comment"># if statement checks if samples need to be removed and following statements remove them</span>
+removed_samples<span class="hljs-operator">&lt;-</span>row.names<span class="hljs-punctuation">(</span>as.data.frame<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-punctuation">(</span>which<span class="hljs-punctuation">(</span>as.data.frame<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span> <span class="hljs-operator">==</span><span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># modify this line to remove samples manually.</span>
+<span class="hljs-comment"># here, sample Ts29 has fewer reads than the rest of the dataset so we will remove it</span>
+<span class="hljs-comment"># note that in the table &quot;out&quot; full file names with extensions are required e.g:&quot;Ts29_1.fastq.gz&quot;</span>
+removed_samples<span class="hljs-operator">&lt;-</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>removed_samples<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;Ts29_1.fastq.gz&quot;</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># clean up file names</span>
+<span class="hljs-comment"># change this if your file name is not structured as SAMPLENAME_fileextension. If there are &quot;_&quot; in your samplename you will need to change this.</span>
+removed_samples.names <span class="hljs-operator">&lt;-</span> sapply<span class="hljs-punctuation">(</span>strsplit<span class="hljs-punctuation">(</span>basename<span class="hljs-punctuation">(</span>removed_samples<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;_&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> `[`<span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">)</span> <span class="hljs-comment"># check this works for your data</span>
+
+<span class="hljs-comment"># remove samples from filtFs, filtRs, sample.names</span>
+<span class="hljs-keyword">if</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">length</span><span class="hljs-punctuation">(</span>removed_samples<span class="hljs-punctuation">)</span> <span class="hljs-operator">!=</span> <span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">{</span>
+  filtFs<span class="hljs-operator">&lt;-</span>filtFs<span class="hljs-punctuation">[</span><span class="hljs-punctuation">(</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>filtFs<span class="hljs-punctuation">)</span> <span class="hljs-operator">%in%</span> removed_samples.names<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span> <span class="hljs-comment"># remove from list of forward filtered read files</span>
+  filtRs<span class="hljs-operator">&lt;-</span>filtRs<span class="hljs-punctuation">[</span><span class="hljs-punctuation">(</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>filtRs<span class="hljs-punctuation">)</span> <span class="hljs-operator">%in%</span> removed_samples.names<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span> <span class="hljs-comment"># remove from list of reverse filtered read files</span>
+  sample.names<span class="hljs-operator">&lt;-</span>sample.names<span class="hljs-punctuation">[</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span>sample.names<span class="hljs-punctuation">)</span> <span class="hljs-operator">%in%</span> removed_samples.names<span class="hljs-punctuation">]</span> <span class="hljs-comment"># removes from sample names list</span>
+  out<span class="hljs-operator">&lt;-</span>out<span class="hljs-punctuation">[</span>which<span class="hljs-punctuation">(</span><span class="hljs-operator">!</span><span class="hljs-punctuation">(</span>row.names<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">)</span><span class="hljs-operator">%in%</span> removed_samples<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span> <span class="hljs-comment"># removes from out</span>
+<span class="hljs-punctuation">}</span>
+
+</code></pre>
+<p>Stop here and check the filtering and trimming step before moving forward!
+Do you need to repeat with new parameters?</p>
+<p>So, if it seems we have lost too many reads, or not enough, or the quality scores are still too low, we need to read try again with new parameters.</p>
+<p>We can check the read quality using FastQC again to be sure:</p>
+<h3 id="432-run-fastqc-and-multiqc-optional">4.3.2 Run <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">Fastqc</a> and <a href="https://www.bing.com/search?q=multiqc&amp;cvid=41c889025cf2474eae8615972425b160&amp;aqs=edge..69i57j0l8j69i11004.1847j0j4&amp;FORM=ANAB01&amp;PC=U531">Multiqc</a> [optional]</h3>
+<h4 id="open-a-new-command-line-session">Open a new command-line session:</h4>
+<p>So that we don't interrupt the R session we have been working in, let's start a new session.</p>
+<p>Option 1 - You can exit your screen using <code>ctrl + a then d</code>, and start a new one <code>screen -S fastqc</code>.
+Then to return you can use <code>ctrl + a then d</code>, and re-enter the <code>meta</code> screen using <code>screen -r meta</code></p>
+<p>Or Option 2 - You can start a new session using Mobaxterm and work there</p>
+<pre><code class="language-bash"><span class="hljs-comment"># start another interactive session in a different session</span>
+	msub -I -q S30 -l procs=8,walltime=0:30:00
+
+<span class="hljs-comment"># Activate conda environment:</span>
+	conda activate fastqc
+
+<span class="hljs-comment"># Set paths</span>
+	indir=~/metabarcoding_ws/outputs/dada2/filtered
+	outdir=~/metabarcoding_ws/outputs/dada2/
+
+<span class="hljs-comment"># Make a directory to store fastqc files</span>
+	<span class="hljs-built_in">mkdir</span> <span class="hljs-variable">$outdir</span>/filtered_fastqc_out
+
+<span class="hljs-comment"># Run fastqc:</span>
+	fastqc <span class="hljs-variable">$indir</span>/*.fastq.gz -t 8 -o <span class="hljs-variable">$outdir</span>/filtered_fastqc_out
+<span class="hljs-comment"># runs fastqc on all fastq.gz n current directory. -t threads to use</span>
+
+<span class="hljs-comment"># Run multiqc on fastqc output folder.</span>
+<span class="hljs-comment">#(It automatically detects fastqc outputs)</span>
+<span class="hljs-comment"># change `--title` if you wish</span>
+	multiqc <span class="hljs-variable">$outdir</span>/filtered_fastqc_out/* -o <span class="hljs-variable">$outdir</span>/filtered_fastqc_out/multiqc_fastqc --interactive --title fastqc_filtered_interactive
+</code></pre>
+<p>If you are happy to proceed, go back to the R session and start to calculate error rates:</p>
+<h2 id="44-error-rates">4.4 Error rates</h2>
+<h3 id="back-in-r">Back in R:</h3>
+<p>Dada2 relies on error models calculated for every dataset. the function <code>learnErrors()</code> will calculate these and store them in <code>errF</code> and <code>errR</code></p>
+<pre><code class="language-R"><span class="hljs-comment"># calculate error rates for forward and reverse reads</span>
+errF <span class="hljs-operator">&lt;-</span> learnErrors<span class="hljs-punctuation">(</span>filtFs<span class="hljs-punctuation">,</span> multithread<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+errR <span class="hljs-operator">&lt;-</span> learnErrors<span class="hljs-punctuation">(</span>filtRs<span class="hljs-punctuation">,</span> multithread<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># make a pdf of the error output plot_errors.pdf</span>
+pdf<span class="hljs-punctuation">(</span>file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/plot_errors_F.pdf&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">)</span>
+plotErrors<span class="hljs-punctuation">(</span>errF<span class="hljs-punctuation">,</span> nominalQ<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+dev.off<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span>
+pdf<span class="hljs-punctuation">(</span>file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/plot_errors_R.pdf&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7</span><span class="hljs-punctuation">)</span>
+plotErrors<span class="hljs-punctuation">(</span>errR<span class="hljs-punctuation">,</span> nominalQ<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+dev.off<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<h2 id="45-dereplicate-reads">4.5 Dereplicate reads</h2>
+<p>The function <code>derepFastq()</code> will group all the identical reads</p>
+<pre><code class="language-R">derep_forward <span class="hljs-operator">&lt;-</span> derepFastq<span class="hljs-punctuation">(</span>filtFs<span class="hljs-punctuation">,</span> verbose<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+<span class="hljs-comment"># name the derep-class objects by the sample names</span>
+<span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>derep_forward<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> sample.names
+
+derep_reverse <span class="hljs-operator">&lt;-</span> derepFastq<span class="hljs-punctuation">(</span>filtRs<span class="hljs-punctuation">,</span> verbose<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+<span class="hljs-comment"># name the derep-class objects by the sample names</span>
+<span class="hljs-built_in">names</span><span class="hljs-punctuation">(</span>derep_reverse<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> sample.names
+</code></pre>
+<h2 id="46-sample-inference-denoise-reads">4.6 Sample Inference/ Denoise reads</h2>
+<p>This utilises the main function of Dada2 <code>dada()</code></p>
+<p>Here, dada2 will use error models calculated for forward and reverse reads separaetly to determine which ASV's are likely to be real biological sequences or if they have occured due to errors. This is done separately since assessing overlapped regions between paired reads is less accurate than analysing each read in the pair directly.</p>
+<p>After denoising, ASV's are then merged by aligning paired reads.</p>
+<p>Then, an ASV table is created <code>seqtab</code> using function <code>makeSequenceTable</code>.</p>
+<p>We can check that the merged reads are the length we expected using <code>getSequences()</code>.</p>
+<pre><code class="language-R"><span class="hljs-comment"># Forward - this clusters forward reads into ASV&#x27;s. later you will merge forward and reverse reads</span>
+dadaFs <span class="hljs-operator">&lt;-</span> dada<span class="hljs-punctuation">(</span>derep_forward<span class="hljs-punctuation">,</span> err<span class="hljs-operator">=</span>errF<span class="hljs-punctuation">,</span> multithread<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+<span class="hljs-comment"># Reverse - this clusters reverse reads into ASV&#x27;s.</span>
+dadaRs <span class="hljs-operator">&lt;-</span> dada<span class="hljs-punctuation">(</span>derep_reverse<span class="hljs-punctuation">,</span> err<span class="hljs-operator">=</span>errR<span class="hljs-punctuation">,</span> multithread<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># merged paired read data</span>
+mergers <span class="hljs-operator">&lt;-</span> mergePairs<span class="hljs-punctuation">(</span>dadaFs<span class="hljs-punctuation">,</span> filtFs<span class="hljs-punctuation">,</span> dadaRs<span class="hljs-punctuation">,</span> filtRs<span class="hljs-punctuation">,</span> verbose<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+<span class="hljs-comment"># Inspect the merger data.frame from the first sample</span>
+head<span class="hljs-punctuation">(</span>mergers<span class="hljs-punctuation">[[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># amplicon sequence variant table (ASV)</span>
+seqtab <span class="hljs-operator">&lt;-</span> makeSequenceTable<span class="hljs-punctuation">(</span>mergers<span class="hljs-punctuation">)</span>
+<span class="hljs-built_in">dim</span><span class="hljs-punctuation">(</span>seqtab<span class="hljs-punctuation">)</span> <span class="hljs-comment"># check size of table</span>
+
+<span class="hljs-comment"># Inspect distribution of sequence lengths</span>
+table<span class="hljs-punctuation">(</span>nchar<span class="hljs-punctuation">(</span>getSequences<span class="hljs-punctuation">(</span>seqtab<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<h2 id="47-remove-chimeras">4.7 Remove chimeras</h2>
+<p>We need to remove chimeras. A function in dada2 called <code>removeBimeraDenovo</code> will do this by removing reads that look like a hybrid of two others in the dataset. Chimeras made from more than two sequences merging are rare.</p>
+<pre><code class="language-R"><span class="hljs-comment"># run removeBimeraDenovo</span>
+seqtab.nochim <span class="hljs-operator">&lt;-</span> removeBimeraDenovo<span class="hljs-punctuation">(</span>seqtab<span class="hljs-punctuation">,</span> method<span class="hljs-operator">=</span><span class="hljs-string">&quot;consensus&quot;</span><span class="hljs-punctuation">,</span> multithread<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> verbose<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># check size of data.frame</span>
+<span class="hljs-built_in">dim</span><span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># this line will print a message using the outputs:</span>
+print<span class="hljs-punctuation">(</span>paste<span class="hljs-punctuation">(</span><span class="hljs-built_in">round</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">)</span><span class="hljs-operator">/</span><span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span>seqtab<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-number">4</span><span class="hljs-punctuation">)</span><span class="hljs-operator">*</span><span class="hljs-number">100</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;% of ASV&#x27;s remain after chimera removal. Remaining ASV&#x27;s:&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-built_in">dim</span><span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">[</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<h2 id="48-removal-of-negative-controls">4.8 Removal of negative controls</h2>
+<p>If your negative control doesn't contain reads, or you have not included a negative control in your study set <code>negative_controls</code> as an emty list <code>= c()</code> and run the code anayway to produce tables <code>seqtab.nochim</code> and <code>seqtab.nochim.c</code>. This is so that when we come to track what happened to the reads at each step, we don't need to change the code depending on wether we removed negative controls or not.</p>
+<p>If you have included negative controls in your experiment, and they have enough reads remaining at this stage such that ASV's have been found in those samples, you can remove those ASV's from the rest of the dataset. Thiscode ahs been written to assume that these ASV's have been introduced to the rest of your data through contamination. This method may be too simple if there are contaminants that are also present in the sample. Please see <code>Decontam</code> for information on an alternative option.</p>
+<p>You will need to make a list of negative control samples e.g: <code>negative_controls&lt;-c(&quot;T16s&quot;, &quot;T20s&quot;,&quot;T21s&quot;)</code>. You will only need the sample names for this stage, not the file name as before when we removed samples.</p>
+<p>Here we will pretend that sample <code>Ts16s</code> is a negative control.</p>
+<pre><code class="language-R"><span class="hljs-comment"># make a list of the negative control samples</span>
+negative_controls<span class="hljs-operator">&lt;-</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;T16s&quot;</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># save a new version of the ASV table `seqtab.nochim` to `seqtab.nochim.c`. &quot;c&quot; for control</span>
+seqtab.nochim.c<span class="hljs-operator">&lt;-</span>seqtab.nochim
+
+<span class="hljs-comment"># this loop will loop through each negative control (f) in the list (negative controls) and remove all ASV&#x27;s found in that sample (to_remove) from the rest of the samples</span>
+<span class="hljs-keyword">for</span><span class="hljs-punctuation">(</span>f <span class="hljs-keyword">in</span> negative_controls<span class="hljs-punctuation">)</span><span class="hljs-punctuation">{</span>
+	<span class="hljs-comment"># print which negative control is being used in the loop righ now</span>
+  print<span class="hljs-punctuation">(</span>f<span class="hljs-punctuation">)</span>
+	<span class="hljs-comment"># make a list of rows to drop so we can count how many</span>
+  to_remove<span class="hljs-operator">&lt;-</span><span class="hljs-built_in">dim</span><span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span>which<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">[</span>which<span class="hljs-punctuation">(</span>row.names<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">)</span><span class="hljs-operator">==</span>f<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><span class="hljs-operator">&gt;</span><span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span>
+	<span class="hljs-comment"># keeps rows where negative control is zero</span>
+  seqtab.nochim.c<span class="hljs-operator">&lt;-</span>seqtab.nochim.c<span class="hljs-punctuation">[</span><span class="hljs-punctuation">,</span>which<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">[</span>which<span class="hljs-punctuation">(</span>row.names<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">)</span><span class="hljs-operator">==</span>f<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span><span class="hljs-punctuation">]</span><span class="hljs-operator">&lt;=</span><span class="hljs-number">0</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span>
+	<span class="hljs-comment"># print a message to say how many ASV&#x27;s were dropped and kept</span>
+  print<span class="hljs-punctuation">(</span>paste<span class="hljs-punctuation">(</span><span class="hljs-built_in">dim</span><span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-number">2</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot; ASV&#x27;s remain after removing&quot;</span><span class="hljs-punctuation">,</span> to_remove<span class="hljs-punctuation">,</span><span class="hljs-string">&quot; ASV&#x27;s present in negative controls:&quot;</span><span class="hljs-punctuation">,</span> f<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+<span class="hljs-punctuation">}</span>
+
+
+<span class="hljs-comment"># we won&#x27;t do this here because we didn&#x27;t use a true negative control</span>
+
+</code></pre>
+<p>Now that we have removed chimeras and optionally removed negative controls we can save our final ASV table which is saved as <code>seqtab.nochim.c</code>.</p>
+<pre><code class="language-R">
+<span class="hljs-comment"># save result</span>
+write.table<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/asv_table.dada2.tsv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;\t&quot;</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># Save seqtab.nochim as an RDS file - this will make reading the table back into R much easier</span>
+saveRDS<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/seqtab_nochim.rds&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># save csv for MicrobiomeAnalyst</span>
+<span class="hljs-comment"># transpose</span>
+seqtab.nochim.df <span class="hljs-operator">&lt;-</span> t<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">)</span>
+<span class="hljs-comment"># make a column for the samples names called &quot;#NAMES&quot;</span>
+seqtab.nochim.df <span class="hljs-operator">&lt;-</span> cbind<span class="hljs-punctuation">(</span>row.names<span class="hljs-punctuation">(</span>seqtab.nochim.df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>seqtab.nochim.df<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># set first column name as &quot;#NAMES&quot; for MicrobiomeAnalyst</span>
+colnames<span class="hljs-punctuation">(</span>seqtab.nochim.df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-operator">&lt;-</span><span class="hljs-string">&quot;#NAMES&quot;</span>
+
+<span class="hljs-comment"># write output</span>
+write.csv<span class="hljs-punctuation">(</span>seqtab.nochim.df<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/asv_table.dada2.ma.csv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<h2 id="49-track-data-across-each-step">4.9 Track data across each step</h2>
+<p>Let's build a table that shows how many reads/ASV's are left after each step.</p>
+<pre><code class="language-R"><span class="hljs-comment"># set getN function - this function will count for us</span>
+getN <span class="hljs-operator">&lt;-</span> <span class="hljs-keyword">function</span><span class="hljs-punctuation">(</span>x<span class="hljs-punctuation">)</span> <span class="hljs-built_in">sum</span><span class="hljs-punctuation">(</span>getUniques<span class="hljs-punctuation">(</span>x<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># Combine filtering, dada2, and chimera removal data into one dataframe</span>
+<span class="hljs-comment"># If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)</span>
+track <span class="hljs-operator">&lt;-</span> cbind<span class="hljs-punctuation">(</span>out<span class="hljs-punctuation">,</span> sapply<span class="hljs-punctuation">(</span>dadaFs<span class="hljs-punctuation">,</span> getN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> sapply<span class="hljs-punctuation">(</span>dadaRs<span class="hljs-punctuation">,</span> getN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> sapply<span class="hljs-punctuation">(</span>mergers<span class="hljs-punctuation">,</span> getN<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> rowSums<span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> rowSums<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># set some column names</span>
+colnames<span class="hljs-punctuation">(</span>track<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;no_reads_input&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;no_reads_after_filter&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;no_ASV_denoisedF&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;no_ASV_denoisedR&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;no_ASV_merged&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;no_ASV_nonchim&quot;</span><span class="hljs-punctuation">,</span><span class="hljs-string">&quot;no_ASV_neg_cntrl_removed&quot;</span><span class="hljs-punctuation">)</span>
+rownames<span class="hljs-punctuation">(</span>track<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> sample.names
+
+<span class="hljs-comment"># check output</span>
+head<span class="hljs-punctuation">(</span>track<span class="hljs-punctuation">)</span> <span class="hljs-comment"># head shows the first 10 entries</span>
+
+<span class="hljs-comment"># write to file:</span>
+write.table<span class="hljs-punctuation">(</span>track<span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/track_reads.tsv&quot;</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;\t&quot;</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<blockquote>
+<p>We can view this table in order of reads remain after negative controls are removed as follows:
+<code>track[order(track[,7], decreasing=T),]</code></p>
+</blockquote>
+<blockquote>
+<p>Question: How many ASV's survived the denoising and merging processes?</p>
+</blockquote>
+<h2 id="410-taxonomy">4.10 Taxonomy</h2>
+<p>Next, we will assign taxa to each ASV we have detected. We will compare our ASV's to he reference database SILVA.</p>
+<p>Functions for assigning taxonomy are <code>taxa_with_bootstraps()</code> and <code>taxa()</code>. Here we use <code>taxa_with_bootstraps()</code>.</p>
+<pre><code class="language-R"><span class="hljs-comment"># dataset - SILVA:</span>
+taxa_with_bootstraps <span class="hljs-operator">&lt;-</span> assignTaxonomy<span class="hljs-punctuation">(</span>seqtab.nochim<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;~/metabarcoding_ws/db/silva_nr99_v138.1_train_set.fa.gz&quot;</span><span class="hljs-punctuation">,</span> outputBootstraps<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span> multithread<span class="hljs-operator">=</span><span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># we can save the taxa dataframe without the bootstraps:</span>
+taxa_all <span class="hljs-operator">&lt;-</span> taxa_with_bootstraps<span class="hljs-operator">$</span>tax
+
+<span class="hljs-comment"># optionally add species:</span>
+taxa_species <span class="hljs-operator">&lt;-</span> addSpecies<span class="hljs-punctuation">(</span>taxa_with_bootstraps<span class="hljs-operator">$</span>tax<span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;~/metabarcoding_ws/db/silva_species_assignment_v138.1.fa.gz&quot;</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># write to file</span>
+write.csv<span class="hljs-punctuation">(</span>taxa_with_bootstraps<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/taxa_with_bootstraps.csv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span>
+write.csv<span class="hljs-punctuation">(</span>taxa_all<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/taxa.csv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span>
+write.csv<span class="hljs-punctuation">(</span>taxa_species<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/taxa_species.csv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">T</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># write for MicrobiomeAnalyst</span>
+taxa_df <span class="hljs-operator">&lt;-</span> cbind<span class="hljs-punctuation">(</span>row.names<span class="hljs-punctuation">(</span>taxa_all<span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>taxa_all<span class="hljs-punctuation">)</span>
+colnames<span class="hljs-punctuation">(</span>taxa_df<span class="hljs-punctuation">)</span><span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-operator">&lt;-</span><span class="hljs-string">&quot;#TAXONOMY&quot;</span>
+
+<span class="hljs-comment"># write - important that &quot;row.names=F&quot; this time</span>
+write.csv<span class="hljs-punctuation">(</span>taxa_df<span class="hljs-punctuation">,</span> file <span class="hljs-operator">=</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/taxa.ma.csv&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>row.names<span class="hljs-operator">=</span><span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span>
+</code></pre>
+<h2 id="4-11-make-and-save-phyloseq-object">4 .11 Make and save phyloseq object</h2>
+<p>Phyloseq objects are used in multiple statistical and vizualisation tools for metabarcoding studies.</p>
+<p>Here you can make a phyloseq object with the OTU table and Taxonomy tables made above. You can also make one which incorporates metadata relevant to your study.</p>
+<p>Here we use file metadata.tsv. See section 6.1 to download this file.</p>
+<p>These will be saved as RDS files.</p>
+<pre><code class="language-R">library<span class="hljs-punctuation">(</span>phyloseq<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># read your metadata file</span>
+metadata <span class="hljs-operator">&lt;-</span> read.csv<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;~/metabarcoding_ws/data/metadata.tsv&quot;</span><span class="hljs-punctuation">,</span> sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;\t&quot;</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># save otu table in a phyloseq otu table format</span>
+phylo_otu_table <span class="hljs-operator">&lt;-</span> otu_table<span class="hljs-punctuation">(</span>seqtab.nochim.c<span class="hljs-punctuation">,</span> taxa_are_rows<span class="hljs-operator">=</span><span class="hljs-built_in">F</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># save tax table in a phyloseq tax table format</span>
+phylo_tax_table <span class="hljs-operator">&lt;-</span> tax_table<span class="hljs-punctuation">(</span>taxa_all<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># save metadata table in a phyloseq metadata table format</span>
+phylo_meta_table <span class="hljs-operator">&lt;-</span> sample_data<span class="hljs-punctuation">(</span>metadata<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># choose the column of the metadata file that matches the sample names in the otu file and rename the sample_names of the phyloseq object by that column</span>
+sample_names<span class="hljs-punctuation">(</span>phylo_meta_table<span class="hljs-punctuation">)</span> <span class="hljs-operator">&lt;-</span> sample_data<span class="hljs-punctuation">(</span>phylo_meta_table<span class="hljs-punctuation">)</span><span class="hljs-operator">$</span>X.NAME
+
+<span class="hljs-comment"># make phyloseq object without the metadata</span>
+phyloseq_object_no_meta <span class="hljs-operator">&lt;-</span> phyloseq<span class="hljs-punctuation">(</span>phylo_otu_table<span class="hljs-punctuation">,</span>  phylo_tax_table<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># make phyloseq object with the metadata</span>
+phyloseq_object <span class="hljs-operator">&lt;-</span> phyloseq<span class="hljs-punctuation">(</span>phylo_otu_table<span class="hljs-punctuation">,</span>  phylo_tax_table<span class="hljs-punctuation">,</span> phylo_meta_table<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># Save phyloseq_object_no_meta as an RDS file</span>
+saveRDS<span class="hljs-punctuation">(</span>phyloseq_object_no_meta<span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/phyloseq_object_no_meta.rds&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># Save phyloseq_object as an RDS file</span>
+saveRDS<span class="hljs-punctuation">(</span>phyloseq_object<span class="hljs-punctuation">,</span> paste<span class="hljs-punctuation">(</span>outpath<span class="hljs-punctuation">,</span><span class="hljs-string">&quot;/phyloseq_object.rds&quot;</span><span class="hljs-punctuation">,</span>sep<span class="hljs-operator">=</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+
+</code></pre>
+<h2 id="4-12-run-microviz---local-machine-optional">4 .12 Run Microviz - local machine (optional)</h2>
+<p>One poassible vizualisation software avalible for metabarcoding is Microviz.</p>
+<p>To use this you need to leave POD and use RStudio on your local machine and download the phyloseq_object.</p>
+<ol>
+<li>Install Microviz</li>
+</ol>
+<pre><code class="language-R">
+<span class="hljs-keyword">if</span> <span class="hljs-punctuation">(</span><span class="hljs-operator">!</span>requireNamespace<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;BiocManager&quot;</span><span class="hljs-punctuation">,</span> quietly <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span> install.packages<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;BiocManager&quot;</span><span class="hljs-punctuation">)</span>
+BiocManager<span class="hljs-operator">::</span>install<span class="hljs-punctuation">(</span><span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-string">&quot;phyloseq&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;microbiome&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;ComplexHeatmap&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span> update <span class="hljs-operator">=</span> <span class="hljs-literal">FALSE</span><span class="hljs-punctuation">)</span>
+
+install.packages<span class="hljs-punctuation">(</span>
+  <span class="hljs-string">&quot;microViz&quot;</span><span class="hljs-punctuation">,</span>
+  repos <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span>davidbarnett <span class="hljs-operator">=</span> <span class="hljs-string">&quot;https://david-barnett.r-universe.dev&quot;</span><span class="hljs-punctuation">,</span> getOption<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;repos&quot;</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>
+<span class="hljs-punctuation">)</span>
+
+</code></pre>
+<ol start="2">
+<li>Run Microviz</li>
+</ol>
+<pre><code class="language-R"><span class="hljs-comment"># load library</span>
+library<span class="hljs-punctuation">(</span>microViz<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># read the phyloseq object wherever it is stored</span>
+phyloseq_object <span class="hljs-operator">&lt;-</span> readRDS<span class="hljs-punctuation">(</span><span class="hljs-string">&quot;../Data/phyloseq_object.rds&quot;</span><span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># run microviz - this will open in your browser</span>
+ord_explore<span class="hljs-punctuation">(</span>phyloseq_object<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># you may encounter errors around the names of taxa. Press stop button to shut down microviz. </span>
+<span class="hljs-comment"># Then run tax_fix() and then rerun ord_explore</span>
+tax_fix<span class="hljs-punctuation">(</span>phyloseq_object<span class="hljs-punctuation">)</span> 
+
+<span class="hljs-comment"># run microviz</span>
+ord_explore<span class="hljs-punctuation">(</span>phyloseq_object<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># if still errors run tax_fix_interactive() to help you figure out what arguments to give to tax_fix</span>
+tax_fix_interactive<span class="hljs-punctuation">(</span>phyloseq_object<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># I needed to set the min length as 3 and unknowns as NA</span>
+<span class="hljs-comment"># I copied and edited the code from the panel in the tax_fix_interactive browser popup</span>
+phyloseq_object_fix <span class="hljs-operator">&lt;-</span> phyloseq_object <span class="hljs-operator">%&gt;%</span>
+  tax_fix<span class="hljs-punctuation">(</span>
+    min_length <span class="hljs-operator">=</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span>
+    unknowns <span class="hljs-operator">=</span> <span class="hljs-built_in">c</span><span class="hljs-punctuation">(</span><span class="hljs-literal">NA</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">,</span>
+    sep <span class="hljs-operator">=</span> <span class="hljs-string">&quot; &quot;</span><span class="hljs-punctuation">,</span> anon_unique <span class="hljs-operator">=</span> <span class="hljs-literal">TRUE</span><span class="hljs-punctuation">,</span>
+    suffix_rank <span class="hljs-operator">=</span> <span class="hljs-string">&quot;classified&quot;</span>
+  <span class="hljs-punctuation">)</span>
+tax_fix_interactive<span class="hljs-punctuation">(</span>phyloseq_object_fix<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># run microviz</span>
+ord_explore<span class="hljs-punctuation">(</span>phyloseq_object_fix<span class="hljs-punctuation">)</span>
+
+<span class="hljs-comment"># enjoy exploring your data!</span>
+</code></pre>
+<p><strong>Now you have completed the Dada2 aspect of the analysis!</strong></p>
+<blockquote>
+<p>You should now  have been left with output files in your <code>outpath</code>: <code>/home/$USER/metabarcoding_ws/outputs/dada2/</code></p>
+<p><strong>Most important:</strong></p>
+<p>ASV file: <code>asv_table.dada2.tsv</code></p>
+<p>Taxonomy files: <code>taxa.csv</code>, <code>taxa_with_bootstraps.csv</code>, and <code>taxa_species.csv</code></p>
+<p>MicrobiomeAnalyst format files :  <code>asv_table_dada2.ma.csv</code>, <code>taxa.ma.csv</code></p>
+<p>Phyloseq objects :  <code>phyloseq_object.rds</code>, <code>phyloseq_object_no_meta.rds</code></p>
+<p><strong>Additional:</strong></p>
+<p>Filtered reads directory: <code>filtered/</code></p>
+<p>Read quality pdfs (pre filtering): <code>plot_read_quality_F.pdf</code>, <code>plot_read_quality_R.pdf</code></p>
+<p>Read quality pdfs (post filtering): <code>plot_read_quality_filtered_F.pdf</code>, <code>plot_read_quality_filtered_R.pdf</code></p>
+<p>R formatted ASV table: <code>seqtab_nochim.rds</code></p>
+<p>Track reads file: <code>track_reads.tsv</code></p>
+<p>Saved out file (can be discarded now): <code>out_save.tsv</code></p>
+<p>Error rate plot pdfs: <code>plot_errors_F.pdf</code>, <code>plot_errors_R.pdf</code></p>
+</blockquote>
+<h2 id="5-alternatively-run-dadaist2-optional">5. Alternatively run <a href="https://github.com/quadram-institute-bioscience/dadaist2">dadaist2</a> (Optional)</h2>
+<p>This is a command line wrapper for dada2.</p>
+<h4 id="in-the-command-line">In the command-line:</h4>
+<pre><code class="language-bash">in_dir=~/metabarcoding_ws/data/16S/fastq
+out_dir=~/metabarcoding_ws/outputs/dadaist2
+database=~/metabarcoding_ws/db/silva_nr99_v138.1_train_set.fa.gz
+meta=~/metabarcoding_ws/outputs/dadaist2/metadatafile.csv <span class="hljs-comment"># make one using dadaist2-metadata below</span>
+<span class="hljs-comment"># activate conda environment</span>
+conda activate dadaist2
+
+<span class="hljs-comment"># optionally move into project directory</span>
+<span class="hljs-built_in">cd</span> <span class="hljs-variable">$in_dir</span>
+<span class="hljs-comment"># make output directory</span>
+<span class="hljs-built_in">mkdir</span> <span class="hljs-variable">$out_dir</span>
+
+<span class="hljs-comment"># make a metadata file if one has not already been made</span>
+dadaist2-metadata -i <span class="hljs-variable">$in_dir</span> -o <span class="hljs-variable">$meta</span> -1 _1 -2 _2
+
+<span class="hljs-comment"># main command - check parameters</span>
+<span class="hljs-comment"># note - if primers not supplied switch on fastp trimming. It will skip trimming if primers are not supplied and cutadapt trimming is selected.</span>
+dadaist2 \
+-input-directory <span class="hljs-variable">$in_dir</span>  \
+-output-directory <span class="hljs-variable">$out_dir</span> \
+-database  <span class="hljs-variable">$database</span> \
+-metadata <span class="hljs-variable">$meta</span> \
+-threads 8 \
+-trunc-len-1 200 \
+-trunc-len-2 160 \
+-s1 0 \
+-s2 0 \
+-min-qual 28 \
+-maxee1 2 \
+-maxee2 2 \
+-save-rds \
+-1 _1 \
+-2 _2 \
+-verbose
+
+<span class="hljs-comment"># export to get MetagenomeAnalyist compatable files</span>
+dadaist2-exporter -i <span class="hljs-variable">$out_dir</span>
+</code></pre>
+<h1 id="6-visualisation-and-statistics">6. Visualisation and statistics:</h1>
+<h2 id="61-microbiomeanalyst">6.1 <a href="https://www.microbiomeanalyst.ca/">MicrobiomeAnalyst</a></h2>
+<p>MicrobiomeAnalyst is a useful tool for exploring your data (although it can be tricky to use if your data isn't in the correct format).</p>
+<p>First download the metadata file:</p>
+<pre><code>wget https://raw.githubusercontent.com/nmc97/metabarcoding_at_cefas_tutorial/main/scripts/workshop_1/data/metadata.csv
+</code></pre>
+<p>Then use the files we produced for MicrobiomeAnalyst:  <code>asv_table_dada2.ma.csv</code>, <code>taxa.ma.csv</code></p>
+<p>Input these data here:
+<a href="https://www.microbiomeanalyst.ca/MicrobiomeAnalyst/upload/OtuUploadView.xhtml">https://www.microbiomeanalyst.ca/MicrobiomeAnalyst/upload/OtuUploadView.xhtml</a></p>
+<p><strong>Dadaist2</strong></p>
+<p>To submit the files in the Dadaist2 MicrobiomeAnalyst directory you may first need to edit some of them.</p>
+<p>The table.txt file needs to have file extensions removed from the sample names (use find and replace).</p>
+<p>The taxa file doesn't contain enough delimiters. Open in excel and save as csv file.</p>
+<h2 id="62-phyloseq">6.2 Phyloseq</h2>
+<p>For this you need R. It would be best to set up R studio on your computer and run this there.</p>
+<p>You will need to create a Phyloseq object from the outputs of Dada2 or Dadaist2</p>
+<h2 id="63-microbiome-r-package">6.3 Microbiome R package</h2>
+<p>For this you need R. It would be best to set up r studio on your computer and run this there.</p>
+<p>You will need to create a Phyloseq object from the outputs of Dada2 or Dadaist2</p>
+<p><a href="https://microbiome.github.io/tutorials/">https://microbiome.github.io/tutorials/</a></p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
