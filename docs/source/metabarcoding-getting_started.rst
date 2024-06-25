@@ -32,8 +32,10 @@ General Process:
 ^^^^^^^^^^^^^^^^
 
 1. Set up experiment
+
 Keep the rest of the analysis in mind when setting up the experiment
-Choose a target sequence
+
+Choose a target sequence (16S, 18S,COI, ITS, 12S ...)
 
 .. note::
 
@@ -45,15 +47,19 @@ Papers:
 
 `Non-specific amplification compromises 2 environmental DNA metabarcoding with COI <https://besjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/2041-210X.13276>`_
 
-2. Sequencing
+2. Sequencing platform
 
 What sequencing platform is available and most appropriate for the study?
 
 note: Nanopore metabarcoding allows for longer sequences to be produced, but the databases for assigning taxonomy to these sequences may be poor in comparison to other metabarcoding approaches.
 
+Methods for short read metabarcoding are more abundant and easy to use
+
+This about the length of teh region you are sequencing and if the sequencing platform will accommodate this - is the read length too short?
+
 3. Data archiving
 
-Read files (fastq.gz, metadata) - where will the raw data be stored/ backed up?
+Read files (fastq.gz), metadata etc. - where will the raw data be stored/ backed up?
 
 4. Quality control - reads
 
@@ -76,7 +82,7 @@ Read files (fastq.gz, metadata) - where will the raw data be stored/ backed up?
   - `Trimmomatic <http://www.usadellab.org/cms/?page=trimmomatic>`_
   - `fastp <https://github.com/OpenGene/fastp>`_
 
-- deduplicating - removing reads which appear more than once in the dataset (reads can be overlapping and highly similar but reads that are identical are redundant)
+- Deduplicating - removing reads which appear more than once in the dataset (reads can be overlapping and highly similar but reads that are identical are redundant)
 
 e.g. in Dada2 tutorial
 
@@ -114,7 +120,9 @@ See https://github.com/nmc97/metabarcoding_at_cefas_tutorial/blob/main/scripts/m
 
 8. Abundance statistics - e.g. alpha and beta Metrics
 
+
 9. Differential abundance Analysis
+
 
 10. Vizualisation
 
@@ -123,7 +131,7 @@ Quality Control: Read quality
 
 Checking the quality of your reads is the first thing that you will need to do and you may spend a lot of time getting your reads in a good state for further analysis.
 
-Note that reverse reads in MiSeq can struggle on metabarcoding runs becasue of low sequence diversity. The forward reads tend to do better reverse reads having lower quality, particlaurly towards the end of the reads - lower quality.
+Note that reverse reads in MiSeq can be of poorer quality on metabarcoding runs becasue of low sequence diversity. The forward reads tend to do better reverse reads having lower quality, particlaurly towards the end of the reads - lower quality.
 
 There may be occasions wghere you need to decide if you should use reverse reads at all.
 
@@ -155,7 +163,7 @@ Programs to use: Fastqc, MultiQC, Cutadapt, Trimmomatic, Dada2 etc...
 .. note::
   Interesting issue from the community:
 
-  Amplicon reads were generated using a kit that did not autimatically sequence reads in the same orientation for every read.
+  Amplicon reads were generated using a kit that did not automatically sequence reads in the same orientation for every read.
   Clustering amplicons relies on them to be in the same orientation. 
  
   Thus, reads need to be re-oriented to the same orientation programatically before continuing. 
